@@ -188,6 +188,44 @@ footer{margin-top:40px;color:var(--muted);font-size:12px;text-align:center;line-
   @keyframes blink{50%{opacity:0}}
   .card:hover{transform:translateY(-2px)} .card{transition:transform .2s,border-color .15s}
 }
+
+/* Дымыч */
+.hero-in{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 24px;align-items:end}
+.hero-in>*:not(.dym-wrap){grid-column:1}
+.dym-wrap{grid-column:2;grid-row:1/span 3;align-self:end;width:clamp(150px,22vw,250px);position:relative}
+.dym{width:100%;height:auto;display:block;overflow:visible}
+.ring{fill:none;stroke:rgba(244,236,234,.7);stroke-width:2.4;opacity:0}
+.say{position:absolute;top:2%;left:-30%;background:var(--fg);color:var(--bg);font-weight:800;font-size:13px;padding:6px 10px;border-radius:12px 12px 12px 2px;white-space:nowrap}
+@media(max-width:640px){.hero-in{grid-template-columns:1fr}.dym-wrap{grid-column:1;grid-row:auto;justify-self:center;width:150px;order:-1}.say{left:auto;right:-40%}}
+.ava{background:linear-gradient(135deg,var(--red),var(--red-deep));padding:3px;overflow:hidden}
+.ava svg{width:100%;height:100%}
+@media (prefers-reduced-motion:no-preference){
+ .d-body,.d-head{transform-box:fill-box}
+ .dym.idle .d-body{animation:bob 2.6s ease-in-out infinite}
+ @keyframes bob{50%{transform:translateY(-3px)}}
+ .d-eyes{transform-origin:105px 83px;animation:blink 4.2s infinite}
+ @keyframes blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+ .ring{animation:ring 4.5s ease-out infinite;transform-origin:140px 100px}
+ .r2{animation-delay:.5s}.r3{animation-delay:1s}
+ @keyframes ring{0%{opacity:0;transform:translate(0,0) scale(.6)}8%{opacity:.85}60%{opacity:0;transform:translate(-14px,-70px) scale(2.2)}100%{opacity:0}}
+ .dym.think .ring{animation-duration:1.6s}
+ .coal{animation:coal 1.8s ease-in-out infinite}.c2{animation-delay:.6s}
+ @keyframes coal{50%{fill:#e63a33;filter:drop-shadow(0 0 4px #ff7a45)}}
+ .dym.think{animation:walk 2.2s ease-in-out infinite}
+ @keyframes walk{0%,100%{transform:translateX(-16px)}50%{transform:translateX(16px)}}
+ .dym.think .l1{animation:step .55s ease-in-out infinite;transform-box:fill-box;transform-origin:top}
+ .dym.think .l2{animation:step .55s ease-in-out infinite reverse;transform-box:fill-box;transform-origin:top}
+ @keyframes step{0%,100%{transform:rotate(9deg)}50%{transform:rotate(-9deg)}}
+ .dym.think .d-head{animation:nod .55s ease-in-out infinite;transform-origin:center}
+ @keyframes nod{50%{transform:translateY(2px) rotate(-3deg)}}
+ .d-wave{transform-box:fill-box;transform-origin:85% 5%}
+ .dym.happy .d-wave{animation:wave .5s ease-in-out 5}
+ @keyframes wave{0%,100%{transform:rotate(0)}50%{transform:rotate(-120deg)}}
+ .dym.happy .d-body{animation:hop .5s ease-out 2}
+ @keyframes hop{40%{transform:translateY(-10px)}}
+ .say{animation:pop .4s cubic-bezier(.2,1.4,.4,1) both}
+ @keyframes pop{from{transform:scale(.4);opacity:0}}
+}
 </style>
 
 <div class="wrap">
@@ -209,6 +247,28 @@ footer{margin-top:40px;color:var(--muted);font-size:12px;text-align:center;line-
     <div class="hero">
       <canvas id="smoke" aria-hidden="true"></canvas>
       <div class="hero-in">
+        <div class="dym-wrap"><svg class="dym idle" id="dym" viewBox="0 0 230 270" role="img" aria-label="Дымыч, кальянщик магазина">
+  <ellipse cx="120" cy="258" rx="92" ry="9" fill="rgba(0,0,0,.45)"/>
+  <g class="d-rings"><circle class="ring r1" cx="140" cy="100" r="7"/><circle class="ring r2" cx="140" cy="100" r="7"/><circle class="ring r3" cx="140" cy="100" r="7"/></g>
+  <g class="d-hookah">
+    <path d="M172 210 Q150 205 148 180 Q146 150 140 112" stroke="#3a2a2a" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <rect x="183" y="150" width="8" height="64" rx="3" fill="#8a6f68"/>
+    <path d="M176 140 h22 l-4 14 h-14z" fill="#b8423b"/>
+    <rect class="coal" x="179" y="133" width="7" height="7" rx="1.5" fill="#ff7a45"/><rect class="coal c2" x="188" y="133" width="7" height="7" rx="1.5" fill="#ff7a45"/>
+    <path d="M168 214 h46 q6 0 2 8 q-10 24 -25 24 q-15 0 -25 -24 q-4 -8 2 -8z" fill="#5a1512" stroke="#e63a33" stroke-width="2"/>
+    <ellipse cx="191" cy="232" rx="12" ry="4" fill="rgba(255,255,255,.12)"/>
+  </g>
+  <g class="d-body">
+    <g class="d-legs"><rect class="leg l1" x="88" y="200" width="15" height="48" rx="6" fill="#1c1515"/><rect class="leg l2" x="110" y="200" width="15" height="48" rx="6" fill="#1c1515"/>
+      <rect x="84" y="242" width="24" height="10" rx="5" fill="#f4ecea"/><rect x="108" y="242" width="24" height="10" rx="5" fill="#f4ecea"/></g>
+    <path d="M70 150 Q72 126 106 124 Q140 126 142 150 L146 208 Q106 216 66 208Z" fill="#c62f29"/>
+    <path d="M92 128 Q106 146 120 128" stroke="#8f1d19" stroke-width="4" fill="none"/>
+    <text x="106" y="186" text-anchor="middle" font-family="Unbounded,Arial Black,sans-serif" font-weight="900" font-size="15" fill="#fff">ДЫМ</text>
+    <g class="d-wave"><path d="M74 146 Q56 170 62 196" stroke="#c62f29" stroke-width="15" fill="none" stroke-linecap="round"/><circle cx="62" cy="198" r="8" fill="#e3ab84"/></g>
+    <path d="M138 148 Q156 130 140 112" stroke="#c62f29" stroke-width="15" fill="none" stroke-linecap="round"/><circle cx="140" cy="111" r="8" fill="#e3ab84"/>
+    <g class="d-head"><circle cx="105" cy="86" r="33" fill="#e3ab84"/><path d="M73 92 Q75 128 105 130 Q135 128 137 92 Q130 108 118 106 L92 106 Q80 108 73 92Z" fill="#2b1b16"/><path d="M93 112 Q105 120 117 112" stroke="#f0d0bc" stroke-width="3" fill="none" stroke-linecap="round"/><g class="d-eyes"><ellipse cx="93" cy="83" rx="4" ry="4.6" fill="#1a0f0c"/><ellipse cx="117" cy="83" rx="4" ry="4.6" fill="#1a0f0c"/></g><path d="M86 74 Q93 70 100 74 M110 74 Q117 70 124 74" stroke="#2b1b16" stroke-width="3.2" fill="none" stroke-linecap="round"/><path d="M70 78 Q70 46 105 46 Q140 46 140 76 L164 78 Q164 86 140 84 Q105 74 70 82Z" fill="#141010"/><circle cx="105" cy="57" r="5" fill="#e63a33"/><path d="M128 108 l9 -3" stroke="#c9a29a" stroke-width="4" stroke-linecap="round"/></g>
+  </g>
+</svg><div class="say" id="say">Здорово, бро!</div></div>
         <div class="badge"><span class="pulse"></span>Дымыч на связи · супер-кальянщик</div>
         <h1 class="lead">Расскажи Дымычу, чего хочется. <em>Он соберёт микс.</em></h1>
         <div class="ask">
@@ -785,6 +845,10 @@ $("#go").onclick=()=>run(true);
 run();
 
 
+// ===== Дымыч: состояния =====
+function setDym(state,phrase){const d=$("#dym");if(!d)return;d.setAttribute("class","dym "+state);const s=$("#say");
+  if(phrase){s.hidden=false;s.textContent=phrase;s.style.animation="none";s.offsetWidth;s.style.animation=""}else s.hidden=true}
+setTimeout(()=>{const s=$("#say");if(s&&$("#dym").classList.contains("idle"))s.hidden=true},4500);
 // ===== ИИ-миксолог =====
 const ITEMS=[["арбуз","арбуз"],["дын","дыня"],["клубни","клубника"],["земляник","земляника"],["малин","малина"],["вишн","вишня"],["черешн","вишня"],["черник","черника"],["голубик","голубика"],["смородин","смородина"],["ежевик","ежевика"],["крыжовн","крыжовник"],["барбарис","барбарис"],["клюкв","клюква"],["гранат","гранат"],["манго","манго"],["ананас","ананас"],["маракуй","маракуйя"],["персик","персик"],["абрикос","абрикос"],["виноград","виноград"],["яблок","яблоко"],["груш","груша"],["банан","банан"],["киви","киви"],["лимон","лимон"],["лайм","лайм"],["апельсин","апельсин"],["мандарин","мандарин"],["грейпфрут","грейпфрут"],["помело","помело"],["кокос","кокос"],["гуав","гуава"],["личи","личи"],["фейхоа","фейхоа"],["слив","слива"],["кола","кола"],["колу","кола"],["чай","чай"],["чая","чай"],["мят","мята"],["ванил","ваниль"],["шоколад","шоколад"],["кофе","кофе"],["орех","орех"],["карамел","карамель"],["йогурт","йогурт"],["морожен","мороженое"],["жвачк","жвачка"],["конфет","конфеты"],["леденц","леденцы"],["скитл","скитлз"],["мармелад","мармелад"],["мишк","мармелад"],["джин","джин"],["коньяк","коньяк"],["текил","текила"],["ликёр","ликёр"],["ликер","ликёр"],["роз","роза"],["базилик","базилик"],["имбир","имбирь"],["кориц","корица"],["перец","перец"],["огур","огурец"],["томат","томат"],["попкорн","попкорн"],["мёд","мёд"],["мед ","мёд"],["лимонад","лимонад"],["газиров","газировка"],["шипуч","газировка"],["энергет","энергетик"],["тархун","тархун"],["эвкалипт","эвкалипт"],["ёлк","ёлка"],["хво","ёлка"],["алоэ","алоэ"],["кактус","кактус"],["халв","халва"],["чизкейк","чизкейк"],["вафл","вафли"],["печень","печенье"],["пирог","пирог"]];
 const ITEMTAG={"мята":"m","лимонад":"n","газировка":"n","чай":"h"};
@@ -864,7 +928,8 @@ async function typeInto(el,text){if(RM){el.textContent=text;return}el.classList.
 async function askAI(text){
   if(aiBusy)return;text=(text||"").trim();if(!text){$("#ai-q").focus();return}aiBusy=true;$("#ai-go").disabled=true;
   const out=$("#ai-out");const p=parse(text);
-  out.innerHTML=`<div class="bubble rise"><div class="ava">Д</div><div class="btext"><div class="think" id="th"></div></div></div>`;
+  out.innerHTML=`<div class="bubble rise"><div class="ava"><svg viewBox="66 44 98 92" aria-hidden="true"><g ><circle cx="105" cy="86" r="33" fill="#e3ab84"/><path d="M73 92 Q75 128 105 130 Q135 128 137 92 Q130 108 118 106 L92 106 Q80 108 73 92Z" fill="#2b1b16"/><path d="M93 112 Q105 120 117 112" stroke="#f0d0bc" stroke-width="3" fill="none" stroke-linecap="round"/><g class="d-eyes"><ellipse cx="93" cy="83" rx="4" ry="4.6" fill="#1a0f0c"/><ellipse cx="117" cy="83" rx="4" ry="4.6" fill="#1a0f0c"/></g><path d="M86 74 Q93 70 100 74 M110 74 Q117 70 124 74" stroke="#2b1b16" stroke-width="3.2" fill="none" stroke-linecap="round"/><path d="M70 78 Q70 46 105 46 Q140 46 140 76 L164 78 Q164 86 140 84 Q105 74 70 82Z" fill="#141010"/><circle cx="105" cy="57" r="5" fill="#e63a33"/><path d="M128 108 l9 -3" stroke="#c9a29a" stroke-width="4" stroke-linecap="round"/></g></svg></div><div class="btext"><div class="think" id="th"></div></div></div>`;
+  setDym("think","Ща намешаю…");
   out.scrollIntoView({behavior:RM?"auto":"smooth",block:"start"});
   const steps=["Так-так, читаю, чего ты хочешь…","Нюхаю все "+FL.length+" банок на полке…","Советуюсь с колбой…","Прикидываю, чтобы тебя не унесло…"];
   const th=$("#th");for(const s of steps){th.querySelectorAll(".now").forEach(d=>{d.className="done"});const d=document.createElement("div");d.className="now";d.textContent=s;th.appendChild(d);await wait(520)}
@@ -873,6 +938,7 @@ async function askAI(text){
   th.parentElement.innerHTML=`<p id="ai-intro"></p>`;await typeInto($("#ai-intro"),intro);
   out.insertAdjacentHTML("beforeend",mixes.map(aiMixHTML).join("")+`<div class="seller rise" style="--i:3"><div><strong>Зашло? Покажи этот экран продавцу</strong><p>Он забьёт чашу. Какой-то банки нет? Жми «⇄ Заменить» рядом со вкусом, Дымыч подберёт похожий. Не забудь про акцию: −10% на табак.</p></div></div><button class="ghost rise" style="--i:4" id="ai-more">Дымыч, давай ещё</button>`);
   $("#ai-more").onclick=()=>{aiBusy=false;askAI(text)};
+  setDym("happy","Готово, бро!");setTimeout(()=>setDym("idle",null),3200);
   aiBusy=false;$("#ai-go").disabled=false}
 const QUICK=["освежиться","сладенького","с кислинкой","для компании","что-то необычное","полегче, я новичок","ягодное","как напиток"];
 $("#ai-quick").innerHTML=QUICK.map(q=>`<button class="chip sm" data-q="${q}">${q}</button>`).join("");
@@ -880,7 +946,7 @@ $("#ai-quick").onclick=e=>{const b=e.target.closest("[data-q]");if(!b)return;con
 $("#ai-go").onclick=()=>askAI($("#ai-q").value);
 $("#ai-q").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();askAI($("#ai-q").value)}});
 const TRY=["хочу освежиться, что-то с арбузом, без мяты","сладкое и ягодное, полегче","кислое и крепкое","как лимонад для компании"];
-$("#ai-out").innerHTML=`<div class="bubble"><div class="ava">Д</div><div class="btext"><p>Здорово, бро! Я Дымыч, супер-кальянщик этого магазина. Забил столько чаш, что знаю все ${FL.length} вкусов на полке по запаху. Пиши, какое настроение, что любишь и чего терпеть не можешь, а я соберу тебе три микса.</p><div class="tryq">${TRY.map(t=>`<button class="chip sm" data-try="${t}">«${t}»</button>`).join("")}</div></div></div>`;
+$("#ai-out").innerHTML=`<div class="bubble"><div class="ava"><svg viewBox="66 44 98 92" aria-hidden="true"><g ><circle cx="105" cy="86" r="33" fill="#e3ab84"/><path d="M73 92 Q75 128 105 130 Q135 128 137 92 Q130 108 118 106 L92 106 Q80 108 73 92Z" fill="#2b1b16"/><path d="M93 112 Q105 120 117 112" stroke="#f0d0bc" stroke-width="3" fill="none" stroke-linecap="round"/><g class="d-eyes"><ellipse cx="93" cy="83" rx="4" ry="4.6" fill="#1a0f0c"/><ellipse cx="117" cy="83" rx="4" ry="4.6" fill="#1a0f0c"/></g><path d="M86 74 Q93 70 100 74 M110 74 Q117 70 124 74" stroke="#2b1b16" stroke-width="3.2" fill="none" stroke-linecap="round"/><path d="M70 78 Q70 46 105 46 Q140 46 140 76 L164 78 Q164 86 140 84 Q105 74 70 82Z" fill="#141010"/><circle cx="105" cy="57" r="5" fill="#e63a33"/><path d="M128 108 l9 -3" stroke="#c9a29a" stroke-width="4" stroke-linecap="round"/></g></svg></div><div class="btext"><p>Здорово, бро! Я Дымыч, супер-кальянщик этого магазина. Забил столько чаш, что знаю все ${FL.length} вкусов на полке по запаху. Пиши, какое настроение, что любишь и чего терпеть не можешь, а я соберу тебе три микса.</p><div class="tryq">${TRY.map(t=>`<button class="chip sm" data-try="${t}">«${t}»</button>`).join("")}</div></div></div>`;
 $("#ai-out").addEventListener("click",e=>{const b=e.target.closest("[data-try]");if(b){$("#ai-q").value=b.dataset.try;askAI(b.dataset.try)}});
 
 // Дым на фоне
