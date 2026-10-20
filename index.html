@@ -118,6 +118,14 @@ section.view{padding-top:24px;display:flex;flex-direction:column;gap:20px}
 footer{margin-top:40px;color:var(--muted);font-size:12px;text-align:center;line-height:1.6}
 @media (prefers-reduced-motion:no-preference){.card,.chip{transition:border-color .15s,background .15s}}
 
+/* Наличие и замена */
+.prow{display:flex;gap:8px;align-items:center;justify-content:space-between;border-radius:8px;padding:2px 4px;margin:0 -4px}
+.parts .swap{flex:0 0 auto;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:5px 9px;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;display:inline-flex}
+.parts .swap:hover{color:var(--fg);border-color:var(--red)}
+.prow.swapped{background:rgba(230,58,51,.14)}
+.card.out{opacity:.6}
+.outb{align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--red-deep);border-radius:6px;padding:2px 8px}
+@media (prefers-reduced-motion:no-preference){.prow.swapped{animation:flash 1.2s ease-out}@keyframes flash{from{background:rgba(255,122,69,.45)}}}
 /* Акции */
 .promos{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
 .promo{position:relative;overflow:hidden;display:flex;gap:16px;align-items:center;padding:18px 20px;border-radius:18px;background:linear-gradient(120deg,var(--red) 0%,var(--red-deep) 70%);color:#fff}
@@ -674,14 +682,26 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",
 const dots=n=>`<span class="dots" aria-label="Крепость ${n} из 5">${[1,2,3,4,5].map(k=>`<i class="${k<=n?"on":""}"></i>`).join("")}</span>`;
 const cap=s=>s[0].toUpperCase()+s.slice(1);
 const WHO=s=>s<=2?"новичкам и любителям лёгкого":s===3?"тем, кто уже курил":"опытным; новичку лучше в микс с лёгким";
-const card=f=>`<button class="card" data-id="${f.id}"><span class="brand"><span>${esc(BRANDS[f.b].name)} · ${esc(BRANDS[f.b].lines[f.ln].name)}${f.hit?' · <span class="hit">хит</span>':""}</span></span><span class="nm">${esc(f.name)}</span><span class="ru">${esc(cap(f.ru))}</span><span class="tg">${f.tags.map(t=>`<i>${TAGS[t]}</i>`).join("")}</span><span class="fx"><span>${dots(f.s)} ${STRN[f.s]}</span><span>Кому: ${WHO(f.s)}</span></span><span class="more">С чем смешать →</span></button>`;
+const card=f=>`<button class="card${f.out?" out":""}" data-id="${f.id}">${f.out?'<span class="outb">Нет в наличии</span>':""}<span class="brand"><span>${esc(BRANDS[f.b].name)} · ${esc(BRANDS[f.b].lines[f.ln].name)}${f.hit?' · <span class="hit">хит</span>':""}</span></span><span class="nm">${esc(f.name)}</span><span class="ru">${esc(cap(f.ru))}</span><span class="tg">${f.tags.map(t=>`<i>${TAGS[t]}</i>`).join("")}</span><span class="fx"><span>${dots(f.s)} ${STRN[f.s]}</span><span>Кому: ${WHO(f.s)}</span></span><span class="more">${f.out?"Похожие в наличии →":"С чем смешать →"}</span></button>`;
 
 // Сочетаемость вкусов
 const GOES={b:"cimhd",f:"icbm",c:"btim",t:"cid",i:"fbtc",m:"bctf",d:"bfz",s:"dfi",h:"bcf",n:"ic",a:"fbc",x:"dfz",g:"xd",k:"dfz",w:"bh",z:"dk"};
 function pairScore(a,b){if(a.id===b.id)return-1;let s=0;for(const t of a.tags)for(const u of b.tags){if(GOES[t]&&GOES[t].includes(u))s+=2;if(t===u)s+=.5}return s}
 let seed=7;const rnd=()=>{seed=(seed*16807)%2147483647;return seed/2147483647};
 const pick=(arr,n)=>{const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a.slice(0,n)};
-function partners(f,n=4){return FL.filter(o=>o.id!==f.id&&!o.tags.every(t=>t==="i"||t==="m")).map(o=>({o,sc:pairScore(f,o)+(o.b===f.b?.6:0)+(o.hit?.4:0)})).sort((x,y)=>y.sc-x.sc).slice(0,12).sort(()=>rnd()-.5).slice(0,n).map(x=>x.o)}
+const AV=()=>FL.filter(f=>!f.out);
+const words4=s=>norm2(s).split(/[^а-яa-z]+/).filter(w=>w.length>3).map(w=>w.slice(0,4));
+const norm2=s=>s.toLowerCase().replace(/ё/g,"е");
+function similar(f,n=4){const fw=new Set(words4(f.ru+" "+f.name));
+  return AV().filter(o=>o.id!==f.id).map(o=>{const sh=o.tags.filter(t=>f.tags.includes(t)).length,extra=o.tags.length-sh;
+    const ww=words4(o.ru+" "+o.name).filter(w=>fw.has(w)).length;
+    return{o,s:sh*3-extra*.6+ww*4+(o.b===f.b?.5:0)-Math.abs(o.s-f.s)*.7+(o.hit?.3:0)}}).sort((a,b)=>b.s-a.s).slice(0,n).map(x=>x.o)}
+function applyStock(lines){const out=new Set();
+  for(let l of lines){l=norm2(l.trim());if(!l||l.startsWith("#"))continue;
+    const [a,b]=l.includes(":")?l.split(":").map(x=>x.trim()):[null,l];
+    FL.forEach(f=>{if(norm2(f.name)===b&&(!a||norm2(BRANDS[f.b].name)===a))out.add(f.id)})}
+  FL.forEach(f=>f.out=out.has(f.id));return out.size}
+function partners(f,n=4){return FL.filter(o=>!o.out&&o.id!==f.id&&!o.tags.every(t=>t==="i"||t==="m")).map(o=>({o,sc:pairScore(f,o)+(o.b===f.b?.6:0)+(o.hit?.4:0)})).sort((x,y)=>y.sc-x.sc).slice(0,12).sort(()=>rnd()-.5).slice(0,n).map(x=>x.o)}
 
 // Карточка вкуса
 function open(id){const f=FL[id],B=BRANDS[f.b],L=B.lines[f.ln];
@@ -699,11 +719,13 @@ function open(id){const f=FL[id],B=BRANDS[f.b],L=B.lines[f.ln];
     <dt>Как забивать</dt><dd>${esc(B.pack)}</dd>
     <dt>Бренд</dt><dd>${esc(B.about)} <span style="color:var(--muted)">(${esc(B.country)})</span></dd>
   </dl>
+  ${f.out?`<h4 style="color:var(--red)">Сейчас нет в наличии. Похожие вкусы:</h4><div class="pair">${similar(f,5).map(o=>`<button class="chip sm" data-id="${o.id}">${esc(o.name)} · ${esc(BRANDS[o.b].name)}</button>`).join("")}</div>`:""}
   <h4>С чем смешать из наличия</h4>
   <div class="pair">${pr.map(o=>`<button class="chip sm" data-id="${o.id}">${esc(o.name)} · ${esc(BRANDS[o.b].name)}</button>`).join("")}</div>
   <p class="note">Это ориентир. Продавец подскажет, какие вкусы сейчас самые удачные в банке.</p>`;
   $("#sheet").hidden=false;$("#panel").scrollTop=0;}
-document.addEventListener("click",e=>{const c=e.target.closest("[data-id]");if(c){open(+c.dataset.id);return}
+document.addEventListener("click",e=>{const sw=e.target.closest("[data-swap]");if(sw){const [k,j]=sw.dataset.swap.split(":").map(Number);swapPart(k,j);return}
+  const c=e.target.closest("[data-id]");if(c){open(+c.dataset.id);return}
   if(e.target.closest(".close")||e.target.id==="sheet")$("#sheet").hidden=true});
 document.addEventListener("keydown",e=>{if(e.key==="Escape")$("#sheet").hidden=true});
 
@@ -728,18 +750,24 @@ function score(f,want){let s=0;for(const t of f.tags)if(want.has(t))s+=3;if(f.hi
 function makeMix(base,pool,used){
   const p2=pool.filter(o=>!used.has(o.id)&&o.id!==base.id).map(o=>({o,sc:pairScore(base,o)+rnd()})).sort((a,b)=>b.sc-a.sc)[0];if(!p2)return null;
   const accTags=st.mood==="sour"?"s":st.mood==="sweet"?"d":"imc";
-  const acc=FL.filter(o=>o.id!==base.id&&o.id!==p2.o.id&&o.tags.some(t=>accTags.includes(t))&&o.s<=Math.max(base.s,3)).map(o=>({o,sc:pairScore(base,o)+pairScore(p2.o,o)+rnd()*2})).sort((a,b)=>b.sc-a.sc)[0];
+  const acc=FL.filter(o=>!o.out&&o.id!==base.id&&o.id!==p2.o.id&&o.tags.some(t=>accTags.includes(t))&&o.s<=Math.max(base.s,3)).map(o=>({o,sc:pairScore(base,o)+pairScore(p2.o,o)+rnd()*2})).sort((a,b)=>b.sc-a.sc)[0];
   return[[base,50],[p2.o,30],acc?[acc.o,20]:null].filter(Boolean)}
 const NAMES={chill:["Тёплый вечер","Медленный дым","Мягкая посадка"],fresh:["Ледяной фреш","Северный ветер","Глоток прохлады"],sweet:["Сладкий финал","Десертная полка","Конфетный дым"],sour:["Кислый удар","Скулы сводит","Цитрусовый шок"],party:["На всю компанию","Барная карта","Пятничный"],weird:["Эксперимент","Не как у всех","Тайная полка"],none:["Микс дня","Выбор продавца","Классика"]};
-function mixHTML(m,title){const nm=m.map(([f])=>f.name).join(" + ");
+const MIXSTORE=[];
+function partsHTML(k){return MIXSTORE[k].map(([f,p],j)=>`<div class="prow"><button data-id="${f.id}"><b>${p}%</b><span><u>${esc(f.name)}</u> · ${esc(BRANDS[f.b].name)}, ${esc(f.ru)}</span></button><button class="swap" data-swap="${k}:${j}" aria-label="Нет на полке? Заменить ${esc(f.name)} на похожий">⇄ Заменить</button></div>`).join("")}
+function swapPart(k,j){const m=MIXSTORE[k];const cur=m[j][0];m.tried=m.tried||{};const tried=m.tried[j]=m.tried[j]||new Set();tried.add(cur.id);
+  const ex=new Set(m.map(([f])=>f.id));let c=similar(cur,40).filter(o=>!ex.has(o.id)&&!tried.has(o.id));
+  if(!c.length){tried.clear();tried.add(cur.id);c=similar(cur,40).filter(o=>!ex.has(o.id))}if(!c.length)return;
+  m[j][0]=c[0];const el=$("#mp-"+k);el.innerHTML=partsHTML(k);const row=el.children[j];row.classList.add("swapped");}
+function mixHTML(m,title){const k=MIXSTORE.push(m)-1;
   return`<div class="mix"><div class="mt"><h3>${esc(title)}</h3>${dots(Math.round(m.reduce((s,[f,p])=>s+f.s*p,0)/100))}</div>
   <div class="bar">${m.map(([,p])=>`<span style="flex:${p}"></span>`).join("")}</div>
-  <div class="parts">${m.map(([f,p])=>`<button data-id="${f.id}"><b>${p}%</b><span><u>${esc(f.name)}</u> · ${esc(BRANDS[f.b].name)}, ${esc(f.ru)}</span></button>`).join("")}</div></div>`}
+  <div class="parts" id="mp-${k}">${partsHTML(k)}</div></div>`}
 function run(scroll){
   seed=Math.floor(Math.random()*1e9)+1;
   const want=new Set(st.taste);const mood=MOODS.find(m=>m[0]===st.mood);if(mood)mood[2].split("").forEach(t=>want.add(t));
   const range=STR.find(s=>s[0]===st.str)[2];
-  let pool=FL.filter(f=>range.includes(f.s));
+  let pool=FL.filter(f=>!f.out&&range.includes(f.s));
   const hitsMode=!want.size;
   const ranked=pool.map(f=>({f,sc:hitsMode?(f.hit?5:0)+rnd():score(f,want)})).sort((a,b)=>b.sc-a.sc).map(x=>x.f);
   const top=ranked.slice(0,24);const singles=pick(top.slice(0,12),6);
@@ -749,7 +777,7 @@ function run(scroll){
   const head=hitsMode?"Хиты магазина":"Под твоё настроение";
   $("#res").innerHTML=`<h2>${head}: попробуй эти вкусы</h2><div class="grid">${singles.map((f,i)=>card(f).replace('class="card"',`class="card rise" style="--i:${i}"`)).join("")}</div>
   <h2>Или готовый микс</h2>${mixes.map((m,i)=>mixHTML(m,nm[i%nm.length])).join("")}
-  <div class="seller"><div><strong>Покажи этот экран продавцу</strong><p>Он соберёт чашу и подскажет, какие банки сейчас самые свежие. Угли: ${coal}.</p></div></div>
+  <div class="seller"><div><strong>Покажи этот экран продавцу</strong><p>Он соберёт чашу. Какого-то вкуса нет на полке? Жми «⇄ Заменить» рядом с ним, подберём похожий. Угли: ${coal}.</p></div></div>
 `;
   if(scroll)$("#res").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});
 }
@@ -793,7 +821,7 @@ const STRRANGE={l:[1,2,3],m:[3],h:[4,5]};
 function aiMixes(p){
   seed=Math.floor(Math.random()*1e9)+1;
   const range=p.str?STRRANGE[p.str]:[1,2,3,4,5];
-  const ok=f=>!f.tags.some(t=>p.notTags.has(t))&&!p.notItems.some(l=>itemMatch(f,l));
+  const ok=f=>!f.out&&!f.tags.some(t=>p.notTags.has(t))&&!p.notItems.some(l=>itemMatch(f,l));
   let pool=FL.filter(f=>ok(f)&&range.includes(f.s));if(pool.length<10)pool=FL.filter(ok);
   const tagScore=f=>f.tags.reduce((s,t)=>s+(p.tags.has(t)?2:0),0)+(f.hit?1:0)+rnd()*1.5;
   const cands=p.items.map(l=>{let c=pool.filter(f=>itemMatch(f,l));if(!c.length)c=FL.filter(f=>ok(f)&&itemMatch(f,l));return c.map(f=>({f,s:tagScore(f)})).sort((a,b)=>b.s-a.s).map(x=>x.f)}).filter(c=>c.length);
@@ -819,10 +847,10 @@ function mixName(m){const tg={};m.forEach(([f,p])=>f.tags.forEach(t=>tg[t]=(tg[t
   const a=ADJ[top]||["Авторский"];return a[Math.floor(rnd()*a.length)]+" "+NOUN[Math.floor(rnd()*NOUN.length)]}
 function why(m){const [b,...rest]=m;let s=`<b>${esc(b[0].name)}</b> — основа: ${esc(b[0].ru)}. `;
   rest.forEach(([f],i)=>{const t=f.tags.find(x=>!b[0].tags.includes(x))||f.tags[0];s+=i===0?`<b>${esc(f.name)}</b> добавляет ${ROLE[t]}. `:`<b>${esc(f.name)}</b> — акцент, даёт ${ROLE[t]}.`});return s}
-function aiMixHTML(m,i){const s=Math.round(m.reduce((a,[f,p])=>a+f.s*p,0)/100),B=BRANDS[m[0][0].b];
+function aiMixHTML(m,i){const k=MIXSTORE.push(m)-1;const s=Math.round(m.reduce((a,[f,p])=>a+f.s*p,0)/100),B=BRANDS[m[0][0].b];
   return`<div class="aimix rise" style="--i:${i}"><div class="mt"><h3>${esc(mixName(m))}</h3><span class="num">МИКС ${i+1} · ${dots(s)} ${STRN[s].toUpperCase()}</span></div>
   <div class="bar" style="--i:${i}">${m.map(([,p])=>`<span style="flex:${p}"></span>`).join("")}</div>
-  <div class="parts">${m.map(([f,p])=>`<button data-id="${f.id}"><b>${p}%</b><span><u>${esc(f.name)}</u> · ${esc(BRANDS[f.b].name)}, ${esc(f.ru)}</span></button>`).join("")}</div>
+  <div class="parts" id="mp-${k}">${partsHTML(k)}</div>
   <p class="why">${why(m)}</p><p class="how">Как забить: ${esc(B.pack)} Уголь: ${s>=4?"3 кубика Cocoloco, следить за жаром":"3 кубика Cocoloco на прогрев, потом 2"}.</p></div>`}
 function summary(p){const bits=[];if(p.moods.length)bits.push("хочется "+p.moods.slice(0,2).map(m=>m[1]).join(" и "));
   if(p.items.length)bits.push("вкусы: "+p.items.join(", "));
@@ -843,7 +871,7 @@ async function askAI(text){
   const mixes=aiMixes(p);const sum=summary(p);
   const intro=sum?`Понял, бро: ${sum}. Держи, что Дымыч намешал:`:`Бро, я не всё понял, но не страшно. Вот три микса, которые заходят всем. Опишешь подробнее, попаду точнее:`;
   th.parentElement.innerHTML=`<p id="ai-intro"></p>`;await typeInto($("#ai-intro"),intro);
-  out.insertAdjacentHTML("beforeend",mixes.map(aiMixHTML).join("")+`<div class="seller rise" style="--i:3"><div><strong>Зашло? Покажи этот экран продавцу</strong><p>Он забьёт чашу и подскажет, какие банки сейчас самые свежие. Не забудь про акцию: −10% на табак.</p></div></div><button class="ghost rise" style="--i:4" id="ai-more">Дымыч, давай ещё</button>`);
+  out.insertAdjacentHTML("beforeend",mixes.map(aiMixHTML).join("")+`<div class="seller rise" style="--i:3"><div><strong>Зашло? Покажи этот экран продавцу</strong><p>Он забьёт чашу. Какой-то банки нет? Жми «⇄ Заменить» рядом со вкусом, Дымыч подберёт похожий. Не забудь про акцию: −10% на табак.</p></div></div><button class="ghost rise" style="--i:4" id="ai-more">Дымыч, давай ещё</button>`);
   $("#ai-more").onclick=()=>{aiBusy=false;askAI(text)};
   aiBusy=false;$("#ai-go").disabled=false}
 const QUICK=["освежиться","сладенького","с кислинкой","для компании","что-то необычное","полегче, я новичок","ягодное","как напиток"];
@@ -892,12 +920,16 @@ $("#like-go").onclick=findLike;$("#like-q").onkeydown=e=>{if(e.key==="Enter")fin
 function findLike(){const q=$("#like-q").value.trim().toLowerCase();if(!q)return;
   const words=q.split(/[\s,]+/).filter(w=>w.length>2&&!["что","нибудь","то","как","был","было"].includes(w));
   const tags=new Set();words.forEach(w=>{for(const k in SYN)if(w.startsWith(k)||w.includes(k))tags.add(SYN[k])});
-  const res=FL.map(f=>{const hay=(f.name+" "+f.ru).toLowerCase();let s=0;words.forEach(w=>{if(hay.includes(stem(w)))s+=4});f.tags.forEach(t=>{if(tags.has(t))s+=1.5});if(f.hit)s+=.3;return{f,s}}).filter(x=>x.s>0).sort((a,b)=>b.s-a.s).slice(0,9).map(x=>x.f);
+  const res=AV().map(f=>{const hay=(f.name+" "+f.ru).toLowerCase();let s=0;words.forEach(w=>{if(hay.includes(stem(w)))s+=4});f.tags.forEach(t=>{if(tags.has(t))s+=1.5});if(f.hit)s+=.3;return{f,s}}).filter(x=>x.s>0).sort((a,b)=>b.s-a.s).slice(0,9).map(x=>x.f);
   $("#like-res").innerHTML=res.length?`<h2>Похоже вот на это</h2><div class="grid">${res.map(card).join("")}</div><div class="seller"><div><strong>Не нашёл точь-в-точь?</strong><p>Продавец соберёт похожий вкус миксом из двух-трёх банок.</p></div></div>`
     :`<div class="seller"><div><strong>Такого вкуса не нашли</strong><p>Опиши продавцу, что это было, он подберёт похожее.</p></div></div>`}
 
 // Угли и шкала
 $("#coals").innerHTML=COALS.map(c=>`<article><div class="age">${esc(c.type)}</div><h3>${esc(c.name)}</h3><p>${esc(c.size)}</p><p>${esc(c.text)}</p><p><b style="color:var(--fg)">Как использовать.</b> ${esc(c.use)}</p></article>`).join("");
+// Стоп-лист: встроенный + файл stock.txt рядом с сайтом
+const STOCK_OUT=[];
+applyStock(STOCK_OUT);
+fetch("stock.txt",{cache:"no-store"}).then(r=>r.ok?r.text():"").then(txt=>{if(!txt)return;applyStock(STOCK_OUT.concat(txt.split("\n")));renderCat();run()}).catch(()=>{});
 $("#scale").innerHTML=[[2,"Sebero Classic, Chabacco Medium"],[3,"Хулиган, Hell, NАШ White, Sebero Black"],[4,"Black Burn, Overdose, Hook, NАШ Black"]].map(([n,t])=>`<div>${dots(n)}<span>${t}</span></div>`).join("");
 </script>
 </body></html>
