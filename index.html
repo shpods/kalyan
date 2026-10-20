@@ -957,6 +957,18 @@ function kbMatch(text){const q=" "+norm(text)+" ";let best=null,bs=0;
     if(s>bs){bs=s;best=e}}return bs>=2?best:null}
 function kbHTML(e){const rel=KB.filter(x=>x!==e&&x.g===e.g).concat(KB.filter(x=>x.g!==e.g&&x.g!=="me")).slice(0,3);
   return`<div class="kbans"><h3>${esc(e.q)}</h3>${e.a.split("\n").map(p=>`<p>${esc(p)}</p>`).join("")}</div><div class="tryq">${rel.map(x=>`<button class="chip sm" data-try="${esc(x.q)}">${esc(x.q)}</button>`).join("")}</div>`}
+
+const TALK=[
+ {k:"minor",rx:/мне (1[0-7]|[5-9]) ?(лет|год)|я школьни|я в \d+ класс|мне нет 18/,a:"Бро, кальяны и табак только с 18 лет. Это не я придумал, это закон. Приходи, когда подрастёшь, я тебе такой микс соберу!",say:"Только 18+"},
+ {k:"rude",rx:/дурак|тупой|идиот|лох|отстой|бесишь|заткнись/,a:"Эй, бро, полегче, я тут чашу держу. Давай лучше подберу тебе что-нибудь вкусное.",say:"Полегче, бро"},
+ {k:"howru",rx:/как дела|как ты|че как|чё как|как жизнь|как сам|как поживаешь/,a:"Да нормально, угли разжёг, чаша прогрета. А у тебя как? Если хочешь покурить, скажи, что любишь, и я соберу микс.",say:"Всё ровно!"},
+ {k:"thanks",rx:/спасиб|спс|благодар|рахмет|сенкс|thanks|от души/,a:"Всегда пожалуйста, бро! Заходи ещё, у нас на полке 333 вкуса.",say:"Обращайся!"},
+ {k:"bye",rx:/пока|до свидан|до встреч|бывай|увидимся/,a:"Давай, бро, до встречи! Если микс понравился, покажи экран продавцу.",say:"Давай, бро!"},
+ {k:"joke",rx:/шутк|анекдот|пошути|рассмеши/,a:"Почему кальянщик не ходит в спортзал? Он и так каждый день тягает… дым.",say:"Ха-ха"},
+ {k:"love",rx:/красав|крут|топ |лучший|молодец|классн|огонь/,a:"Спасибо, стараюсь! Ну что, мешаем тебе что-нибудь?",say:"Спасибо, бро!"},
+ {k:"greet",rx:/привет|здравств|салам|салем|сәлем|хай|хеллоу|hello|hi |здорово|добрый (вечер|день|утро)|доброе утро|ку /,a:"Здорово, бро! Рад видеть. Расскажи, какое у тебя настроение, и я соберу микс. Или спроси что-нибудь про кальяны.",say:"Здорово!"}
+];
+function smallTalk(nq){return TALK.find(x=>x.rx.test(nq))||null}
 const QRX=/\?|^как |\sкак |почему|зачем|что такое|что за |сколько|чем отлич|какой лучше|какую|какой |какая |какие |можно ли|что делать|расскажи|объясни|подскажи|посоветуй|зачем/;
 const MIXRX=/микс|замут|собери|подбери|покурить|покурим|хочу |хочется|настроен/;
 
@@ -1044,13 +1056,24 @@ async function typeInto(el,text){if(RM){el.textContent=text;return}el.classList.
 async function askAI(text){
   if(aiBusy)return;text=(text||"").trim();if(!text){$("#ai-q").focus();return}aiBusy=true;$("#ai-go").disabled=true;
   const out=$("#ai-out");const p=parse(text);
-  const nq=" "+norm(text)+" ",kb=kbMatch(text),isQ=QRX.test(nq),wantMix=(p.items.length&&!isQ)||(p.moods.length&&!isQ)||MIXRX.test(nq)&&!kb;
-  if(kb&&!wantMix||isQ&&!wantMix&&!p.items.length){
+  const nq=" "+norm(text)+" ",kb=kbMatch(text),isQ=QRX.test(nq),talk=smallTalk(nq);
+  const strongMix=/микс|замут|замеш|намеш|собери|подбери|подобрать|что покурить|покурить|покурим|посоветуй вкус|посоветуй табак|какой табак взять|какой вкус|что взять/.test(nq);
+  const moodMix=p.moods.length&&!kb&&!isQ&&(!talk||["greet","thanks","love","howru"].includes(talk.k)&&/хочу|хочется|давай|сделай|что-то|что-нибудь/.test(nq));
+  let route=(strongMix||p.items.length&&(!isQ||!kb)||moodMix)?"mix":kb?"kb":talk?"talk":"none";
+  if(route==="mix"&&kb&&isQ&&!strongMix)route="kb";
+  if(talk&&talk.k==="minor")route="talk";
+  if(route!=="mix"){
     out.innerHTML=`<div class="bubble rise"><div class="ava">${AVA}</div><div class="btext"><div class="think" id="th"></div></div></div>`;
-    setDym("think","Ща расскажу…");out.scrollIntoView({behavior:RM?"auto":"smooth",block:"start"});
-    const th=$("#th");for(const s of ["Вспоминаю, бро…","Сверяюсь с опытом…"]){th.querySelectorAll(".now").forEach(d=>{d.className="done"});const d=document.createElement("div");d.className="now";d.textContent=s;th.appendChild(d);await wait(450)}
-    th.parentElement.innerHTML=kb?kbHTML(kb):`<div class="kbans"><p>Про это, бро, не подскажу, моя тема — кальяны. Спроси про чаши, угли, забивку или почему горчит. Или опиши настроение, и я соберу микс.</p></div><div class="tryq">${["Какую чашу выбрать?","Почему кальян горчит?","Как правильно забить чашу?"].map(x=>`<button class="chip sm" data-try="${x}">${x}</button>`).join("")}</div>`;
-    setDym("happy",kb?"Вот так, бро!":"Это не ко мне…");setTimeout(()=>setDym("idle",null),3000);aiBusy=false;$("#ai-go").disabled=false;return}
+    setDym("think",route==="kb"?"Ща расскажу…":"Секунду…");out.scrollIntoView({behavior:RM?"auto":"smooth",block:"start"});
+    const th=$("#th");for(const s of (route==="kb"?["Вспоминаю, бро…","Сверяюсь с опытом…"]:["Читаю…"])){th.querySelectorAll(".now").forEach(d=>{d.className="done"});const d=document.createElement("div");d.className="now";d.textContent=s;th.appendChild(d);await wait(450)}
+    const chips=a=>`<div class="tryq">${a.map(x=>`<button class="chip sm" data-try="${x}">${x}</button>`).join("")}</div>`;
+    const SUG=["хочу что-то свежее","сладкое и ягодное","Какую чашу выбрать?","Почему горчит?"];
+    let html,ph;
+    if(route==="kb"){html=kbHTML(kb);ph="Вот так, бро!"}
+    else if(route==="talk"){html=`<div class="kbans"><p>${esc(talk.a)}</p></div>`+(talk.k==="minor"?"":chips(SUG));ph=talk.say}
+    else{html=`<div class="kbans"><p>Бро, не совсем понял. Я умею две вещи: собрать микс под твоё настроение или ответить на вопрос про кальяны. Попробуй так:</p></div>`+chips(SUG);ph="Не понял, бро…"}
+    th.parentElement.innerHTML=html;
+    setDym("happy",ph);setTimeout(()=>setDym("idle",null),3000);aiBusy=false;$("#ai-go").disabled=false;return}
   out.innerHTML=`<div class="bubble rise"><div class="ava"><svg viewBox="66 44 98 92" aria-hidden="true"><g ><circle cx="105" cy="86" r="33" fill="#e3ab84"/><path d="M73 92 Q75 128 105 130 Q135 128 137 92 Q130 108 118 106 L92 106 Q80 108 73 92Z" fill="#2b1b16"/><path d="M93 112 Q105 120 117 112" stroke="#f0d0bc" stroke-width="3" fill="none" stroke-linecap="round"/><g class="d-eyes"><ellipse cx="93" cy="83" rx="4" ry="4.6" fill="#1a0f0c"/><ellipse cx="117" cy="83" rx="4" ry="4.6" fill="#1a0f0c"/></g><path d="M86 74 Q93 70 100 74 M110 74 Q117 70 124 74" stroke="#2b1b16" stroke-width="3.2" fill="none" stroke-linecap="round"/><path d="M70 78 Q70 46 105 46 Q140 46 140 76 L164 78 Q164 86 140 84 Q105 74 70 82Z" fill="#141010"/><circle cx="105" cy="57" r="5" fill="#e63a33"/><path d="M128 108 l9 -3" stroke="#c9a29a" stroke-width="4" stroke-linecap="round"/></g></svg></div><div class="btext"><div class="think" id="th"></div></div></div>`;
   setDym("think","Ща намешаю…");
   out.scrollIntoView({behavior:RM?"auto":"smooth",block:"start"});
