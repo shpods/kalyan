@@ -126,6 +126,24 @@ footer{margin-top:40px;color:var(--muted);font-size:12px;text-align:center;line-
 .card.out{opacity:.6}
 .outb{align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--red-deep);border-radius:6px;padding:2px 8px}
 @media (prefers-reduced-motion:no-preference){.prow.swapped{animation:flash 1.2s ease-out}@keyframes flash{from{background:rgba(255,122,69,.45)}}}
+/* Чаши */
+.bowls{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.bowl{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px;transition:border-color .2s,box-shadow .2s}
+.bowl.match{border-color:var(--red);box-shadow:0 0 0 3px rgba(230,58,51,.25)}
+.bowl.match h3::after{content:"Подходит тебе";margin-left:10px;font-family:var(--body);font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:var(--red);color:#fff;border-radius:6px;padding:2px 8px;vertical-align:middle}
+.bpic{background:var(--surface-2);border-radius:12px;padding:8px}
+.bpic svg{width:100%;height:auto;max-height:130px;display:block}
+.bw{fill:#3a2a2a;stroke:#c9a29a;stroke-width:2}
+.bs{fill:#211919;stroke:#c9a29a;stroke-width:2}
+.tb{fill:none;stroke:#e63a33;stroke-width:6;stroke-linecap:round}
+.air{stroke:#ff7a45;stroke-width:2.4;stroke-dasharray:3 4;fill:none}
+.hole{fill:#ff7a45}
+.lb{fill:#a8948f;font-size:10px;font-family:var(--body)}
+.bbody{display:flex;flex-direction:column;gap:8px}.bbody h3{font-size:18px}.bbody p{margin:0;color:var(--muted)}
+.bbody .kv{grid-template-columns:110px 1fr;font-size:14px}
+.bres{margin:0;font-weight:700;color:var(--fg)}
+.kbans p{margin:0 0 8px}.kbans p:last-child{margin:0}.kbans h3{font-size:16px;margin-bottom:8px;color:var(--ember)}
+@media (prefers-reduced-motion:no-preference){.air{animation:flow 1s linear infinite}@keyframes flow{to{stroke-dashoffset:-14}}}
 /* Акции */
 .promos{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
 .promo{position:relative;overflow:hidden;display:flex;gap:16px;align-items:center;padding:18px 20px;border-radius:18px;background:linear-gradient(120deg,var(--red) 0%,var(--red-deep) 70%);color:#fff}
@@ -238,6 +256,7 @@ footer{margin-top:40px;color:var(--muted);font-size:12px;text-align:center;line-
     <button role="tab" id="t-pick" aria-selected="true" data-v="pick">Рекомендации</button>
     <button role="tab" id="t-cat" aria-selected="false" data-v="cat">Все вкусы</button>
     <button role="tab" id="t-like" aria-selected="false" data-v="like">Похожее на…</button>
+    <button role="tab" id="t-bowl" aria-selected="false" data-v="bowl">Чаши</button>
     <button role="tab" id="t-coal" aria-selected="false" data-v="coal">Угли</button>
     <button role="tab" id="t-new" aria-selected="false" data-v="new">Я новичок</button>
   </nav>
@@ -272,7 +291,7 @@ footer{margin-top:40px;color:var(--muted);font-size:12px;text-align:center;line-
         <div class="badge"><span class="pulse"></span>Дымыч на связи · супер-кальянщик</div>
         <h1 class="lead">Расскажи Дымычу, чего хочется. <em>Он соберёт микс.</em></h1>
         <div class="ask">
-          <textarea id="ai-q" rows="3" aria-label="Напиши Дымычу, что хочешь покурить" placeholder="Например: хочу освежиться, что-то с арбузом, не очень крепко и без мяты"></textarea>
+          <textarea id="ai-q" rows="3" aria-label="Напиши Дымычу, что хочешь покурить" placeholder="Опиши микс («что-то с арбузом, без мяты») или спроси что угодно про кальян («чем фанел лучше турки?»)"></textarea>
           <div class="ask-row"><div class="chips" id="ai-quick"></div><button class="cta glow" id="ai-go">Дымыч, замути микс</button></div>
         </div>
       </div>
@@ -312,6 +331,29 @@ footer{margin-top:40px;color:var(--muted);font-size:12px;text-align:center;line-
     <div class="search"><input id="like-q" type="search" placeholder="Например: дыня с холодком" aria-label="Что курил раньше"><button class="cta" id="like-go">Найти</button></div>
     <div class="chips" id="like-ex"></div>
     <div class="results" id="like-res"></div>
+  </section>
+
+  <!-- ЧАШИ -->
+  <section class="view" id="v-bowl" hidden>
+    <h1 class="lead">Какую чашу <em>взять?</em></h1>
+    <p class="sub">От чаши зависит половина вкуса. Ответь на два вопроса, и подсветим подходящую.</p>
+    <div class="step"><h3>Какой табак куришь?</h3><div class="chips" id="b-tob"></div><h3>Чем греешь?</h3><div class="chips" id="b-heat"></div><p class="bres" id="b-res"></p></div>
+    <div class="bowls">
+      <article class="bowl" id="bowl-phunnel"><div class="bpic"><svg viewBox="0 0 160 110" aria-hidden="true"><path d="M20 20 h120 l-16 62 q-2 8 -10 8 h-68 q-8 0 -10 -8z" class="bw"/><path d="M74 90 v-60 q0 -6 6 -6 q6 0 6 6 v60" class="bs"/><path d="M34 64 q12 -10 26 -6 q10 4 14 -2 M86 56 q10 8 20 2 q10 -6 22 2" class="tb"/><path d="M80 92 v14" class="air"/></svg></div><div class="bbody"><h3>Фанел</h3><p>Одна дырка в центре, поднятая трубкой. Сироп стекает по кругу и не уходит в шахту.</p>
+        <dl class="kv"><dt>Для каких табаков</dt><dd>Сиропные табаки: Black Burn, Хулиган, Overdose, Hell, NАШ</dd><dt>Как забивать</dt><dd>Кольцом вокруг трубки, рыхло, ниже края на 1–2 мм. Сверху калауд или фольга.</dd><dt>Плюсы</dt><dd>Ровный вкус, меньше горчит, дольше курится</dd><dt>Минусы</dt><dd>Табак нужно класть аккуратно, кольцом</dd></dl></div></article>
+      <article class="bowl" id="bowl-turka"><div class="bpic"><svg viewBox="0 0 160 110" aria-hidden="true"><path d="M20 20 h120 l-16 62 q-2 8 -10 8 h-68 q-8 0 -10 -8z" class="bw"/><path d="M38 60 q14 -8 28 -4 q14 4 28 -2 q14 -6 28 2" class="tb"/><g class="air"><path d="M64 90 v14"/><path d="M80 90 v14"/><path d="M96 90 v14"/></g></svg></div><div class="bbody"><h3>Турка (классика)</h3><p>Несколько дырочек прямо в дне. Самая простая и привычная чаша.</p>
+        <dl class="kv"><dt>Для каких табаков</dt><dd>Чайные смеси (Chabacco, Hook) и лёгкий Sebero</dd><dt>Как забивать</dt><dd>Рыхло по всей чаше, не забивая дырочки комом, отступ 1–2 мм.</dd><dt>Плюсы</dt><dd>Быстро греется, яркий вкус с первых тяг</dd><dt>Минусы</dt><dd>Сироп может течь в шахту, быстрее пригорает</dd></dl></div></article>
+      <article class="bowl" id="bowl-killer"><div class="bpic"><svg viewBox="0 0 160 110" aria-hidden="true"><path d="M52 6 h56 l-8 82 q-1 6 -8 6 h-24 q-7 0 -8 -6z" class="bw"/><path d="M60 26 q10 -6 20 -2 q10 4 20 -2 M60 46 q10 -6 20 -2 q10 4 20 -2" class="tb"/><path d="M80 94 v14" class="air"/></svg></div><div class="bbody"><h3>Убивашка</h3><p>Высокая узкая чаша. Табака больше, забивка плотнее, сессия долгая и крепкая.</p>
+        <dl class="kv"><dt>Для каких табаков</dt><dd>Крепкие табаки на Берли: Black Burn, NАШ Black, Overdose</dd><dt>Как забивать</dt><dd>Плотнее обычного, почти до края, на фольге.</dd><dt>Плюсы</dt><dd>Долго курится, максимум крепости</dd><dt>Минусы</dt><dd>Не для новичков, легко «накурит»</dd></dl></div></article>
+      <article class="bowl" id="bowl-vortex"><div class="bpic"><svg viewBox="0 0 160 110" aria-hidden="true"><path d="M20 20 h120 l-16 62 q-2 8 -10 8 h-68 q-8 0 -10 -8z" class="bw"/><path d="M74 90 v-56 q6 -8 12 0 v56" class="bs"/><circle cx="74" cy="52" r="2.4" class="hole"/><circle cx="86" cy="52" r="2.4" class="hole"/><path d="M34 64 q12 -10 26 -6 M100 58 q12 -6 26 4" class="tb"/><path d="M80 92 v14" class="air"/></svg></div><div class="bbody"><h3>Вортекс</h3><p>Трубка в центре закрыта сверху, дырки по бокам. Улучшенный фанел.</p>
+        <dl class="kv"><dt>Для каких табаков</dt><dd>Сиропные и влажные табаки</dd><dt>Как забивать</dt><dd>Как фанел: рыхло, кольцом.</dd><dt>Плюсы</dt><dd>Чистый вкус, экономный расход</dd><dt>Минусы</dt><dd>Встречается реже, стоит дороже</dd></dl></div></article>
+    </div>
+    <div class="guide">
+      <article><h3>Из чего бывают чаши</h3><ul><li><b>Глина</b>: держит жар, но впитывает запах. Под мяту держи отдельную.</li><li><b>Глазурованная керамика</b>: не впитывает аромат, легко моется. Самый универсальный вариант.</li><li><b>Силикон</b>: не бьётся, удобно в дорогу, но хуже держит жар.</li><li><b>Камень</b>: долго держит тепло, но тяжёлый.</li></ul></article>
+      <article><h3>Калауд или фольга</h3><p><b>Калауд</b> — крышка для углей: жар ровный, табак не прижигается, фольга не нужна. Кладут 2–3 угля. Новичкам советуем его.</p><p><b>Фольга</b> — классика: 2–3 слоя, много мелких дырочек зубочисткой, между табаком и фольгой 1–2 мм воздуха.</p></article>
+      <article><h3>Размер</h3><p>Маленькая чаша на 12–15 г — на одного-двух. Большая на 18–25 г — на компанию и долгий вечер.</p></article>
+    </div>
+    <div class="seller"><div><strong>Есть вопрос про чаши?</strong><p>Спроси Дымыча на главной, например «чем фанел лучше турки», или покажи этот экран продавцу.</p></div></div>
   </section>
 
   <!-- УГЛИ -->
@@ -790,7 +832,7 @@ document.addEventListener("click",e=>{const sw=e.target.closest("[data-swap]");i
 document.addEventListener("keydown",e=>{if(e.key==="Escape")$("#sheet").hidden=true});
 
 // Вкладки
-const VIEWS=["pick","cat","like","coal","new"];
+const VIEWS=["pick","cat","like","bowl","coal","new"];
 function show(v){VIEWS.forEach(x=>{$("#v-"+x).hidden=x!==v;$("#t-"+x).setAttribute("aria-selected",x===v)});window.scrollTo({top:0})}
 document.querySelectorAll("nav.tabs button").forEach(b=>b.onclick=()=>show(b.dataset.v));
 if(VIEWS.includes(location.hash.slice(1)))show(location.hash.slice(1));
@@ -845,6 +887,61 @@ $("#go").onclick=()=>run(true);
 run();
 
 
+// База знаний Дымыча: k — ключевые слова (корни), g — тема, q — вопрос, a — ответ (абзацы через \n)
+const KB=[
+{g:"bowl",k:["фанел или турк","турка или фанел","турк или фанел","лучше турк","лучше фанел","фанел и турк","турк и фанел","фанел от турк","турк от фанел"],q:"Фанел или турка: что лучше?",a:"Зависит от табака, бро.\nФанел: сироп не стекает в шахту, вкус ровнее, меньше горчит, сессия дольше. Бери под сиропные табаки: Black Burn, Хулиган, Overdose, Hell.\nТурка: греется быстрее и даёт более яркий вкус с первых тяг, но легче перегреть. Бери под чайные смеси (Chabacco, Hook) и лёгкий Sebero.\nЕсли сомневаешься, начни с фанела с калаудом: так сложнее всё испортить."},
+{g:"bowl",k:["чаш","какую чаш","какая чаш"],q:"Какую чашу выбрать?",a:"Чаша решает половину вкуса, бро.\nДля сочных сиропных табаков (Black Burn, Хулиган, Overdose, Hell, NАШ) бери фанел: сироп не стекает в шахту, вкус ровный, почти не горчит.\nДля чайных смесей и лёгкого Sebero подойдёт турка: прогревается быстро и даёт яркий вкус.\nХочешь долгую крепкую сессию на фольге — бери убивашку.\nВсе чаши с картинками есть во вкладке «Чаши»."},
+{g:"bowl",k:["фанел","фанэл","phunnel","фанал"],q:"Что такое фанел?",a:"Фанел (phunnel) — чаша с одной дыркой в центре, которая поднята над дном, как маленькая труба.\nСироп стекает вниз по кругу и не попадает в шахту, поэтому чаша не «плачет» в колбу, вкус ровный и держится дольше.\nКак забивать: табак кладёшь кольцом вокруг трубки, рыхло, чуть ниже краёв. Сверху калауд или фольга.\nЛучше всего подходит для влажных сиропных табаков: Black Burn, Хулиган, Overdose, Hell."},
+{g:"bowl",k:["турк","классическ","египетск","дырочк","отверсти"],q:"Что такое турка?",a:"Турка (она же классическая или египетская чаша) — чаша с несколькими дырочками прямо в дне.\nПлюсы: быстро греется, даёт яркий и насыщенный вкус с первых тяг.\nМинусы: сироп может стекать в шахту, а при перегреве табак начинает горчить быстрее, чем в фанеле.\nКак забивать: рыхло, не закрывая дырочки плотным комом, отступ от верха 1–2 мм.\nОтлично заходит с чайными смесями (Chabacco, Hook) и лёгким Sebero."},
+{g:"bowl",k:["убивашк","killer","киллер"],q:"Что такое убивашка?",a:"Убивашка (killer) — высокая вытянутая чаша с узкой шахтой.\nВ неё кладут больше табака и забивают плотнее, поэтому сессия получается долгой и крепкой. Отсюда и название.\nКурят на фольге. Новичкам не советую: легко «накурит».\nПодходит для крепких табаков на Берли: Black Burn, NАШ Black, Overdose."},
+{g:"bowl",k:["вортекс","vortex","тотем"],q:"Что такое вортекс?",a:"Вортекс (vortex) — разновидность фанела: трубка в центре закрыта сверху, а дырочки сделаны по её бокам.\nСироп стекает мимо отверстий, а воздух проходит ровно. Вкус чистый, табак расходуется экономно.\nЗабивать так же, как фанел: рыхло, кольцом."},
+{g:"bowl",k:["глин","керамик","силикон","гранит","камен","материал"],q:"Из чего бывают чаши?",a:"Глина: отлично держит жар, но впитывает запах. Под мяту и холодок лучше держать отдельную чашу.\nГлазурованная керамика: не впитывает аромат, легко моется, самый универсальный вариант.\nСиликон: не бьётся, удобно брать с собой, но жар держит хуже.\nКамень: долго держит тепло, но тяжёлый и долго греется."},
+{g:"bowl",k:["калауд","kaloud","лотус","lotus","hmd","хмд"],q:"Калауд или фольга?",a:"Калауд — металлическая крышка на чашу, в которую кладут угли. Жар идёт ровно, угли меньше прожигают табак, фольга не нужна.\nВ калауд кладут 2–3 кубика угля. Регулировать жар можно заслонкой.\nФольга — классика: дешево, но нужно уметь. Фольгу кладут в 2–3 слоя и делают много маленьких дырочек зубочисткой.\nНовичку советую калауд: сложнее перегреть и испортить вкус."},
+{g:"bowl",k:["фольг"],q:"Как правильно класть фольгу?",a:"Фольгу кладут в 2–3 слоя и натягивают на чашу как барабан.\nДырочки делают зубочисткой: часто, от центра к краям.\nМежду табаком и фольгой оставь 1–2 мм воздуха, иначе табак сразу пригорит."},
+{g:"coal",k:["угл","уголь","кубик","разжи","розжиг"],q:"Какие угли брать и как разжигать?",a:"Бери кокосовый уголь (у нас Cocoloco). Он не пахнет, горит ровно и долго.\nРазжигай на электроплитке или в специальной печке 8–10 минут, переворачивая щипцами, пока кубики не станут серыми со всех сторон. Недожжённый уголь даёт горечь и угарный газ.\nСколько класть: 3 кубика на прогрев, потом 2–3 по ощущениям. Одной закладки хватает примерно на 50–60 минут.\nБыстроразжигаемые таблетки удобны, но портят вкус химией."},
+{g:"pack",k:["забив","набив","утрамб","плотн","рыхл","сколько табака"],q:"Как правильно забить чашу?",a:"Разомни табак пальцами, чтобы сироп распределился.\nКлади рыхло, щепотками, не утрамбовывай. Отступ от края 1–2 мм, чтобы табак не касался фольги или калауда.\nНа одну чашу обычно уходит 15–20 грамм. Пачки 25 грамм хватит на 1–2 забивки.\nЕсли табак очень влажный, слегка подсуши его на салфетке."},
+{g:"pack",k:["прогре","разогре","сколько греть"],q:"Сколько прогревать кальян?",a:"Обычно 5–7 минут на 3 углях.\nПервые тяги делай мягко, не спеша. Когда дым стал густым и вкусным, прогрев готов.\nСильно лёгкие табаки (Sebero) прогреваются быстрее, крепкие на Берли (Black Burn) чуть дольше."},
+{g:"fix",k:["горч","горит","горел","пригор","перегре","жжет","жжёт","дерет","дерёт"],q:"Почему кальян горчит?",a:"Скорее всего, перегрев. Что делать:\n1. Сними один уголь или сдвинь угли к краю.\n2. Не тяни часто и сильно: дай чаше остыть.\n3. Проверь, что табак не касается фольги или калауда.\n4. Угли должны быть полностью разожжены, недожжённые тоже дают горечь.\nНа будущее: для сиропных табаков бери фанел, он горит меньше."},
+{g:"fix",k:["мало дым","нет дым","не дым","дыма мало","дымност","слабый дым"],q:"Почему мало дыма?",a:"Обычно не хватает жара или табак слишком сухой.\n1. Добавь уголь или подвинь угли ближе к центру.\n2. Прогрей подольше, 7–8 минут.\n3. Проверь тягу: если она слишком лёгкая, дым «разбавляется».\n4. Сухой табак дымит слабо. Возьми свежую банку или более сиропный табак."},
+{g:"fix",k:["нет вкус","нет вкуса","не чувствую вкус","вкус пропал","безвкус"],q:"Почему нет вкуса?",a:"Чаще всего перегрели или, наоборот, недогрели.\nЕсли вкус пропал в середине — табак выкурился, пора менять чашу.\nЕсли вкуса нет с начала — добавь жара и подожди пару минут.\nЕщё вкус глушит грязный кальян и старая вода. Сполосни шахту и колбу."},
+{g:"fix",k:["тяг","тугой","тяжело тян","воздух","сифон","клапан","уплотнит"],q:"Почему плохая тяга?",a:"Проверь по порядку:\n1. Уплотнители на колбе и чаше сидят плотно, нигде не подсасывает воздух.\n2. Клапан стравливания не залип.\n3. Табак не утрамбован, дырочки в чаше не забиты.\n4. Шланг чистый и не перегнут.\nСлишком тугая тяга чаще всего из-за плотной забивки."},
+{g:"water",k:["вод","колб","молок","лёд в колб","лед в колб"],q:"Сколько воды заливать в колбу?",a:"Вода должна покрывать шахту на 2–3 сантиметра. Больше — тяжело тянуть, меньше — дым горячий и резкий.\nЛей холодную воду, можно добавить лёд: дым станет мягче.\nМолоко, сок или вино лить не советую: вкус почти не меняется, а колба потом пахнет и плохо отмывается."},
+{g:"care",k:["чист","мыть","помыть","ерш","ёрш","запах"],q:"Как чистить кальян?",a:"После каждой сессии: вылей воду, промой колбу и шахту тёплой водой.\nРаз в неделю: шахту прочисти ёршиком, колбу помой с содой или лимонной кислотой.\nЧашу отмой от табака горячей водой. Глиняные без средства для посуды.\nШланг промывай, только если он моющийся: силиконовые можно, кожаные нельзя."},
+{g:"care",k:["шланг","мундштук"],q:"Какой шланг лучше?",a:"Силиконовый: можно мыть, не впитывает запах, служит долго. Самый практичный вариант.\nКлассический кожаный или тканевый мыть нельзя, со временем он начинает пахнуть.\nМундштук бери отдельный, многие курят со своим личным."},
+{g:"hookah",k:["какой кальян","выбрать кальян","кальян выбрать","шахт","нержав","кальян купить","купить кальян"],q:"Как выбрать кальян?",a:"Смотри на три вещи:\n1. Шахта из нержавейки: не ржавеет и не даёт металлического привкуса.\n2. Хорошая тяга и плотные уплотнители.\n3. Устойчивая колба, в которую удобно лить воду.\nДля дома хватит кальяна средней высоты, для заведения бери надёжнее и проще в чистке.\nКакие модели есть у нас, покажет продавец. И помни про акцию: при покупке кальяна −10% на весь ассортимент."},
+{g:"tob",k:["вирджини","берли","burley","virginia","сигарн","лист","варен","варён"],q:"Чем отличаются виды табака?",a:"Вирджиния — светлый лист, мягкий, лёгкий и сладковатый. Хорошо передаёт фруктовые вкусы.\nБерли — тёмный лист, крепче и плотнее. На нём сделан Black Burn.\nСигарный лист — крепкий, с благородным табачным послевкусием, как у NАШ Cigar.\nВарёный табак (Sebero) мягкий и прощает перегрев.\nЧайные смеси (Chabacco, Hook) сделаны не на табаке, а на чайном листе."},
+{g:"tob",k:["чайн","бестабач","без табак","chabacco","чабак"],q:"Что такое чайная смесь?",a:"Это смесь для кальяна на основе чайного листа вместо табака. У нас это Chabacco и Hook.\nКурится мягко, даёт много дыма и забивается проще: ничего не надо отжимать.\nChabacco Medium — лёгкая. Hook — крепкая, на технологии Nexus, никотин чувствуется быстро."},
+{g:"str",k:["крепост","никотин","накур","унесл","вштыр","плохо стало","голова кру","тошн"],q:"Что такое крепость и что если накурило?",a:"Крепость — это сколько никотина в табаке. На сайте она показана точками от 1 до 5.\nНовичкам — 1–2: Sebero, Chabacco Medium. Опытным — 4–5: Black Burn, Hook, Overdose.\nЕсли закружилась голова или подташнивает: отложи кальян, выйди на свежий воздух, попей воды и съешь что-нибудь сладкое. В следующий раз бери полегче."},
+{g:"tob",k:["хран","срок годн","пересох","засох"],q:"Как хранить табак?",a:"В плотно закрытой банке или пакете, в тени, при комнатной температуре.\nНе держи на солнце и у батареи: пересохнет.\nПересохший табак можно чуть оживить, сбрызнув глицерином, но вкус уже не тот."},
+{g:"mix",k:["холодок","ментол","ice","айс"],q:"Что такое холодок?",a:"Холодок — добавка с охлаждающим эффектом, как мятная жвачка без вкуса мяты. Например, Black Burn IceBerg или Hell Sneg.\nДобавляй немного, 10–15% от чаши. Больше — и ты почувствуешь только мороз.\nЕсли не любишь холод, бери просто мяту, она мягче."},
+{g:"mix",k:["пропорц","как смешать","как миксовать","сочета","как составить"],q:"Как самому составить микс?",a:"Простое правило: основа 50%, второй вкус 30%, акцент 20%.\nОснова — то, что больше всего хочется (например, арбуз). Второй вкус её дополняет (дыня, ягоды). Акцент добавляет характер: мята, холодок, кислинка или цитрус.\nНе смешивай больше трёх вкусов: они начинают «спорить».\nИли напиши мне вкус, и я сам предложу три микса."},
+{g:"time",k:["сколько курится","сколько держ","на сколько хват","сколько времени","как долго"],q:"Сколько курится одна чаша?",a:"В среднем 40–60 минут.\nСиропные табаки (Black Burn, Хулиган) держат вкус дольше, лёгкие (Sebero) быстрее выкуриваются.\nКалауд и фанел продлевают сессию: жар ровнее, табак не прогорает."},
+{g:"health",k:["вред","здоров","безопасн","угарн","беремен","опасн"],q:"Кальян вредный?",a:"Скажу честно, бро: вредный. Кальян не безопаснее сигарет. За сессию ты вдыхаешь много дыма, а угли выделяют угарный газ.\nЕсли куришь, хотя бы проветривай помещение, полностью разжигай угли и не кури каждый день.\nДо 18 лет и во время беременности — нельзя совсем."},
+{g:"shop",k:["акци","скидк","скидос"],q:"Какие сейчас акции?",a:"Сейчас действуют две акции:\n• при покупке табака скидка 10%;\n• при покупке кальяна скидка 10% на весь ассортимент.\nПодробности уточняй у продавца на кассе."},
+{g:"shop",k:["адрес","где вы","где наход","время работ","когда работ","часы работ","доставк"],q:"Где магазин и как работаете?",a:"Адрес, часы работы и наличие уточняй у продавца или в наших соцсетях.\nТабак мы продаём только в магазине, лично и только тем, кому есть 18."},
+{g:"me",k:["кто ты","ты кто","дымыч","ты бот","как тебя"],q:"Кто ты такой?",a:"Я Дымыч, супер-кальянщик shpods hookah team. Забил столько чаш, что знаю все вкусы на полке по запаху.\nМогу собрать микс под настроение или рассказать что угодно про кальяны: чаши, угли, забивку, почему горчит и как это исправить."}
+];
+
+// Подбор чаши
+const bst={tob:null,heat:null};
+chipRow($("#b-tob"),[["syrup","Сиропный: Black Burn, Хулиган, Hell, Overdose"],["light","Лёгкий: Sebero"],["tea","Чайная смесь: Chabacco, Hook"],["strong","Хочу крепко и долго"]],k=>bst.tob===k,k=>{bst.tob=k;bowlPick()});
+chipRow($("#b-heat"),[["kaloud","Калауд"],["foil","Фольга"],["dunno","Не знаю"]],k=>bst.heat===k,k=>{bst.heat=k;bowlPick()});
+function bowlPick(){document.querySelectorAll(".bowl").forEach(b=>b.classList.remove("match"));if(!bst.tob)return;
+  let k={syrup:"phunnel",light:"turka",tea:"turka",strong:"killer"}[bst.tob];if(k==="killer"&&bst.heat==="kaloud")k="phunnel";
+  const tip={phunnel:"Бери фанел: сироп не уйдёт в шахту, вкус ровный.",turka:"Бери турку: быстро прогреется и даст яркий вкус.",killer:"Бери убивашку на фольге: долго и крепко. Новичкам не советуем."}[k];
+  const heat=bst.heat==="dunno"||!bst.heat?" Греть советуем калаудом: так проще не перегреть.":bst.heat==="foil"?" Фольгу клади в 2–3 слоя и делай много мелких дырочек.":" С калаудом бери 2–3 угля.";
+  $("#b-res").textContent=tip+heat;const el=$("#bowl-"+k);el.classList.add("match");el.scrollIntoView({behavior:RM?"auto":"smooth",block:"nearest"})}
+
+// Дымыч отвечает на вопросы
+function kbMatch(text){const q=" "+norm(text)+" ";let best=null,bs=0;
+  for(const e of KB){let s=0;for(const k of e.k){const kk=norm(k);if(new RegExp("[^а-яa-z]"+kk.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).test(q))s+=kk.includes(" ")?3:2}
+    if(s>bs){bs=s;best=e}}return bs>=2?best:null}
+function kbHTML(e){const rel=KB.filter(x=>x!==e&&x.g===e.g).concat(KB.filter(x=>x.g!==e.g&&x.g!=="me")).slice(0,3);
+  return`<div class="kbans"><h3>${esc(e.q)}</h3>${e.a.split("\n").map(p=>`<p>${esc(p)}</p>`).join("")}</div><div class="tryq">${rel.map(x=>`<button class="chip sm" data-try="${esc(x.q)}">${esc(x.q)}</button>`).join("")}</div>`}
+const QRX=/\?|^как |\sкак |почему|зачем|что такое|что за |сколько|чем отлич|какой лучше|какую|какой |какая |какие |можно ли|что делать|расскажи|объясни|подскажи|посоветуй|зачем/;
+const MIXRX=/микс|замут|собери|подбери|покурить|покурим|хочу |хочется|настроен/;
+
+const AVA=`<svg viewBox="66 44 98 92" aria-hidden="true"><g ><circle cx="105" cy="86" r="33" fill="#e3ab84"/><path d="M73 92 Q75 128 105 130 Q135 128 137 92 Q130 108 118 106 L92 106 Q80 108 73 92Z" fill="#2b1b16"/><path d="M93 112 Q105 120 117 112" stroke="#f0d0bc" stroke-width="3" fill="none" stroke-linecap="round"/><g class="d-eyes"><ellipse cx="93" cy="83" rx="4" ry="4.6" fill="#1a0f0c"/><ellipse cx="117" cy="83" rx="4" ry="4.6" fill="#1a0f0c"/></g><path d="M86 74 Q93 70 100 74 M110 74 Q117 70 124 74" stroke="#2b1b16" stroke-width="3.2" fill="none" stroke-linecap="round"/><path d="M70 78 Q70 46 105 46 Q140 46 140 76 L164 78 Q164 86 140 84 Q105 74 70 82Z" fill="#141010"/><circle cx="105" cy="57" r="5" fill="#e63a33"/><path d="M128 108 l9 -3" stroke="#c9a29a" stroke-width="4" stroke-linecap="round"/></g></svg>`;
 // ===== Дымыч: состояния =====
 function setDym(state,phrase){const d=$("#dym");if(!d)return;d.setAttribute("class","dym "+state);const s=$("#say");
   if(phrase){s.hidden=false;s.textContent=phrase;s.style.animation="none";s.offsetWidth;s.style.animation=""}else s.hidden=true}
@@ -928,6 +1025,13 @@ async function typeInto(el,text){if(RM){el.textContent=text;return}el.classList.
 async function askAI(text){
   if(aiBusy)return;text=(text||"").trim();if(!text){$("#ai-q").focus();return}aiBusy=true;$("#ai-go").disabled=true;
   const out=$("#ai-out");const p=parse(text);
+  const nq=" "+norm(text)+" ",kb=kbMatch(text),isQ=QRX.test(nq),wantMix=(p.items.length&&!isQ)||(p.moods.length&&!isQ)||MIXRX.test(nq)&&!kb;
+  if(kb&&!wantMix||isQ&&!wantMix&&!p.items.length){
+    out.innerHTML=`<div class="bubble rise"><div class="ava">${AVA}</div><div class="btext"><div class="think" id="th"></div></div></div>`;
+    setDym("think","Ща расскажу…");out.scrollIntoView({behavior:RM?"auto":"smooth",block:"start"});
+    const th=$("#th");for(const s of ["Вспоминаю, бро…","Сверяюсь с опытом…"]){th.querySelectorAll(".now").forEach(d=>{d.className="done"});const d=document.createElement("div");d.className="now";d.textContent=s;th.appendChild(d);await wait(450)}
+    th.parentElement.innerHTML=kb?kbHTML(kb):`<div class="kbans"><p>Про это, бро, не подскажу, моя тема — кальяны. Спроси про чаши, угли, забивку или почему горчит. Или опиши настроение, и я соберу микс.</p></div><div class="tryq">${["Какую чашу выбрать?","Почему кальян горчит?","Как правильно забить чашу?"].map(x=>`<button class="chip sm" data-try="${x}">${x}</button>`).join("")}</div>`;
+    setDym("happy",kb?"Вот так, бро!":"Это не ко мне…");setTimeout(()=>setDym("idle",null),3000);aiBusy=false;$("#ai-go").disabled=false;return}
   out.innerHTML=`<div class="bubble rise"><div class="ava"><svg viewBox="66 44 98 92" aria-hidden="true"><g ><circle cx="105" cy="86" r="33" fill="#e3ab84"/><path d="M73 92 Q75 128 105 130 Q135 128 137 92 Q130 108 118 106 L92 106 Q80 108 73 92Z" fill="#2b1b16"/><path d="M93 112 Q105 120 117 112" stroke="#f0d0bc" stroke-width="3" fill="none" stroke-linecap="round"/><g class="d-eyes"><ellipse cx="93" cy="83" rx="4" ry="4.6" fill="#1a0f0c"/><ellipse cx="117" cy="83" rx="4" ry="4.6" fill="#1a0f0c"/></g><path d="M86 74 Q93 70 100 74 M110 74 Q117 70 124 74" stroke="#2b1b16" stroke-width="3.2" fill="none" stroke-linecap="round"/><path d="M70 78 Q70 46 105 46 Q140 46 140 76 L164 78 Q164 86 140 84 Q105 74 70 82Z" fill="#141010"/><circle cx="105" cy="57" r="5" fill="#e63a33"/><path d="M128 108 l9 -3" stroke="#c9a29a" stroke-width="4" stroke-linecap="round"/></g></svg></div><div class="btext"><div class="think" id="th"></div></div></div>`;
   setDym("think","Ща намешаю…");
   out.scrollIntoView({behavior:RM?"auto":"smooth",block:"start"});
@@ -941,12 +1045,14 @@ async function askAI(text){
   setDym("happy","Готово, бро!");setTimeout(()=>setDym("idle",null),3200);
   aiBusy=false;$("#ai-go").disabled=false}
 const QUICK=["освежиться","сладенького","с кислинкой","для компании","что-то необычное","полегче, я новичок","ягодное","как напиток"];
-$("#ai-quick").innerHTML=QUICK.map(q=>`<button class="chip sm" data-q="${q}">${q}</button>`).join("");
+const QASK=["Какую чашу выбрать?","Почему горчит?","Калауд или фольга?","Сколько воды в колбу?"];
+$("#ai-quick").innerHTML=QUICK.map(q=>`<button class="chip sm" data-q="${q}">${q}</button>`).join("")+QASK.map(q=>`<button class="chip sm" data-try="${q}">${q}</button>`).join("");
+$("#ai-quick").addEventListener("click",e=>{const b=e.target.closest("[data-try]");if(b){$("#ai-q").value=b.dataset.try;askAI(b.dataset.try)}});
 $("#ai-quick").onclick=e=>{const b=e.target.closest("[data-q]");if(!b)return;const ta=$("#ai-q");ta.value=(ta.value.trim()?ta.value.trim()+", ":"")+b.dataset.q;ta.focus()};
 $("#ai-go").onclick=()=>askAI($("#ai-q").value);
 $("#ai-q").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();askAI($("#ai-q").value)}});
 const TRY=["хочу освежиться, что-то с арбузом, без мяты","сладкое и ягодное, полегче","кислое и крепкое","как лимонад для компании"];
-$("#ai-out").innerHTML=`<div class="bubble"><div class="ava"><svg viewBox="66 44 98 92" aria-hidden="true"><g ><circle cx="105" cy="86" r="33" fill="#e3ab84"/><path d="M73 92 Q75 128 105 130 Q135 128 137 92 Q130 108 118 106 L92 106 Q80 108 73 92Z" fill="#2b1b16"/><path d="M93 112 Q105 120 117 112" stroke="#f0d0bc" stroke-width="3" fill="none" stroke-linecap="round"/><g class="d-eyes"><ellipse cx="93" cy="83" rx="4" ry="4.6" fill="#1a0f0c"/><ellipse cx="117" cy="83" rx="4" ry="4.6" fill="#1a0f0c"/></g><path d="M86 74 Q93 70 100 74 M110 74 Q117 70 124 74" stroke="#2b1b16" stroke-width="3.2" fill="none" stroke-linecap="round"/><path d="M70 78 Q70 46 105 46 Q140 46 140 76 L164 78 Q164 86 140 84 Q105 74 70 82Z" fill="#141010"/><circle cx="105" cy="57" r="5" fill="#e63a33"/><path d="M128 108 l9 -3" stroke="#c9a29a" stroke-width="4" stroke-linecap="round"/></g></svg></div><div class="btext"><p>Здорово, бро! Я Дымыч, супер-кальянщик этого магазина. Забил столько чаш, что знаю все ${FL.length} вкусов на полке по запаху. Пиши, какое настроение, что любишь и чего терпеть не можешь, а я соберу тебе три микса.</p><div class="tryq">${TRY.map(t=>`<button class="chip sm" data-try="${t}">«${t}»</button>`).join("")}</div></div></div>`;
+$("#ai-out").innerHTML=`<div class="bubble"><div class="ava"><svg viewBox="66 44 98 92" aria-hidden="true"><g ><circle cx="105" cy="86" r="33" fill="#e3ab84"/><path d="M73 92 Q75 128 105 130 Q135 128 137 92 Q130 108 118 106 L92 106 Q80 108 73 92Z" fill="#2b1b16"/><path d="M93 112 Q105 120 117 112" stroke="#f0d0bc" stroke-width="3" fill="none" stroke-linecap="round"/><g class="d-eyes"><ellipse cx="93" cy="83" rx="4" ry="4.6" fill="#1a0f0c"/><ellipse cx="117" cy="83" rx="4" ry="4.6" fill="#1a0f0c"/></g><path d="M86 74 Q93 70 100 74 M110 74 Q117 70 124 74" stroke="#2b1b16" stroke-width="3.2" fill="none" stroke-linecap="round"/><path d="M70 78 Q70 46 105 46 Q140 46 140 76 L164 78 Q164 86 140 84 Q105 74 70 82Z" fill="#141010"/><circle cx="105" cy="57" r="5" fill="#e63a33"/><path d="M128 108 l9 -3" stroke="#c9a29a" stroke-width="4" stroke-linecap="round"/></g></svg></div><div class="btext"><p>Здорово, бро! Я Дымыч, супер-кальянщик этого магазина. Забил столько чаш, что знаю все ${FL.length} вкусов на полке по запаху. Пиши, какое настроение, что любишь и чего терпеть не можешь, а я соберу тебе три микса. Или спрашивай что угодно про кальяны: чаши, угли, забивку, почему горчит.</p><div class="tryq">${TRY.map(t=>`<button class="chip sm" data-try="${t}">«${t}»</button>`).join("")}</div></div></div>`;
 $("#ai-out").addEventListener("click",e=>{const b=e.target.closest("[data-try]");if(b){$("#ai-q").value=b.dataset.try;askAI(b.dataset.try)}});
 
 // Дым на фоне
