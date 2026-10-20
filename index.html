@@ -178,6 +178,13 @@ footer p{margin:0 0 8px;max-width:70ch;margin-inline:auto}
 }
 #ai-out,#hero,#res{scroll-margin-top:70px}
 @media(max-width:640px){body{padding-bottom:110px}}
+/* WhatsApp */
+.wrow{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center}
+.wcenter{justify-content:center;margin-bottom:14px}
+.wa{display:inline-flex;align-items:center;gap:8px;background:#1f8f4e;color:#fff;font-weight:800;text-decoration:none;border-radius:12px;padding:11px 16px;font-size:15px}
+.wa:hover{background:#25a85c}.wa svg{width:20px;height:20px;flex:0 0 auto}
+.wa.sm{padding:8px 12px;font-size:13px}
+.wtxt{color:var(--muted);font-size:14px}.wanum{color:var(--fg);font-weight:700;user-select:all;font-variant-numeric:tabular-nums}
 /* Акции */
 .promos{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
 .promo{position:relative;overflow:hidden;display:flex;gap:16px;align-items:center;padding:18px 20px;border-radius:18px;background:var(--surface);border:1px solid var(--line);color:var(--fg)}
@@ -305,6 +312,7 @@ footer p{margin:0 0 8px;max-width:70ch;margin-inline:auto}
         <button class="howc" data-go="cat"><b>2</b><strong>Посмотри вкусы</strong><span>Все вкусы с описанием, крепостью и с чем их смешать.</span></button>
         <div class="howc"><b>3</b><strong>Покажи экран продавцу</strong><span>Он соберёт чашу из того, что ты выбрал.</span></div>
       </div>
+      <div class="wrow"><a class="wa " href="https://wa.me/77476660077?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D0%B8%D1%88%D1%83%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%20shpods." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.5c.1.2 1.6 2.5 3.9 3.5 1.5.6 2 .7 2.7.6.4-.1 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1-.1-.2-.2-.2-.4-.3z"/></svg><span>Написать в WhatsApp</span></a><span class="wtxt">Есть вопрос? Пиши нам: <span class="wanum">+7 747 666 00 77</span></span></div>
     </div>
     <div class="hero" id="hero">
       <canvas id="smoke" aria-hidden="true"></canvas>
@@ -447,7 +455,7 @@ footer p{margin:0 0 8px;max-width:70ch;margin-inline:auto}
     </div>
   </section>
 
-  <footer><p><b>Курение вредит вашему здоровью.</b></p><p>Сайт носит справочный характер, предназначен только для лиц старше 21 года и не является рекламой. Мы не продаём табачные изделия дистанционно: через сайт, мессенджеры или с доставкой. Продажа табака только в магазине, лично, лицам старше 21 года при предъявлении удостоверения личности.</p><p>Описания вкусов собраны из открытых источников: отзывов курильщиков и сайтов производителей. Наличие и цены уточняйте у продавца.</p></footer>
+  <footer><div class="wrow wcenter"><a class="wa sm" href="https://wa.me/77476660077?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D0%B8%D1%88%D1%83%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%20shpods." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.5c.1.2 1.6 2.5 3.9 3.5 1.5.6 2 .7 2.7.6.4-.1 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1-.1-.2-.2-.2-.4-.3z"/></svg><span>Написать в WhatsApp</span></a><span class="wanum">+7 747 666 00 77</span></div><p><b>Курение вредит вашему здоровью.</b></p><p>Сайт носит справочный характер, предназначен только для лиц старше 21 года и не является рекламой. Мы не продаём табачные изделия дистанционно: через сайт, мессенджеры или с доставкой. Продажа табака только в магазине, лично, лицам старше 21 года при предъявлении удостоверения личности.</p><p>Описания вкусов собраны из открытых источников: отзывов курильщиков и сайтов производителей. Наличие и цены уточняйте у продавца.</p></footer>
 </div>
 
 <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-h">
@@ -982,7 +990,7 @@ const KB=[
 {g:"time",k:["сколько курится","сколько держ","на сколько хват","сколько времени","как долго"],q:"Сколько курится одна чаша?",a:"В среднем 40–60 минут.\nСиропные табаки (Black Burn, Хулиган) держат вкус дольше, лёгкие (Sebero) быстрее выкуриваются.\nКалауд и фанел продлевают сессию: жар ровнее, табак не прогорает."},
 {g:"health",k:["вред","здоров","безопасн","угарн","беремен","опасн"],q:"Кальян вредный?",a:"Скажу честно, бро: вредный. Кальян не безопаснее сигарет. За сессию ты вдыхаешь много дыма, а угли выделяют угарный газ.\nЕсли куришь, хотя бы проветривай помещение, полностью разжигай угли и не кури каждый день.\nДо 21 года и во время беременности — нельзя совсем. В Казахстане табак продают только с 21 года."},
 {g:"shop",k:["акци","скидк","скидос"],q:"Какие сейчас акции?",a:"Сейчас действуют две акции:\n• при покупке табака скидка 10%;\n• при покупке кальяна скидка 10% на весь ассортимент.\nПодробности уточняй у продавца на кассе."},
-{g:"shop",k:["адрес","где вы","где наход","время работ","когда работ","часы работ","доставк"],q:"Где магазин и как работаете?",a:"Адрес, часы работы и наличие уточняй у продавца или в наших соцсетях.\nТабак мы продаём только в магазине, лично и только тем, кому исполнился 21 год, по удостоверению личности."},
+{g:"shop",k:["адрес","где вы","где наход","время работ","когда работ","часы работ","доставк","ватсап","вотсап","whatsapp","номер","телефон","контакт","связат","позвонить","написать вам"],q:"Где магазин и как работаете?",a:"Пиши нам в WhatsApp: +7 747 666 00 77. Там подскажут адрес, часы работы и что есть в наличии.\nТабак мы продаём только в магазине, лично и только тем, кому исполнился 21 год, по удостоверению личности."},
 {g:"me",k:["кто ты","ты кто","дымыч","ты бот","как тебя"],q:"Кто ты такой?",a:"Я Дымыч, супер-кальянщик shpods hookah team. Забил столько чаш, что знаю все вкусы на полке по запаху.\nМогу собрать микс под настроение или рассказать что угодно про кальяны: чаши, угли, забивку, почему горчит и как это исправить."}
 ];
 
@@ -1000,7 +1008,8 @@ function bowlPick(){document.querySelectorAll(".bowl").forEach(b=>b.classList.re
 function kbMatch(text){const q=" "+norm(text)+" ";let best=null,bs=0;
   for(const e of KB){let s=0;for(const k of e.k){const kk=norm(k);if(new RegExp("[^а-яa-z]"+kk.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).test(q))s+=kk.includes(" ")?3:2}
     if(s>bs){bs=s;best=e}}return bs>=2?best:null}
-function kbHTML(e){const rel=KB.filter(x=>x!==e&&x.g===e.g).concat(KB.filter(x=>x.g!==e.g&&x.g!=="me")).slice(0,3);
+function kbHTML(e){if(e.g==="shop"&&/WhatsApp/.test(e.a))return kbHTML0(e)+`<div class="wrow" style="margin-top:10px"><a class=\"wa sm\" href=\"https://wa.me/77476660077?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D0%B8%D1%88%D1%83%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%20shpods.\" target=\"_blank\" rel=\"noopener\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.5c.1.2 1.6 2.5 3.9 3.5 1.5.6 2 .7 2.7.6.4-.1 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1-.1-.2-.2-.2-.4-.3z\"/></svg><span>Написать в WhatsApp</span></a></div>`;return kbHTML0(e)}
+function kbHTML0(e){const rel=KB.filter(x=>x!==e&&x.g===e.g).concat(KB.filter(x=>x.g!==e.g&&x.g!=="me")).slice(0,3);
   return`<div class="kbans"><h3>${esc(e.q)}</h3>${e.a.split("\n").map(p=>`<p>${esc(p)}</p>`).join("")}</div><div class="tryq">${rel.map(x=>`<button class="chip sm" data-try="${esc(x.q)}">${esc(x.q)}</button>`).join("")}</div>`}
 
 const TALK=[
@@ -1025,7 +1034,8 @@ dymf.onclick=dymf.onkeydown=e=>{if(e.type==="keydown"&&e.key!=="Enter")return;$(
 function RMQ(){return matchMedia("(prefers-reduced-motion: reduce)").matches}
 let heroSeen=true;
 if("IntersectionObserver" in window){new IntersectionObserver(es=>{heroSeen=es[0].isIntersecting;floatVis()},{threshold:.15}).observe($("#dym"))}
-function floatVis(){dymf.classList.toggle("off",heroSeen||$("#v-pick").hidden||!$("#gate").hidden)}
+let dymUsed=false;
+function floatVis(){dymf.classList.toggle("off",!dymUsed||heroSeen||$("#v-pick").hidden||!$("#gate").hidden)}
 function setDym(state,phrase){for(const id of ["dym","dym2"]){const d=$("#"+id);if(d)d.setAttribute("class","dym "+state)}
   for(const id of ["say","say2"]){const s=$("#"+id);if(!s)continue;
   if(phrase){s.hidden=false;s.textContent=phrase;s.style.animation="none";s.offsetWidth;s.style.animation=""}else s.hidden=true}}
@@ -1107,7 +1117,7 @@ const wait=ms=>new Promise(r=>setTimeout(r,RM?0:ms));
 let aiBusy=false;
 async function typeInto(el,text){if(RM){el.textContent=text;return}el.classList.add("caret");for(let i=0;i<=text.length;i+=2){el.textContent=text.slice(0,i);await wait(14)}el.textContent=text;el.classList.remove("caret")}
 async function askAI(text){
-  if(aiBusy)return;text=(text||"").trim();if(!text){$("#ai-q").focus();return}aiBusy=true;$("#ai-go").disabled=true;
+  if(aiBusy)return;text=(text||"").trim();if(text){dymUsed=true;floatVis()}if(!text){$("#ai-q").focus();return}aiBusy=true;$("#ai-go").disabled=true;
   const out=$("#ai-out");const p=parse(text);
   const nq=" "+norm(text)+" ",kb=kbMatch(text),isQ=QRX.test(nq),talk=smallTalk(nq);
   const strongMix=/микс|замут|замеш|намеш|собери|подбери|подобрать|что покурить|покурить|покурим|посоветуй вкус|посоветуй табак|какой табак взять|какой вкус|что взять/.test(nq);
