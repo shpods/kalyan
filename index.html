@@ -162,6 +162,22 @@ button.howc{cursor:pointer}button.howc:hover{border-color:var(--muted)}
 .gbtns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}.gbtns .cta{align-self:auto}
 .gno{color:var(--fg)!important;font-weight:700}
 footer p{margin:0 0 8px;max-width:70ch;margin-inline:auto}
+/* Кальян Дымыча и мини-Дымыч */
+.wisp{fill:none;stroke:rgba(244,236,234,.35);stroke-width:3;stroke-linecap:round;opacity:0}
+.bubbles circle{fill:rgba(255,255,255,.55);opacity:0}
+.dym-float{position:fixed;right:max(10px,env(safe-area-inset-right,0px));bottom:calc(10px + env(safe-area-inset-bottom,0px));width:78px;z-index:15;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:6px 4px 0;box-shadow:0 10px 30px rgba(0,0,0,.5);cursor:pointer;transition:transform .3s,opacity .3s}
+.dym-float.off{opacity:0;transform:translateY(20px) scale(.8);pointer-events:none}
+.dym-float .say{top:-34px;left:auto;right:0;font-size:12px}
+@media (prefers-reduced-motion:no-preference){
+ .wisp{animation:wisp 3s ease-in-out infinite}.w2{animation-delay:1.5s}
+ @keyframes wisp{0%{opacity:0;transform:translateY(8px)}30%{opacity:.8}100%{opacity:0;transform:translateY(-14px)}}
+ .dym.think .wisp{animation-duration:1.2s}
+ .bubbles circle{animation:bub 1.6s ease-in infinite}.bubbles circle:nth-child(2){animation-delay:.5s}.bubbles circle:nth-child(3){animation-delay:1s}
+ .dym.think .bubbles circle{animation-duration:.6s}
+ @keyframes bub{0%{opacity:0;transform:translateY(0)}20%{opacity:1}100%{opacity:0;transform:translateY(-16px)}}
+}
+#ai-out,#hero,#res{scroll-margin-top:70px}
+@media(max-width:640px){body{padding-bottom:110px}}
 /* Акции */
 .promos{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
 .promo{position:relative;overflow:hidden;display:flex;gap:16px;align-items:center;padding:18px 20px;border-radius:18px;background:var(--surface);border:1px solid var(--line);color:var(--fg)}
@@ -293,16 +309,27 @@ footer p{margin:0 0 8px;max-width:70ch;margin-inline:auto}
     <div class="hero" id="hero">
       <canvas id="smoke" aria-hidden="true"></canvas>
       <div class="hero-in">
-        <div class="dym-wrap"><svg class="dym idle" id="dym" viewBox="0 0 230 270" role="img" aria-label="Дымыч, кальянщик магазина">
+        <div class="dym-wrap"><svg class="dym idle" id="dym" viewBox="0 10 250 260" role="img" aria-label="Дымыч, кальянщик магазина">
   <ellipse cx="120" cy="258" rx="92" ry="9" fill="rgba(0,0,0,.45)"/>
   <g class="d-rings"><circle class="ring r1" cx="140" cy="100" r="7"/><circle class="ring r2" cx="140" cy="100" r="7"/><circle class="ring r3" cx="140" cy="100" r="7"/></g>
   <g class="d-hookah">
-    <path d="M172 210 Q150 205 148 180 Q146 150 140 112" stroke="#3a2a2a" stroke-width="5" fill="none" stroke-linecap="round"/>
-    <rect x="183" y="150" width="8" height="64" rx="3" fill="#8a6f68"/>
-    <path d="M176 140 h22 l-4 14 h-14z" fill="#b8423b"/>
-    <rect class="coal" x="179" y="133" width="7" height="7" rx="1.5" fill="#ff7a45"/><rect class="coal c2" x="188" y="133" width="7" height="7" rx="1.5" fill="#ff7a45"/>
-    <path d="M168 214 h46 q6 0 2 8 q-10 24 -25 24 q-15 0 -25 -24 q-4 -8 2 -8z" fill="#5a1512" stroke="#e63a33" stroke-width="2"/>
-    <ellipse cx="191" cy="232" rx="12" ry="4" fill="rgba(255,255,255,.12)"/>
+    <g class="d-wisp"><path class="wisp w1" d="M190 62 q-6 -10 0 -20 q6 -10 0 -20"/><path class="wisp w2" d="M196 62 q6 -10 0 -20 q-6 -10 0 -20"/></g>
+    <path d="M186 172 Q160 176 156 150 Q153 122 141 113" stroke="#2a2222" stroke-width="7" fill="none" stroke-linecap="round"/>
+    <path d="M186 172 Q160 176 156 150 Q153 122 141 113" stroke="#6b5a56" stroke-width="2" fill="none" stroke-linecap="round" stroke-dasharray="2 5"/>
+    <path d="M176 200 h28 v8 q26 12 26 32 q0 22 -40 22 q-40 0 -40 -22 q0 -20 26 -32z" fill="#2a1211" stroke="#e63a33" stroke-width="2.5"/>
+    <path d="M152 238 q2 22 38 22 q36 0 38 -22 q-38 6 -76 0z" fill="rgba(230,58,51,.45)"/>
+    <ellipse cx="172" cy="228" rx="5" ry="12" fill="rgba(255,255,255,.14)"/>
+    <g class="bubbles"><circle cx="186" cy="250" r="2"/><circle cx="194" cy="252" r="1.6"/><circle cx="190" cy="248" r="1.3"/></g>
+    <rect x="186" y="100" width="8" height="102" rx="3" fill="#cfc5c1"/>
+    <rect x="181" y="194" width="18" height="8" rx="3" fill="#8f8480"/>
+    <rect x="182" y="148" width="16" height="6" rx="3" fill="#8f8480"/>
+    <rect x="182" y="168" width="10" height="7" rx="3" fill="#8f8480"/>
+    <ellipse cx="190" cy="102" rx="25" ry="5.5" fill="#8f8480"/>
+    <ellipse cx="190" cy="100" rx="25" ry="5.5" fill="#b7aca8"/>
+    <path d="M175 96 h30 l-6 -18 h-18z" fill="#d9b8ae"/>
+    <path d="M172 78 h36 l-5 -9 h-26z" fill="#3a3232"/>
+    <rect x="176" y="66" width="28" height="4" rx="2" fill="#4a4040"/>
+    <rect class="coal" x="178" y="58" width="8" height="8" rx="1.5" fill="#ff7a45"/><rect class="coal c2" x="188" y="58" width="8" height="8" rx="1.5" fill="#ff7a45"/><rect class="coal" x="197" y="59" width="6" height="7" rx="1.5" fill="#ff7a45"/>
   </g>
   <g class="d-body">
     <g class="d-legs"><rect class="leg l1" x="88" y="200" width="15" height="48" rx="6" fill="#1c1515"/><rect class="leg l2" x="110" y="200" width="15" height="48" rx="6" fill="#1c1515"/>
@@ -432,6 +459,7 @@ footer p{margin:0 0 8px;max-width:70ch;margin-inline:auto}
     <p class="gno" id="gate-msg" hidden>Извини, бро, сайт только для тех, кому есть 21. Приходи позже!</p>
   </div>
 </div>
+<div class="dym-float off" id="dymf" role="button" tabindex="0" aria-label="Вернуться к Дымычу"><div class="say" id="say2" hidden></div></div>
 <div class="sheet" id="sheet" hidden><div class="panel" id="panel" role="dialog" aria-modal="true"></div></div>
 
 <script>
@@ -869,7 +897,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape")$("#sheet").hidden=t
 
 // Вкладки
 const VIEWS=["pick","cat","like","bowl","coal","new"];
-function show(v){VIEWS.forEach(x=>{$("#v-"+x).hidden=x!==v;$("#t-"+x).setAttribute("aria-selected",x===v)});window.scrollTo({top:0})}
+function show(v){VIEWS.forEach(x=>{$("#v-"+x).hidden=x!==v;$("#t-"+x).setAttribute("aria-selected",x===v)});window.scrollTo({top:0});if(typeof floatVis==="function")floatVis()}
 document.querySelectorAll("nav.tabs button").forEach(b=>b.onclick=()=>show(b.dataset.v));
 if(VIEWS.includes(location.hash.slice(1)))show(location.hash.slice(1));
 
@@ -991,8 +1019,16 @@ const MIXRX=/микс|замут|собери|подбери|покурить|п
 
 const AVA=`<svg viewBox="66 44 98 92" aria-hidden="true"><g ><circle cx="105" cy="86" r="33" fill="#e3ab84"/><path d="M73 92 Q75 128 105 130 Q135 128 137 92 Q130 108 118 106 L92 106 Q80 108 73 92Z" fill="#2b1b16"/><path d="M93 112 Q105 120 117 112" stroke="#f0d0bc" stroke-width="3" fill="none" stroke-linecap="round"/><g class="d-eyes"><ellipse cx="93" cy="83" rx="4" ry="4.6" fill="#1a0f0c"/><ellipse cx="117" cy="83" rx="4" ry="4.6" fill="#1a0f0c"/></g><path d="M86 74 Q93 70 100 74 M110 74 Q117 70 124 74" stroke="#2b1b16" stroke-width="3.2" fill="none" stroke-linecap="round"/><path d="M70 78 Q70 46 105 46 Q140 46 140 76 L164 78 Q164 86 140 84 Q105 74 70 82Z" fill="#141010"/><circle cx="105" cy="57" r="5" fill="#e63a33"/><path d="M128 108 l9 -3" stroke="#c9a29a" stroke-width="4" stroke-linecap="round"/></g></svg>`;
 // ===== Дымыч: состояния =====
-function setDym(state,phrase){const d=$("#dym");if(!d)return;d.setAttribute("class","dym "+state);const s=$("#say");
-  if(phrase){s.hidden=false;s.textContent=phrase;s.style.animation="none";s.offsetWidth;s.style.animation=""}else s.hidden=true}
+// мини-Дымыч в углу: копия большого, видна, когда большой ушёл с экрана
+const dymf=$("#dymf");{const c=$("#dym").cloneNode(true);c.id="dym2";c.removeAttribute("aria-label");c.setAttribute("aria-hidden","true");dymf.prepend(c)}
+dymf.onclick=dymf.onkeydown=e=>{if(e.type==="keydown"&&e.key!=="Enter")return;$("#hero").scrollIntoView({behavior:RMQ()?"auto":"smooth",block:"start"})};
+function RMQ(){return matchMedia("(prefers-reduced-motion: reduce)").matches}
+let heroSeen=true;
+if("IntersectionObserver" in window){new IntersectionObserver(es=>{heroSeen=es[0].isIntersecting;floatVis()},{threshold:.15}).observe($("#dym"))}
+function floatVis(){dymf.classList.toggle("off",heroSeen||$("#v-pick").hidden||!$("#gate").hidden)}
+function setDym(state,phrase){for(const id of ["dym","dym2"]){const d=$("#"+id);if(d)d.setAttribute("class","dym "+state)}
+  for(const id of ["say","say2"]){const s=$("#"+id);if(!s)continue;
+  if(phrase){s.hidden=false;s.textContent=phrase;s.style.animation="none";s.offsetWidth;s.style.animation=""}else s.hidden=true}}
 setTimeout(()=>{const s=$("#say");if(s&&$("#dym").classList.contains("idle"))s.hidden=true},4500);
 // ===== ИИ-миксолог =====
 const ITEMS=[["арбуз","арбуз"],["дын","дыня"],["клубни","клубника"],["земляник","земляника"],["малин","малина"],["вишн","вишня"],["черешн","вишня"],["черник","черника"],["голубик","голубика"],["смородин","смородина"],["ежевик","ежевика"],["крыжовн","крыжовник"],["барбарис","барбарис"],["клюкв","клюква"],["гранат","гранат"],["манго","манго"],["ананас","ананас"],["маракуй","маракуйя"],["персик","персик"],["абрикос","абрикос"],["виноград","виноград"],["яблок","яблоко"],["груш","груша"],["банан","банан"],["киви","киви"],["лимон","лимон"],["лайм","лайм"],["апельсин","апельсин"],["мандарин","мандарин"],["грейпфрут","грейпфрут"],["помело","помело"],["кокос","кокос"],["гуав","гуава"],["личи","личи"],["фейхоа","фейхоа"],["слив","слива"],["кола","кола"],["колу","кола"],["чай","чай"],["чая","чай"],["мят","мята"],["ванил","ваниль"],["шоколад","шоколад"],["кофе","кофе"],["орех","орех"],["карамел","карамель"],["йогурт","йогурт"],["морожен","мороженое"],["жвачк","жвачка"],["конфет","конфеты"],["леденц","леденцы"],["скитл","скитлз"],["мармелад","мармелад"],["мишк","мармелад"],["джин","джин"],["коньяк","коньяк"],["текил","текила"],["ликёр","ликёр"],["ликер","ликёр"],["роз","роза"],["базилик","базилик"],["имбир","имбирь"],["кориц","корица"],["перец","перец"],["огур","огурец"],["томат","томат"],["попкорн","попкорн"],["мёд","мёд"],["мед ","мёд"],["лимонад","лимонад"],["газиров","газировка"],["шипуч","газировка"],["энергет","энергетик"],["тархун","тархун"],["эвкалипт","эвкалипт"],["ёлк","ёлка"],["хво","ёлка"],["алоэ","алоэ"],["кактус","кактус"],["халв","халва"],["чизкейк","чизкейк"],["вафл","вафли"],["печень","печенье"],["пирог","пирог"]];
@@ -1162,7 +1198,7 @@ document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>{if(b.dataset.go
 // Возрастное окно
 (function(){let ok=false;try{ok=localStorage.getItem("age21")==="1"}catch(e){}
   const g=$("#gate");if(ok){g.hidden=true;return}document.documentElement.style.overflow="hidden";
-  $("#gate-yes").onclick=()=>{try{localStorage.setItem("age21","1")}catch(e){}g.hidden=true;document.documentElement.style.overflow=""};
+  $("#gate-yes").onclick=()=>{try{localStorage.setItem("age21","1")}catch(e){}g.hidden=true;document.documentElement.style.overflow="";floatVis()};
   $("#gate-no").onclick=()=>{$("#gate-msg").hidden=false;$("#gate-yes").hidden=true;$("#gate-no").hidden=true}})();
 // Стоп-лист: встроенный + файл stock.txt рядом с сайтом
 const STOCK_OUT=[];
