@@ -1,4 +1,4 @@
-<title>Дымыч подберёт</title>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"></head><body><title>Дымыч подберёт</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Manrope:wght@400;500;700;800&display=swap">
@@ -12,6 +12,8 @@
   color-scheme:dark;
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
+img{max-width:100%}
 body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.5;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
@@ -898,3 +900,4 @@ function findLike(){const q=$("#like-q").value.trim().toLowerCase();if(!q)return
 $("#coals").innerHTML=COALS.map(c=>`<article><div class="age">${esc(c.type)}</div><h3>${esc(c.name)}</h3><p>${esc(c.size)}</p><p>${esc(c.text)}</p><p><b style="color:var(--fg)">Как использовать.</b> ${esc(c.use)}</p></article>`).join("");
 $("#scale").innerHTML=[[2,"Sebero Classic, Chabacco Medium"],[3,"Хулиган, Hell, NАШ White, Sebero Black"],[4,"Black Burn, Overdose, Hook, NАШ Black"]].map(([n,t])=>`<div>${dots(n)}<span>${t}</span></div>`).join("");
 </script>
+</body></html>
