@@ -255,11 +255,11 @@ footer p{margin:0 0 8px;max-width:70ch;margin-inline:auto}
 /* Дымыч */
 .hero-in{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 24px;align-items:end}
 .hero-in>*:not(.dym-wrap){grid-column:1}
-.dym-wrap{grid-column:2;grid-row:1/span 3;align-self:end;width:clamp(150px,22vw,250px);position:relative}
+.dym-wrap{grid-column:2;grid-row:1/span 3;align-self:end;width:clamp(180px,26vw,300px);position:relative}
 .dym{width:100%;height:auto;display:block;overflow:visible}
 .ring{fill:none;stroke:rgba(244,236,234,.7);stroke-width:2.4;opacity:0}
 .say{position:absolute;top:2%;left:-30%;background:var(--fg);color:var(--bg);font-weight:800;font-size:13px;padding:6px 10px;border-radius:12px 12px 12px 2px;white-space:nowrap}
-@media(max-width:640px){.hero-in{grid-template-columns:1fr}.dym-wrap{grid-column:1;grid-row:auto;justify-self:center;width:150px;order:-1}.say{left:auto;right:-40%}}
+@media(max-width:640px){.hero-in{grid-template-columns:1fr}.dym-wrap{grid-column:1;grid-row:auto;justify-self:center;width:220px;order:-1}.say{left:auto;right:-40%}}
 .ava{background:var(--surface-2);border:1px solid var(--line);padding:3px;overflow:hidden}
 .ava svg{width:100%;height:100%}
 @media (prefers-reduced-motion:no-preference){
@@ -268,7 +268,7 @@ footer p{margin:0 0 8px;max-width:70ch;margin-inline:auto}
  @keyframes bob{50%{transform:translateY(-3px)}}
  .d-eyes{transform-origin:105px 83px;animation:blink 4.2s infinite}
  @keyframes blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
- .ring{animation:ring 4.5s ease-out infinite;transform-origin:140px 100px}
+ .ring{animation:ring 4.5s ease-out infinite;transform-origin:124px 104px}
  .r2{animation-delay:.5s}.r3{animation-delay:1s}
  @keyframes ring{0%{opacity:0;transform:translate(0,0) scale(.6)}8%{opacity:.85}60%{opacity:0;transform:translate(-14px,-70px) scale(2.2)}100%{opacity:0}}
  .dym.think .ring{animation-duration:1.6s}
@@ -323,36 +323,160 @@ footer p{margin:0 0 8px;max-width:70ch;margin-inline:auto}
       <canvas id="smoke" aria-hidden="true"></canvas>
       <div class="hero-in">
         <div class="dym-wrap"><svg class="dym idle" id="dym" viewBox="0 10 250 260" role="img" aria-label="Дымыч, кальянщик магазина">
-  <ellipse cx="120" cy="258" rx="92" ry="9" fill="rgba(0,0,0,.45)"/>
-  <g class="d-rings"><circle class="ring r1" cx="140" cy="100" r="7"/><circle class="ring r2" cx="140" cy="100" r="7"/><circle class="ring r3" cx="140" cy="100" r="7"/></g>
+  <defs>
+    <linearGradient id="dy-skin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3c6a0"/><stop offset="1" stop-color="#dc9f78"/></linearGradient>
+    <linearGradient id="dy-hood" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e5463d"/><stop offset=".55" stop-color="#c92e27"/><stop offset="1" stop-color="#9a1f1a"/></linearGradient>
+    <linearGradient id="dy-sleeve" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#b8271f"/><stop offset=".5" stop-color="#d9392f"/><stop offset="1" stop-color="#a8221c"/></linearGradient>
+    <linearGradient id="dy-beard" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2820"/><stop offset="1" stop-color="#1f1511"/></linearGradient>
+    <linearGradient id="dy-cap" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2f2a2a"/><stop offset="1" stop-color="#0f0d0d"/></linearGradient>
+    <linearGradient id="dy-pants" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2c2727"/><stop offset="1" stop-color="#171414"/></linearGradient>
+    <linearGradient id="dy-metal" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6d6664"/><stop offset=".35" stop-color="#ece6e4"/><stop offset=".6" stop-color="#8d8583"/><stop offset="1" stop-color="#c7c0bd"/></linearGradient>
+    <linearGradient id="dy-clay" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8f3f27"/><stop offset=".4" stop-color="#d9784c"/><stop offset="1" stop-color="#9c4a2c"/></linearGradient>
+    <radialGradient id="dy-glass" cx=".38" cy=".35" r=".75"><stop offset="0" stop-color="#5a1c19" stop-opacity=".55"/><stop offset=".7" stop-color="#2a0d0c" stop-opacity=".8"/><stop offset="1" stop-color="#170807" stop-opacity=".95"/></radialGradient>
+    <linearGradient id="dy-water" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e6574d" stop-opacity=".75"/><stop offset="1" stop-color="#7a1712" stop-opacity=".9"/></linearGradient>
+    <radialGradient id="dy-glow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ff9a5c" stop-opacity=".75"/><stop offset="1" stop-color="#ff7a45" stop-opacity="0"/></radialGradient>
+    <radialGradient id="dy-shadow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  </defs>
+
+  <ellipse cx="128" cy="257" rx="104" ry="11" fill="url(#dy-shadow)"/>
+  <g class="d-rings"><circle class="ring r1" cx="124" cy="104" r="6"/><circle class="ring r2" cx="124" cy="104" r="6"/><circle class="ring r3" cx="124" cy="104" r="6"/></g>
+
+  <!-- КАЛЬЯН -->
   <g class="d-hookah">
-    <g class="d-wisp"><path class="wisp w1" d="M190 62 q-6 -10 0 -20 q6 -10 0 -20"/><path class="wisp w2" d="M196 62 q6 -10 0 -20 q-6 -10 0 -20"/></g>
-    <path d="M186 172 Q160 176 156 150 Q153 122 141 113" stroke="#2a2222" stroke-width="7" fill="none" stroke-linecap="round"/>
-    <path d="M186 172 Q160 176 156 150 Q153 122 141 113" stroke="#6b5a56" stroke-width="2" fill="none" stroke-linecap="round" stroke-dasharray="2 5"/>
-    <path d="M176 200 h28 v8 q26 12 26 32 q0 22 -40 22 q-40 0 -40 -22 q0 -20 26 -32z" fill="#2a1211" stroke="#e63a33" stroke-width="2.5"/>
-    <path d="M152 238 q2 22 38 22 q36 0 38 -22 q-38 6 -76 0z" fill="rgba(230,58,51,.45)"/>
-    <ellipse cx="172" cy="228" rx="5" ry="12" fill="rgba(255,255,255,.14)"/>
-    <g class="bubbles"><circle cx="186" cy="250" r="2"/><circle cx="194" cy="252" r="1.6"/><circle cx="190" cy="248" r="1.3"/></g>
-    <rect x="186" y="100" width="8" height="102" rx="3" fill="#cfc5c1"/>
-    <rect x="181" y="194" width="18" height="8" rx="3" fill="#8f8480"/>
-    <rect x="182" y="148" width="16" height="6" rx="3" fill="#8f8480"/>
-    <rect x="182" y="168" width="10" height="7" rx="3" fill="#8f8480"/>
-    <ellipse cx="190" cy="102" rx="25" ry="5.5" fill="#8f8480"/>
-    <ellipse cx="190" cy="100" rx="25" ry="5.5" fill="#b7aca8"/>
-    <path d="M175 96 h30 l-6 -18 h-18z" fill="#d9b8ae"/>
-    <path d="M172 78 h36 l-5 -9 h-26z" fill="#3a3232"/>
-    <rect x="176" y="66" width="28" height="4" rx="2" fill="#4a4040"/>
-    <rect class="coal" x="178" y="58" width="8" height="8" rx="1.5" fill="#ff7a45"/><rect class="coal c2" x="188" y="58" width="8" height="8" rx="1.5" fill="#ff7a45"/><rect class="coal" x="197" y="59" width="6" height="7" rx="1.5" fill="#ff7a45"/>
+    <g class="d-wisp"><path class="wisp w1" d="M188 50 q-6 -9 0 -18 q6 -9 0 -18"/><path class="wisp w2" d="M195 50 q6 -9 0 -18 q-6 -9 0 -18"/></g>
+    <!-- шланг -->
+    <path d="M186 171 Q164 178 158 152 Q154 124 145 111" stroke="#1b1515" stroke-width="7.5" fill="none" stroke-linecap="round"/>
+    <path d="M186 171 Q164 178 158 152 Q154 124 145 111" stroke="#4a3d3a" stroke-width="7.5" fill="none" stroke-linecap="round" stroke-dasharray="1.2 3"/>
+    <path d="M184 169.5 Q164 175 159.5 151" stroke="rgba(255,255,255,.18)" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    <!-- колба -->
+    <path d="M178 199 h24 v7 q30 13 30 34 q0 23 -42 23 q-42 0 -42 -23 q0 -21 30 -34z" fill="url(#dy-glass)" stroke="#e8564c" stroke-width="2"/>
+    <path d="M150.5 236 q2 25 39.5 25 q37.5 0 39.5 -25 q-20 5 -39.5 3 q-20 -2 -39.5 -3z" fill="url(#dy-water)"/>
+    <path d="M152 236 q19 3 38 3 q19 0 38 -3" stroke="rgba(255,190,170,.6)" stroke-width="1.4" fill="none"/>
+    <path d="M161 222 q-6 12 -2 26" stroke="rgba(255,255,255,.35)" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M168 214 q-3 3 -4 6" stroke="rgba(255,255,255,.3)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M178 206 h24" stroke="#e8564c" stroke-width="2"/>
+    <g class="bubbles"><circle cx="186" cy="250" r="2.2"/><circle cx="194" cy="252" r="1.7"/><circle cx="190" cy="247" r="1.3"/></g>
+    <!-- шахта -->
+    <rect x="186" y="104" width="8" height="140" rx="3" fill="url(#dy-metal)"/>
+    <rect x="180" y="193" width="20" height="9" rx="3" fill="url(#dy-metal)"/>
+    <rect x="181" y="150" width="18" height="6" rx="3" fill="url(#dy-metal)"/>
+    <rect x="183" y="137" width="14" height="4" rx="2" fill="url(#dy-metal)"/>
+    <path d="M181 167 h11 v8 h-11 q-3 -4 0 -8z" fill="url(#dy-metal)"/>
+    <rect x="184" y="118" width="12" height="9" rx="3" fill="url(#dy-metal)"/>
+    <!-- тарелка -->
+    <ellipse cx="190" cy="105.5" rx="27" ry="6.5" fill="#6d6664"/>
+    <ellipse cx="190" cy="103" rx="27" ry="6.5" fill="url(#dy-metal)"/>
+    <ellipse cx="190" cy="102.5" rx="18" ry="3.5" fill="rgba(0,0,0,.18)"/>
+    <!-- чаша -->
+    <path d="M176 98 h28 l-5 -20 h-18z" fill="url(#dy-clay)"/>
+    <path d="M178 90 h24" stroke="rgba(255,255,255,.25)" stroke-width="1.2"/>
+    <!-- калауд -->
+    <path d="M171 78 h38 l-4 -10 h-30z" fill="#3b3434"/>
+    <path d="M171 78 h38" stroke="#8d8583" stroke-width="1.6"/>
+    <g fill="#1c1818"><rect x="178" y="71" width="3" height="5" rx="1"/><rect x="185" y="71" width="3" height="5" rx="1"/><rect x="192" y="71" width="3" height="5" rx="1"/><rect x="199" y="71" width="3" height="5" rx="1"/></g>
+    <rect x="174" y="65" width="32" height="4" rx="2" fill="#5b5352"/>
+    <ellipse cx="190" cy="61" rx="22" ry="9" fill="url(#dy-glow)"/>
+    <rect class="coal" x="177" y="57" width="8.5" height="8" rx="1.6" fill="#ff7a45"/>
+    <rect class="coal c2" x="186.5" y="56" width="8.5" height="9" rx="1.6" fill="#ff7a45"/>
+    <rect class="coal" x="196" y="57.5" width="7" height="7.5" rx="1.6" fill="#ff7a45"/>
+    <path d="M178 58 h6 M188 57 h5 M197 59 h4" stroke="rgba(255,240,200,.75)" stroke-width="1" stroke-linecap="round"/>
   </g>
+
+  <!-- ДЫМЫЧ -->
   <g class="d-body">
-    <g class="d-legs"><rect class="leg l1" x="88" y="200" width="15" height="48" rx="6" fill="#1c1515"/><rect class="leg l2" x="110" y="200" width="15" height="48" rx="6" fill="#1c1515"/>
-      <rect x="84" y="242" width="24" height="10" rx="5" fill="#f4ecea"/><rect x="108" y="242" width="24" height="10" rx="5" fill="#f4ecea"/></g>
-    <path d="M70 150 Q72 126 106 124 Q140 126 142 150 L146 208 Q106 216 66 208Z" fill="#c62f29"/>
-    <path d="M92 128 Q106 146 120 128" stroke="#8f1d19" stroke-width="4" fill="none"/>
-    <text x="106" y="186" text-anchor="middle" font-family="Unbounded,Arial Black,sans-serif" font-weight="900" font-size="15" fill="#fff">ДЫМ</text>
-    <g class="d-wave"><path d="M74 146 Q56 170 62 196" stroke="#c62f29" stroke-width="15" fill="none" stroke-linecap="round"/><circle cx="62" cy="198" r="8" fill="#e3ab84"/></g>
-    <path d="M138 148 Q156 130 140 112" stroke="#c62f29" stroke-width="15" fill="none" stroke-linecap="round"/><circle cx="140" cy="111" r="8" fill="#e3ab84"/>
-    <g class="d-head"><circle cx="105" cy="86" r="33" fill="#e3ab84"/><path d="M73 92 Q75 128 105 130 Q135 128 137 92 Q130 108 118 106 L92 106 Q80 108 73 92Z" fill="#2b1b16"/><path d="M93 112 Q105 120 117 112" stroke="#f0d0bc" stroke-width="3" fill="none" stroke-linecap="round"/><g class="d-eyes"><ellipse cx="93" cy="83" rx="4" ry="4.6" fill="#1a0f0c"/><ellipse cx="117" cy="83" rx="4" ry="4.6" fill="#1a0f0c"/></g><path d="M86 74 Q93 70 100 74 M110 74 Q117 70 124 74" stroke="#2b1b16" stroke-width="3.2" fill="none" stroke-linecap="round"/><path d="M70 78 Q70 46 105 46 Q140 46 140 76 L164 78 Q164 86 140 84 Q105 74 70 82Z" fill="#141010"/><circle cx="105" cy="57" r="5" fill="#e63a33"/><path d="M128 108 l9 -3" stroke="#c9a29a" stroke-width="4" stroke-linecap="round"/></g>
+    <g class="d-legs">
+      <g class="leg l1">
+        <path d="M88 204 h16 l-1 34 q0 4 -4 4 h-8 q-4 0 -4 -4z" fill="url(#dy-pants)"/>
+        <path d="M89 234 h14" stroke="#0e0c0c" stroke-width="3"/>
+        <path d="M80 248 q0 -9 10 -10 h11 q5 0 5 6 v4 q0 3 -3 3 h-20 q-3 0 -3 -3z" fill="#f4ecea"/>
+        <path d="M80 248 h26 v2.5 q0 2 -2 2 h-22 q-2 0 -2 -2z" fill="#c9bcb8"/>
+        <path d="M86 243 q6 -2 12 1" stroke="#e63a33" stroke-width="2" fill="none" stroke-linecap="round"/>
+      </g>
+      <g class="leg l2">
+        <path d="M110 204 h16 l-1 34 q0 4 -4 4 h-8 q-4 0 -4 -4z" fill="url(#dy-pants)"/>
+        <path d="M111 234 h14" stroke="#0e0c0c" stroke-width="3"/>
+        <path d="M108 244 q0 -6 5 -6 h11 q10 1 10 10 q0 3 -3 3 h-20 q-3 0 -3 -3z" fill="#f4ecea"/>
+        <path d="M108 248 h26 v2.5 q0 2 -2 2 h-22 q-2 0 -2 -2z" fill="#c9bcb8"/>
+        <path d="M116 244 q6 -3 12 0" stroke="#e63a33" stroke-width="2" fill="none" stroke-linecap="round"/>
+      </g>
+    </g>
+    <!-- худи -->
+    <path d="M70 148 Q71 128 92 124 L120 124 Q141 128 142 148 L146 205 Q146 214 136 215 L76 215 Q66 214 66 205Z" fill="url(#dy-hood)"/>
+    <path d="M128 127 Q141 131 142 148 L146 205 Q146 214 136 215 L122 215 Q134 180 128 127Z" fill="#000" opacity=".16"/>
+    <path d="M68 203 h78 v4 q0 8 -10 8 h-58 q-10 0 -10 -8z" fill="#9a1f1a"/>
+    <path d="M74 206 v7 M80 206 v8 M86 206 v8 M92 206 v8 M98 206 v8 M104 206 v8 M110 206 v8 M116 206 v8 M122 206 v8 M128 206 v8 M134 206 v8 M140 206 v7" stroke="#7d1814" stroke-width="1"/>
+    <!-- карман -->
+    <path d="M84 178 h44 l6 24 h-56z" fill="#000" opacity=".14"/>
+    <path d="M84 178 h44 l6 24 h-56z" fill="none" stroke="#8f1b17" stroke-width="1.4" stroke-dasharray="2 2"/>
+    <!-- логотип на груди -->
+    <g transform="translate(106 164)">
+      <circle r="10.5" fill="#f4ecea"/>
+      <path d="M-5 3 q-3 -6 2 -8 q1 -5 6 -3 q5 -1 5 4 q4 1 2 5 z" fill="#c92e27"/>
+      <text y="21" text-anchor="middle" font-family="Unbounded,Inter Display,Arial Black,sans-serif" font-weight="900" font-size="8.5" fill="#f4ecea" letter-spacing=".5">SHPODS</text>
+    </g>
+    <!-- капюшон и шнурки -->
+    <path d="M88 124 Q105 142 124 124 Q118 134 106 135 Q94 134 88 124Z" fill="#8f1b17"/>
+    <path d="M86 125 Q83 119 92 118 L120 118 Q129 119 126 125 Q118 131 106 131 Q94 131 86 125Z" fill="#b52720"/>
+    <path d="M97 132 q-1 8 0 15" stroke="#f4ecea" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M115 132 q1 8 0 13" stroke="#f4ecea" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <rect x="95.5" y="146" width="3.5" height="6" rx="1.5" fill="#c9bcb8"/><rect x="113.3" y="144" width="3.5" height="6" rx="1.5" fill="#c9bcb8"/>
+    <!-- машущая рука -->
+    <g class="d-wave">
+      <path d="M77 138 Q66 142 62 160 L56 190 q-1 6 6 7 l8 1 q6 0 6 -6 L80 164 Q84 148 77 138Z" fill="url(#dy-sleeve)"/>
+      <path d="M55 186 h20 l-1 10 q-1 3 -4 3 h-12 q-4 0 -4 -4z" fill="#9a1f1a"/>
+      <path d="M57 199 q-3 6 0 11 q4 5 10 3 q6 -2 6 -8 l-1 -6z" fill="url(#dy-skin)"/>
+      <path d="M57 203 q-5 -2 -6 2 q0 3 4 4" fill="url(#dy-skin)"/>
+      <path d="M61 210 q4 1 7 -1" stroke="#c98563" stroke-width="1" fill="none"/>
+    </g>
+    <!-- рука с мундштуком -->
+    <path d="M134 136 Q148 142 150 128 Q151 118 146 113 l-8 3 q3 6 1 12 q-3 4 -9 2z" fill="url(#dy-sleeve)"/>
+    <path d="M141 119 h11 l-1 -7 h-10z" fill="#9a1f1a"/>
+    <path d="M140 112 q-3 -6 2 -9 q5 -2 9 1 q3 4 0 8z" fill="url(#dy-skin)"/>
+    
+    <!-- шея -->
+    <path d="M97 116 h16 v8 q-8 4 -16 0z" fill="#c98563"/>
+    <!-- ГОЛОВА -->
+    <g class="d-head">
+      <ellipse cx="72.5" cy="91" rx="6.5" ry="8.5" fill="#e3ab84"/><ellipse cx="73.5" cy="91" rx="3.2" ry="5" fill="#c98563"/>
+      <ellipse cx="137.5" cy="91" rx="6.5" ry="8.5" fill="#dc9f78"/><ellipse cx="136.5" cy="91" rx="3.2" ry="5" fill="#c08060"/>
+      <path d="M74 84 Q74 54 105 54 Q136 54 136 84 L136 98 Q136 118 105 120 Q74 118 74 98Z" fill="url(#dy-skin)"/>
+      <path d="M127 64 Q136 72 136 86 L136 98 Q136 112 122 118 Q131 96 127 64Z" fill="#000" opacity=".07"/>
+      <!-- бакенбарды и борода -->
+      <path d="M74 80 L74 98 Q74 120 105 132 Q136 120 136 98 L136 80 L131 80 L131 96 Q129 104 120 104 Q113 99 105 100 Q97 99 90 104 Q81 104 79 96 L79 80Z" fill="url(#dy-beard)"/>
+      <path d="M82 110 q4 8 10 12 M95 118 q3 6 6 9 M115 118 q-3 6 -6 9 M128 110 q-4 8 -10 12 M105 122 v8" stroke="#4a3328" stroke-width="1.3" fill="none" stroke-linecap="round" opacity=".8"/>
+      <!-- усы -->
+      <path d="M90 104 Q97 98 105 101 Q113 98 120 104 Q114 107 105 104 Q96 107 90 104Z" fill="#2b1d18"/>
+      <!-- рот -->
+      <path d="M97 109 Q105 116 113 109 Q105 112 97 109Z" fill="#fff"/>
+      <path d="M97 109 Q105 116 113 109" stroke="#1a0f0c" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+      <!-- нос и щёки -->
+      <path d="M103 86 Q101 95 99 97 Q103 100 108 98 Q111 96 108 94" fill="#d08a64"/>
+      <path d="M104 88 q-1 4 -2 6" stroke="rgba(255,255,255,.4)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      <ellipse cx="85" cy="95" rx="5" ry="2.6" fill="#e6826a" opacity=".45"/><ellipse cx="125" cy="95" rx="5" ry="2.6" fill="#e6826a" opacity=".45"/>
+      <!-- глаза -->
+      <g class="d-eyes">
+        <ellipse cx="93" cy="83" rx="5.6" ry="6.2" fill="#fff"/><ellipse cx="117" cy="83" rx="5.6" ry="6.2" fill="#fff"/>
+        <circle cx="94.2" cy="84" r="3.6" fill="#4a2a1c"/><circle cx="118.2" cy="84" r="3.6" fill="#4a2a1c"/>
+        <circle cx="94.4" cy="84.2" r="1.9" fill="#120a08"/><circle cx="118.4" cy="84.2" r="1.9" fill="#120a08"/>
+        <circle cx="95.6" cy="82.6" r="1.1" fill="#fff"/><circle cx="119.6" cy="82.6" r="1.1" fill="#fff"/>
+        <path d="M87.5 80 Q93 76.5 98.5 80" stroke="#8a5a44" stroke-width="1" fill="none" opacity=".6"/>
+        <path d="M111.5 80 Q117 76.5 122.5 80" stroke="#8a5a44" stroke-width="1" fill="none" opacity=".6"/>
+      </g>
+      <!-- брови -->
+      <path d="M86 74.5 Q92 70 100 73.5 L99.5 76 Q92 73.5 86.5 77Z" fill="#2b1d18"/>
+      <path d="M110 73 Q118 69 125 73 L124.5 75.5 Q118 72.5 110.5 75.5Z" fill="#2b1d18"/>
+      <!-- кепка -->
+      <path d="M72 79 Q70 46 105 45 Q140 46 139 77 Q105 67 72 79Z" fill="url(#dy-cap)"/>
+      <path d="M105 45 Q101 60 100 70 M105 45 Q118 56 124 70 M105 45 Q88 56 83 72" stroke="#3d3737" stroke-width="1" fill="none"/>
+      <circle cx="105" cy="45.5" r="2.4" fill="#3d3737"/>
+      <path d="M71 79 Q105 64 139 76 L165 80 Q169 84 163 87 Q140 83 128 81 Q100 76 72 85Z" fill="#141111"/>
+      <path d="M139 76 L165 80 Q169 84 163 87 Q147 84 136 82Z" fill="#000" opacity=".35"/>
+      <path d="M74 81 Q105 70 136 79" stroke="#e63a33" stroke-width="1.6" fill="none"/>
+      <circle cx="104" cy="58" r="6.5" fill="#e63a33"/>
+      <path d="M100.5 60 q-1.5 -3.5 1.5 -4.5 q1 -3 4 -1.5 q3 -.5 3 2.5 q2 1 0 3.5z" fill="#fff"/>
+      <path d="M114 110 L141 106" stroke="url(#dy-metal)" stroke-width="4.2" stroke-linecap="round"/>
+      <path d="M113 110.2 L117 109.6" stroke="#e8c47a" stroke-width="4.6" stroke-linecap="round"/>
+    </g>
   </g>
 </svg><div class="say" id="say">Здорово, бро!</div></div>
         <div class="badge"><span class="pulse"></span>Дымыч на связи · супер-кальянщик</div>
@@ -1032,7 +1156,7 @@ function smallTalk(nq){return TALK.find(x=>x.rx.test(nq))||null}
 const QRX=/\?|^как |\sкак |почему|зачем|что такое|что за |сколько|чем отлич|какой лучше|какую|какой |какая |какие |можно ли|что делать|расскажи|объясни|подскажи|посоветуй|зачем/;
 const MIXRX=/микс|замут|собери|подбери|покурить|покурим|хочу |хочется|настроен/;
 
-const AVA=`<svg viewBox="66 44 98 92" aria-hidden="true"><g ><circle cx="105" cy="86" r="33" fill="#e3ab84"/><path d="M73 92 Q75 128 105 130 Q135 128 137 92 Q130 108 118 106 L92 106 Q80 108 73 92Z" fill="#2b1b16"/><path d="M93 112 Q105 120 117 112" stroke="#f0d0bc" stroke-width="3" fill="none" stroke-linecap="round"/><g class="d-eyes"><ellipse cx="93" cy="83" rx="4" ry="4.6" fill="#1a0f0c"/><ellipse cx="117" cy="83" rx="4" ry="4.6" fill="#1a0f0c"/></g><path d="M86 74 Q93 70 100 74 M110 74 Q117 70 124 74" stroke="#2b1b16" stroke-width="3.2" fill="none" stroke-linecap="round"/><path d="M70 78 Q70 46 105 46 Q140 46 140 76 L164 78 Q164 86 140 84 Q105 74 70 82Z" fill="#141010"/><circle cx="105" cy="57" r="5" fill="#e63a33"/><path d="M128 108 l9 -3" stroke="#c9a29a" stroke-width="4" stroke-linecap="round"/></g></svg>`;
+const AVA=`<svg viewBox="62 40 110 98" aria-hidden="true"><defs><linearGradient id="dy-skin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3c6a0"/><stop offset="1" stop-color="#dc9f78"/></linearGradient><linearGradient id="dy-beard" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2820"/><stop offset="1" stop-color="#1f1511"/></linearGradient><linearGradient id="dy-cap" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2f2a2a"/><stop offset="1" stop-color="#0f0d0d"/></linearGradient><linearGradient id="dy-metal" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6d6664"/><stop offset=".35" stop-color="#ece6e4"/><stop offset=".6" stop-color="#8d8583"/><stop offset="1" stop-color="#c7c0bd"/></linearGradient></defs><g>       <ellipse cx="72.5" cy="91" rx="6.5" ry="8.5" fill="#e3ab84"/><ellipse cx="73.5" cy="91" rx="3.2" ry="5" fill="#c98563"/>       <ellipse cx="137.5" cy="91" rx="6.5" ry="8.5" fill="#dc9f78"/><ellipse cx="136.5" cy="91" rx="3.2" ry="5" fill="#c08060"/>       <path d="M74 84 Q74 54 105 54 Q136 54 136 84 L136 98 Q136 118 105 120 Q74 118 74 98Z" fill="url(#dy-skin)"/>       <path d="M127 64 Q136 72 136 86 L136 98 Q136 112 122 118 Q131 96 127 64Z" fill="#000" opacity=".07"/>       <!-- бакенбарды и борода -->       <path d="M74 80 L74 98 Q74 120 105 132 Q136 120 136 98 L136 80 L131 80 L131 96 Q129 104 120 104 Q113 99 105 100 Q97 99 90 104 Q81 104 79 96 L79 80Z" fill="url(#dy-beard)"/>       <path d="M82 110 q4 8 10 12 M95 118 q3 6 6 9 M115 118 q-3 6 -6 9 M128 110 q-4 8 -10 12 M105 122 v8" stroke="#4a3328" stroke-width="1.3" fill="none" stroke-linecap="round" opacity=".8"/>       <!-- усы -->       <path d="M90 104 Q97 98 105 101 Q113 98 120 104 Q114 107 105 104 Q96 107 90 104Z" fill="#2b1d18"/>       <!-- рот -->       <path d="M97 109 Q105 116 113 109 Q105 112 97 109Z" fill="#fff"/>       <path d="M97 109 Q105 116 113 109" stroke="#1a0f0c" stroke-width="1.4" fill="none" stroke-linecap="round"/>       <!-- нос и щёки -->       <path d="M103 86 Q101 95 99 97 Q103 100 108 98 Q111 96 108 94" fill="#d08a64"/>       <path d="M104 88 q-1 4 -2 6" stroke="rgba(255,255,255,.4)" stroke-width="1.2" fill="none" stroke-linecap="round"/>       <ellipse cx="85" cy="95" rx="5" ry="2.6" fill="#e6826a" opacity=".45"/><ellipse cx="125" cy="95" rx="5" ry="2.6" fill="#e6826a" opacity=".45"/>       <!-- глаза -->       <g class="d-eyes">         <ellipse cx="93" cy="83" rx="5.6" ry="6.2" fill="#fff"/><ellipse cx="117" cy="83" rx="5.6" ry="6.2" fill="#fff"/>         <circle cx="94.2" cy="84" r="3.6" fill="#4a2a1c"/><circle cx="118.2" cy="84" r="3.6" fill="#4a2a1c"/>         <circle cx="94.4" cy="84.2" r="1.9" fill="#120a08"/><circle cx="118.4" cy="84.2" r="1.9" fill="#120a08"/>         <circle cx="95.6" cy="82.6" r="1.1" fill="#fff"/><circle cx="119.6" cy="82.6" r="1.1" fill="#fff"/>         <path d="M87.5 80 Q93 76.5 98.5 80" stroke="#8a5a44" stroke-width="1" fill="none" opacity=".6"/>         <path d="M111.5 80 Q117 76.5 122.5 80" stroke="#8a5a44" stroke-width="1" fill="none" opacity=".6"/>       </g>       <!-- брови -->       <path d="M86 74.5 Q92 70 100 73.5 L99.5 76 Q92 73.5 86.5 77Z" fill="#2b1d18"/>       <path d="M110 73 Q118 69 125 73 L124.5 75.5 Q118 72.5 110.5 75.5Z" fill="#2b1d18"/>       <!-- кепка -->       <path d="M72 79 Q70 46 105 45 Q140 46 139 77 Q105 67 72 79Z" fill="url(#dy-cap)"/>       <path d="M105 45 Q101 60 100 70 M105 45 Q118 56 124 70 M105 45 Q88 56 83 72" stroke="#3d3737" stroke-width="1" fill="none"/>       <circle cx="105" cy="45.5" r="2.4" fill="#3d3737"/>       <path d="M71 79 Q105 64 139 76 L165 80 Q169 84 163 87 Q140 83 128 81 Q100 76 72 85Z" fill="#141111"/>       <path d="M139 76 L165 80 Q169 84 163 87 Q147 84 136 82Z" fill="#000" opacity=".35"/>       <path d="M74 81 Q105 70 136 79" stroke="#e63a33" stroke-width="1.6" fill="none"/>       <circle cx="104" cy="58" r="6.5" fill="#e63a33"/>       <path d="M100.5 60 q-1.5 -3.5 1.5 -4.5 q1 -3 4 -1.5 q3 -.5 3 2.5 q2 1 0 3.5z" fill="#fff"/>       <path d="M114 110 L141 106" stroke="url(#dy-metal)" stroke-width="4.2" stroke-linecap="round"/>       <path d="M113 110.2 L117 109.6" stroke="#e8c47a" stroke-width="4.6" stroke-linecap="round"/></g></svg>`;
 // ===== Дымыч: состояния =====
 // мини-Дымыч в углу: копия большого, видна, когда большой ушёл с экрана
 const dymf=$("#dymf");{const c=$("#dym").cloneNode(true);c.id="dym2";c.removeAttribute("aria-label");c.setAttribute("aria-hidden","true");dymf.prepend(c)}
@@ -1143,7 +1267,7 @@ async function askAI(text){
     else{html=`<div class="kbans"><p>Бро, не совсем понял. Я умею две вещи: собрать микс под твоё настроение или ответить на вопрос про кальяны. Попробуй так:</p></div>`+chips(SUG);ph="Не понял, бро…"}
     th.parentElement.innerHTML=html;
     setDym("happy",ph);setTimeout(()=>setDym("idle",null),3000);aiBusy=false;$("#ai-go").disabled=false;return}
-  out.innerHTML=`<div class="bubble rise"><div class="ava"><svg viewBox="66 44 98 92" aria-hidden="true"><g ><circle cx="105" cy="86" r="33" fill="#e3ab84"/><path d="M73 92 Q75 128 105 130 Q135 128 137 92 Q130 108 118 106 L92 106 Q80 108 73 92Z" fill="#2b1b16"/><path d="M93 112 Q105 120 117 112" stroke="#f0d0bc" stroke-width="3" fill="none" stroke-linecap="round"/><g class="d-eyes"><ellipse cx="93" cy="83" rx="4" ry="4.6" fill="#1a0f0c"/><ellipse cx="117" cy="83" rx="4" ry="4.6" fill="#1a0f0c"/></g><path d="M86 74 Q93 70 100 74 M110 74 Q117 70 124 74" stroke="#2b1b16" stroke-width="3.2" fill="none" stroke-linecap="round"/><path d="M70 78 Q70 46 105 46 Q140 46 140 76 L164 78 Q164 86 140 84 Q105 74 70 82Z" fill="#141010"/><circle cx="105" cy="57" r="5" fill="#e63a33"/><path d="M128 108 l9 -3" stroke="#c9a29a" stroke-width="4" stroke-linecap="round"/></g></svg></div><div class="btext"><div class="think" id="th"></div></div></div>`;
+  out.innerHTML=`<div class="bubble rise"><div class="ava"><svg viewBox="62 40 110 98" aria-hidden="true"><defs><linearGradient id="dy-skin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3c6a0"/><stop offset="1" stop-color="#dc9f78"/></linearGradient><linearGradient id="dy-beard" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2820"/><stop offset="1" stop-color="#1f1511"/></linearGradient><linearGradient id="dy-cap" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2f2a2a"/><stop offset="1" stop-color="#0f0d0d"/></linearGradient><linearGradient id="dy-metal" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6d6664"/><stop offset=".35" stop-color="#ece6e4"/><stop offset=".6" stop-color="#8d8583"/><stop offset="1" stop-color="#c7c0bd"/></linearGradient></defs><g>       <ellipse cx="72.5" cy="91" rx="6.5" ry="8.5" fill="#e3ab84"/><ellipse cx="73.5" cy="91" rx="3.2" ry="5" fill="#c98563"/>       <ellipse cx="137.5" cy="91" rx="6.5" ry="8.5" fill="#dc9f78"/><ellipse cx="136.5" cy="91" rx="3.2" ry="5" fill="#c08060"/>       <path d="M74 84 Q74 54 105 54 Q136 54 136 84 L136 98 Q136 118 105 120 Q74 118 74 98Z" fill="url(#dy-skin)"/>       <path d="M127 64 Q136 72 136 86 L136 98 Q136 112 122 118 Q131 96 127 64Z" fill="#000" opacity=".07"/>       <!-- бакенбарды и борода -->       <path d="M74 80 L74 98 Q74 120 105 132 Q136 120 136 98 L136 80 L131 80 L131 96 Q129 104 120 104 Q113 99 105 100 Q97 99 90 104 Q81 104 79 96 L79 80Z" fill="url(#dy-beard)"/>       <path d="M82 110 q4 8 10 12 M95 118 q3 6 6 9 M115 118 q-3 6 -6 9 M128 110 q-4 8 -10 12 M105 122 v8" stroke="#4a3328" stroke-width="1.3" fill="none" stroke-linecap="round" opacity=".8"/>       <!-- усы -->       <path d="M90 104 Q97 98 105 101 Q113 98 120 104 Q114 107 105 104 Q96 107 90 104Z" fill="#2b1d18"/>       <!-- рот -->       <path d="M97 109 Q105 116 113 109 Q105 112 97 109Z" fill="#fff"/>       <path d="M97 109 Q105 116 113 109" stroke="#1a0f0c" stroke-width="1.4" fill="none" stroke-linecap="round"/>       <!-- нос и щёки -->       <path d="M103 86 Q101 95 99 97 Q103 100 108 98 Q111 96 108 94" fill="#d08a64"/>       <path d="M104 88 q-1 4 -2 6" stroke="rgba(255,255,255,.4)" stroke-width="1.2" fill="none" stroke-linecap="round"/>       <ellipse cx="85" cy="95" rx="5" ry="2.6" fill="#e6826a" opacity=".45"/><ellipse cx="125" cy="95" rx="5" ry="2.6" fill="#e6826a" opacity=".45"/>       <!-- глаза -->       <g class="d-eyes">         <ellipse cx="93" cy="83" rx="5.6" ry="6.2" fill="#fff"/><ellipse cx="117" cy="83" rx="5.6" ry="6.2" fill="#fff"/>         <circle cx="94.2" cy="84" r="3.6" fill="#4a2a1c"/><circle cx="118.2" cy="84" r="3.6" fill="#4a2a1c"/>         <circle cx="94.4" cy="84.2" r="1.9" fill="#120a08"/><circle cx="118.4" cy="84.2" r="1.9" fill="#120a08"/>         <circle cx="95.6" cy="82.6" r="1.1" fill="#fff"/><circle cx="119.6" cy="82.6" r="1.1" fill="#fff"/>         <path d="M87.5 80 Q93 76.5 98.5 80" stroke="#8a5a44" stroke-width="1" fill="none" opacity=".6"/>         <path d="M111.5 80 Q117 76.5 122.5 80" stroke="#8a5a44" stroke-width="1" fill="none" opacity=".6"/>       </g>       <!-- брови -->       <path d="M86 74.5 Q92 70 100 73.5 L99.5 76 Q92 73.5 86.5 77Z" fill="#2b1d18"/>       <path d="M110 73 Q118 69 125 73 L124.5 75.5 Q118 72.5 110.5 75.5Z" fill="#2b1d18"/>       <!-- кепка -->       <path d="M72 79 Q70 46 105 45 Q140 46 139 77 Q105 67 72 79Z" fill="url(#dy-cap)"/>       <path d="M105 45 Q101 60 100 70 M105 45 Q118 56 124 70 M105 45 Q88 56 83 72" stroke="#3d3737" stroke-width="1" fill="none"/>       <circle cx="105" cy="45.5" r="2.4" fill="#3d3737"/>       <path d="M71 79 Q105 64 139 76 L165 80 Q169 84 163 87 Q140 83 128 81 Q100 76 72 85Z" fill="#141111"/>       <path d="M139 76 L165 80 Q169 84 163 87 Q147 84 136 82Z" fill="#000" opacity=".35"/>       <path d="M74 81 Q105 70 136 79" stroke="#e63a33" stroke-width="1.6" fill="none"/>       <circle cx="104" cy="58" r="6.5" fill="#e63a33"/>       <path d="M100.5 60 q-1.5 -3.5 1.5 -4.5 q1 -3 4 -1.5 q3 -.5 3 2.5 q2 1 0 3.5z" fill="#fff"/>       <path d="M114 110 L141 106" stroke="url(#dy-metal)" stroke-width="4.2" stroke-linecap="round"/>       <path d="M113 110.2 L117 109.6" stroke="#e8c47a" stroke-width="4.6" stroke-linecap="round"/></g></svg></div><div class="btext"><div class="think" id="th"></div></div></div>`;
   setDym("think","Ща намешаю…");
   out.scrollIntoView({behavior:RM?"auto":"smooth",block:"start"});
   const steps=["Так-так, читаю, чего ты хочешь…","Нюхаю все "+FL.length+" банок на полке…","Советуюсь с колбой…","Прикидываю, чтобы тебя не унесло…"];
@@ -1163,7 +1287,7 @@ $("#ai-quick").onclick=e=>{const b=e.target.closest("[data-q]");if(!b)return;con
 $("#ai-go").onclick=()=>askAI($("#ai-q").value);
 $("#ai-q").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();askAI($("#ai-q").value)}});
 const TRY=["хочу освежиться, что-то с арбузом, без мяты","сладкое и ягодное, полегче","кислое и крепкое","как лимонад для компании"];
-$("#ai-out").innerHTML=`<div class="bubble"><div class="ava"><svg viewBox="66 44 98 92" aria-hidden="true"><g ><circle cx="105" cy="86" r="33" fill="#e3ab84"/><path d="M73 92 Q75 128 105 130 Q135 128 137 92 Q130 108 118 106 L92 106 Q80 108 73 92Z" fill="#2b1b16"/><path d="M93 112 Q105 120 117 112" stroke="#f0d0bc" stroke-width="3" fill="none" stroke-linecap="round"/><g class="d-eyes"><ellipse cx="93" cy="83" rx="4" ry="4.6" fill="#1a0f0c"/><ellipse cx="117" cy="83" rx="4" ry="4.6" fill="#1a0f0c"/></g><path d="M86 74 Q93 70 100 74 M110 74 Q117 70 124 74" stroke="#2b1b16" stroke-width="3.2" fill="none" stroke-linecap="round"/><path d="M70 78 Q70 46 105 46 Q140 46 140 76 L164 78 Q164 86 140 84 Q105 74 70 82Z" fill="#141010"/><circle cx="105" cy="57" r="5" fill="#e63a33"/><path d="M128 108 l9 -3" stroke="#c9a29a" stroke-width="4" stroke-linecap="round"/></g></svg></div><div class="btext"><p>Здорово, бро! Я Дымыч, супер-кальянщик этого магазина. Забил столько чаш, что знаю все ${FL.length} вкусов на полке по запаху. Пиши, какое настроение, что любишь и чего терпеть не можешь, а я соберу тебе три микса. Или спрашивай что угодно про кальяны: чаши, угли, забивку, почему горчит.</p><div class="tryq">${TRY.map(t=>`<button class="chip sm" data-try="${t}">«${t}»</button>`).join("")}</div></div></div>`;
+$("#ai-out").innerHTML=`<div class="bubble"><div class="ava"><svg viewBox="62 40 110 98" aria-hidden="true"><defs><linearGradient id="dy-skin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3c6a0"/><stop offset="1" stop-color="#dc9f78"/></linearGradient><linearGradient id="dy-beard" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2820"/><stop offset="1" stop-color="#1f1511"/></linearGradient><linearGradient id="dy-cap" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2f2a2a"/><stop offset="1" stop-color="#0f0d0d"/></linearGradient><linearGradient id="dy-metal" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6d6664"/><stop offset=".35" stop-color="#ece6e4"/><stop offset=".6" stop-color="#8d8583"/><stop offset="1" stop-color="#c7c0bd"/></linearGradient></defs><g>       <ellipse cx="72.5" cy="91" rx="6.5" ry="8.5" fill="#e3ab84"/><ellipse cx="73.5" cy="91" rx="3.2" ry="5" fill="#c98563"/>       <ellipse cx="137.5" cy="91" rx="6.5" ry="8.5" fill="#dc9f78"/><ellipse cx="136.5" cy="91" rx="3.2" ry="5" fill="#c08060"/>       <path d="M74 84 Q74 54 105 54 Q136 54 136 84 L136 98 Q136 118 105 120 Q74 118 74 98Z" fill="url(#dy-skin)"/>       <path d="M127 64 Q136 72 136 86 L136 98 Q136 112 122 118 Q131 96 127 64Z" fill="#000" opacity=".07"/>       <!-- бакенбарды и борода -->       <path d="M74 80 L74 98 Q74 120 105 132 Q136 120 136 98 L136 80 L131 80 L131 96 Q129 104 120 104 Q113 99 105 100 Q97 99 90 104 Q81 104 79 96 L79 80Z" fill="url(#dy-beard)"/>       <path d="M82 110 q4 8 10 12 M95 118 q3 6 6 9 M115 118 q-3 6 -6 9 M128 110 q-4 8 -10 12 M105 122 v8" stroke="#4a3328" stroke-width="1.3" fill="none" stroke-linecap="round" opacity=".8"/>       <!-- усы -->       <path d="M90 104 Q97 98 105 101 Q113 98 120 104 Q114 107 105 104 Q96 107 90 104Z" fill="#2b1d18"/>       <!-- рот -->       <path d="M97 109 Q105 116 113 109 Q105 112 97 109Z" fill="#fff"/>       <path d="M97 109 Q105 116 113 109" stroke="#1a0f0c" stroke-width="1.4" fill="none" stroke-linecap="round"/>       <!-- нос и щёки -->       <path d="M103 86 Q101 95 99 97 Q103 100 108 98 Q111 96 108 94" fill="#d08a64"/>       <path d="M104 88 q-1 4 -2 6" stroke="rgba(255,255,255,.4)" stroke-width="1.2" fill="none" stroke-linecap="round"/>       <ellipse cx="85" cy="95" rx="5" ry="2.6" fill="#e6826a" opacity=".45"/><ellipse cx="125" cy="95" rx="5" ry="2.6" fill="#e6826a" opacity=".45"/>       <!-- глаза -->       <g class="d-eyes">         <ellipse cx="93" cy="83" rx="5.6" ry="6.2" fill="#fff"/><ellipse cx="117" cy="83" rx="5.6" ry="6.2" fill="#fff"/>         <circle cx="94.2" cy="84" r="3.6" fill="#4a2a1c"/><circle cx="118.2" cy="84" r="3.6" fill="#4a2a1c"/>         <circle cx="94.4" cy="84.2" r="1.9" fill="#120a08"/><circle cx="118.4" cy="84.2" r="1.9" fill="#120a08"/>         <circle cx="95.6" cy="82.6" r="1.1" fill="#fff"/><circle cx="119.6" cy="82.6" r="1.1" fill="#fff"/>         <path d="M87.5 80 Q93 76.5 98.5 80" stroke="#8a5a44" stroke-width="1" fill="none" opacity=".6"/>         <path d="M111.5 80 Q117 76.5 122.5 80" stroke="#8a5a44" stroke-width="1" fill="none" opacity=".6"/>       </g>       <!-- брови -->       <path d="M86 74.5 Q92 70 100 73.5 L99.5 76 Q92 73.5 86.5 77Z" fill="#2b1d18"/>       <path d="M110 73 Q118 69 125 73 L124.5 75.5 Q118 72.5 110.5 75.5Z" fill="#2b1d18"/>       <!-- кепка -->       <path d="M72 79 Q70 46 105 45 Q140 46 139 77 Q105 67 72 79Z" fill="url(#dy-cap)"/>       <path d="M105 45 Q101 60 100 70 M105 45 Q118 56 124 70 M105 45 Q88 56 83 72" stroke="#3d3737" stroke-width="1" fill="none"/>       <circle cx="105" cy="45.5" r="2.4" fill="#3d3737"/>       <path d="M71 79 Q105 64 139 76 L165 80 Q169 84 163 87 Q140 83 128 81 Q100 76 72 85Z" fill="#141111"/>       <path d="M139 76 L165 80 Q169 84 163 87 Q147 84 136 82Z" fill="#000" opacity=".35"/>       <path d="M74 81 Q105 70 136 79" stroke="#e63a33" stroke-width="1.6" fill="none"/>       <circle cx="104" cy="58" r="6.5" fill="#e63a33"/>       <path d="M100.5 60 q-1.5 -3.5 1.5 -4.5 q1 -3 4 -1.5 q3 -.5 3 2.5 q2 1 0 3.5z" fill="#fff"/>       <path d="M114 110 L141 106" stroke="url(#dy-metal)" stroke-width="4.2" stroke-linecap="round"/>       <path d="M113 110.2 L117 109.6" stroke="#e8c47a" stroke-width="4.6" stroke-linecap="round"/></g></svg></div><div class="btext"><p>Здорово, бро! Я Дымыч, супер-кальянщик этого магазина. Забил столько чаш, что знаю все ${FL.length} вкусов на полке по запаху. Пиши, какое настроение, что любишь и чего терпеть не можешь, а я соберу тебе три микса. Или спрашивай что угодно про кальяны: чаши, угли, забивку, почему горчит.</p><div class="tryq">${TRY.map(t=>`<button class="chip sm" data-try="${t}">«${t}»</button>`).join("")}</div></div></div>`;
 $("#ai-out").addEventListener("click",e=>{const b=e.target.closest("[data-try]");if(b){$("#ai-q").value=b.dataset.try;askAI(b.dataset.try)}});
 
 // Дым на фоне
