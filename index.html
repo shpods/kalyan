@@ -160,7 +160,8 @@ button.howc{cursor:pointer}button.howc:hover{border-color:var(--muted)}
 .gbox{max-width:440px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:26px;display:flex;flex-direction:column;gap:14px;text-align:center;align-items:center}
 .g21{font-family:var(--display);font-weight:900;font-size:44px;color:var(--red);border:3px solid var(--red);border-radius:16px;padding:4px 16px;line-height:1.1}
 .gbox h2{font-size:21px}.gbox p{margin:0;color:var(--muted);font-size:15px}
-.gbtns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}.gbtns .cta{align-self:auto}
+.gbtns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+#gate-cities .cta{flex:1 1 160px}.gbtns .cta{align-self:auto}
 .gno{color:var(--fg)!important;font-weight:700}
 footer p{margin:0 0 8px;max-width:70ch;margin-inline:auto}
 /* Кальян Дымыча и мини-Дымыч */
@@ -650,7 +651,8 @@ footer p{margin:0 0 8px;max-width:70ch;margin-inline:auto}
     <div class="g21">21+</div>
     <h2 id="gate-h">Вам уже исполнился 21 год?</h2>
     <p>Сайт содержит информацию о табачной продукции. По закону Республики Казахстан он предназначен только для лиц старше 21 года.</p>
-    <div class="gbtns"><button class="cta" id="gate-yes">Да, мне есть 21</button><button class="ghost" id="gate-no">Нет</button></div>
+    <div class="gbtns" id="gate-cities"><button class="cta" data-gcity="almaty">Да, я из Алматы</button><button class="cta" data-gcity="astana">Да, я из Астаны</button></div>
+    <div class="gbtns"><button class="cta" id="gate-yes">Да, мне есть 21</button><button class="ghost" id="gate-no">Нет, мне нет 21</button></div>
     <p class="gno" id="gate-msg" hidden>Извини, бро, сайт только для тех, кому есть 21. Приходи позже!</p>
   </div>
 </div>
@@ -1423,8 +1425,12 @@ renderCity();
 // Возрастное окно
 (function(){let ok=false;try{ok=localStorage.getItem("age21")==="1"}catch(e){}
   const g=$("#gate");if(ok){g.hidden=true;if(!CITYKEY)askCity();return}document.documentElement.style.overflow="hidden";
-  $("#gate-yes").onclick=()=>{try{localStorage.setItem("age21","1")}catch(e){}g.hidden=true;document.documentElement.style.overflow="";floatVis();if(!CITYKEY)askCity()};
-  $("#gate-no").onclick=()=>{$("#gate-msg").hidden=false;$("#gate-yes").hidden=true;$("#gate-no").hidden=true}})();
+  // город не известен — спрашиваем возраст и город одним окном
+  if(!CITYKEY){$("#gate-yes").hidden=true;$("#gate-h").textContent="Вам есть 21 год? Из какого вы города?"}else $("#gate-cities").hidden=true;
+  const pass=()=>{try{localStorage.setItem("age21","1")}catch(e){}g.hidden=true;document.documentElement.style.overflow="";floatVis()};
+  document.querySelectorAll("[data-gcity]").forEach(b=>b.onclick=()=>{setCity(b.dataset.gcity);pass()});
+  $("#gate-yes").onclick=()=>{pass();if(!CITYKEY)askCity()};
+  $("#gate-no").onclick=()=>{$("#gate-msg").hidden=false;g.querySelectorAll(".gbtns").forEach(x=>x.hidden=true)}})();
 // Кальяны в наличии: файл hookahs.txt (Название | Цена | фото | Описание), фото в папке foto/
 const WAICON=`<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.5c.1.2 1.6 2.5 3.9 3.5 1.5.6 2 .7 2.7.6.4-.1 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1-.1-.2-.2-.2-.4-.3z"/></svg>`;
 const waLink=txt=>"https://wa.me/"+CITY.wa+"?text="+encodeURIComponent(txt);
