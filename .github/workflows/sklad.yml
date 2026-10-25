@@ -1,0 +1,34 @@
+name: Остатки из МоегоСклада
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sklad
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Забрать остатки
+        env:
+          MOYSKLAD_TOKEN: ${{ secrets.MOYSKLAD_TOKEN }}
+        run: python sklad/sync.py
+      - name: Сохранить изменения
+        run: |
+          git config user.name "sklad-bot"
+          git config user.email "sklad-bot@users.noreply.github.com"
+          git add stock-auto.txt hookahs-auto.txt sklad-report.txt foto/auto || true
+          if git diff --cached --quiet; then echo "Ничего не изменилось"; exit 0; fi
+          git commit -m "Остатки из МоегоСклада"
+          git push

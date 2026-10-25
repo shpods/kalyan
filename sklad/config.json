@@ -1,0 +1,15 @@
+{
+  "brands": {
+    "Black Burn": ["black burn", "blackburn", "блэк берн", "блек берн"],
+    "Хулиган": ["хулиган", "hooligan", "hlgn", "хлгн"],
+    "Overdose": ["overdose", "овердоз", "овердос"],
+    "Sebero": ["sebero", "себеро"],
+    "Chabacco": ["chabacco", "чабакко", "чабако"],
+    "Hook": ["hook", "хук"],
+    "NАШ": ["наш", "nash"],
+    "Hell": ["hell", "хелл", "хэлл"]
+  },
+  "hookah_folders": ["кальяны"],
+  "ignore_folders": ["угли", "уголь", "аксессуар"],
+  "download_photos": true
+}

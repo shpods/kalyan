@@ -1401,11 +1401,14 @@ function renderHooks(lines){const items=lines.map(l=>l.trim()).filter(l=>l&&!l.s
     <div class="hbd"><h3>${esc(n)}</h3>${pr?`<div class="hprice">${priceFmt(pr)}</div>`:""}${ds?`<p>${esc(ds)}</p>`:""}
     <a class="wa sm" href="${waLink("Здравствуйте! Интересует кальян "+n+". Он есть в наличии?")}" target="_blank" rel="noopener">${WAICON}<span>Спросить</span></a></div></article>`).join("")}
 renderHooks([]);
-fetch("hookahs.txt",{cache:"no-store"}).then(r=>r.ok?r.text():"").then(txt=>{if(txt)renderHooks(txt.split("\n"))}).catch(()=>{});
+const getTxt=f=>fetch(f,{cache:"no-store"}).then(r=>r.ok?r.text():"").catch(()=>"");
+// ручной список + автоматический из МоегоСклада; ручная строка с тем же названием важнее
+Promise.all([getTxt("hookahs.txt"),getTxt("hookahs-auto.txt")]).then(([a,b])=>{const man=a.split("\n"),seen=new Set(man.map(l=>l.split("|")[0].trim().toLowerCase()).filter(Boolean));
+  const auto=b.split("\n").filter(l=>!seen.has(l.split("|")[0].trim().toLowerCase()));renderHooks(man.concat(auto))});
 // Стоп-лист: встроенный + файл stock.txt рядом с сайтом
 const STOCK_OUT=[];
 applyStock(STOCK_OUT);
-fetch("stock.txt",{cache:"no-store"}).then(r=>r.ok?r.text():"").then(txt=>{if(!txt)return;applyStock(STOCK_OUT.concat(txt.split("\n")));renderCat();run()}).catch(()=>{});
+Promise.all([getTxt("stock.txt"),getTxt("stock-auto.txt")]).then(([a,b])=>{if(!a&&!b)return;applyStock(STOCK_OUT.concat(a.split("\n"),b.split("\n")));renderCat();run()});
 $("#scale").innerHTML=[[2,"Sebero Classic, Chabacco Medium"],[3,"Хулиган, Hell, NАШ White, Sebero Black"],[4,"Black Burn, Overdose, Hook, NАШ Black"]].map(([n,t])=>`<div>${dots(n)}<span>${t}</span></div>`).join("");
 </script>
 </body></html>
