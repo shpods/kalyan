@@ -180,6 +180,20 @@ footer p{margin:0 0 8px;max-width:70ch;margin-inline:auto}
 }
 #ai-out,#hero,#res{scroll-margin-top:70px}
 @media(max-width:640px){body{padding-bottom:110px}}
+.gsub{margin-top:10px!important;color:var(--muted);font-size:14px}
+/* Соцкнопки */
+.social{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;width:100%;max-width:560px}
+.sb{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:16px;text-decoration:none;color:#fff;min-width:0;box-shadow:0 6px 18px rgba(0,0,0,.35);transition:transform .15s}
+.sb:active{transform:scale(.96)}
+.si{flex:0 0 auto;width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:rgba(255,255,255,.18)}
+.si svg{width:22px;height:22px}
+.sl{display:flex;flex-direction:column;min-width:0;line-height:1.15}
+.sl b{font-size:14px}.sl small{font-size:11px;opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-wa{background:linear-gradient(135deg,#25b866,#178049)}
+.sb-ig{background:linear-gradient(135deg,#f58529 0%,#dd2a7b 50%,#8134af 100%)}
+.sb-gis{background:linear-gradient(135deg,#3fb54a,#1d8a2b)}
+@media(max-width:520px){.sb{flex-direction:column;text-align:center;gap:6px;padding:12px 6px}.sl small{font-size:10px}.si{width:42px;height:42px;border-radius:14px}.si svg{width:24px;height:24px}}
+.social.bottom{margin:0 auto 16px}
 /* Город */
 .citybar{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 10px;font-size:14px}
 .citybar svg{width:16px;height:16px;color:var(--red)}
@@ -332,7 +346,11 @@ footer p{margin:0 0 8px;max-width:70ch;margin-inline:auto}
     <div class="age"><b>21+</b>Только для лиц старше 21 года</div>
     <div class="citybar" id="citybar"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"/></svg><span id="city-name">Город</span><a id="city-addr" href="#" target="_blank" rel="noopener"></a><button class="citysw" id="city-sw">Сменить город</button></div>
     <p class="infonote">Информационный сайт магазина. Не является рекламой. Табачная продукция через сайт не продаётся и не доставляется: продажа только в магазине, лицам старше 21 года по удостоверению личности.</p>
-    <a class="wa sm" href="https://wa.me/77476660077?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D0%B8%D1%88%D1%83%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%20shpods." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.5c.1.2 1.6 2.5 3.9 3.5 1.5.6 2 .7 2.7.6.4-.1 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1-.1-.2-.2-.2-.4-.3z"/></svg><span>WhatsApp: +7 747 666 00 77</span></a>
+    <nav class="social top" aria-label="Связаться">
+      <a class="sb sb-wa" href="https://wa.me/77476660077?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!" target="_blank" rel="noopener"><span class="si"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.5 21.5l4.8-1.3A9.5 9.5 0 1 0 12 2.5zm0 2a7.5 7.5 0 1 1-3.8 14l-.4-.2-2.3.6.6-2.2-.2-.4A7.5 7.5 0 0 1 12 4.5z"/><path fill="currentColor" d="M9.3 7.6c.3 0 .5 0 .6.4l.8 1.8c.1.2 0 .4-.1.6l-.6.7c-.1.2-.1.3 0 .5.7 1.2 1.6 2.1 2.9 2.7.2.1.3 0 .5-.1l.8-.9c.2-.2.4-.2.6-.1l1.7.8c.3.1.3.3.3.5 0 .9-.7 1.9-1.6 2-1.1.2-2.8-.3-4.6-1.9-2-1.7-2.8-3.6-2.7-4.8.1-1.2 1-2.2 1.4-2.2z"/></svg></span><span class="sl"><b>WhatsApp</b><small class="s-phone">+7 747 666 00 77</small></span></a>
+      <a class="sb sb-ig lnk-ig" href="https://instagram.com/shpods.astana.k3" target="_blank" rel="noopener"><span class="si"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.3" cy="6.7" r="1.3" fill="currentColor"/></svg></span><span class="sl"><b>Instagram</b><small class="s-ig">@shpods</small></span></a>
+      <a class="sb sb-gis lnk-gis" href="https://2gis.kz/astana/geo/70000001084433607" target="_blank" rel="noopener"><span class="si"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a7.5 7.5 0 0 0-7.5 7.5c0 5.4 6.6 11.9 6.9 12.2a.9.9 0 0 0 1.2 0c.3-.3 6.9-6.8 6.9-12.2A7.5 7.5 0 0 0 12 2zm0 10.3a2.8 2.8 0 1 1 0-5.6 2.8 2.8 0 0 1 0 5.6z"/></svg></span><span class="sl"><b>2ГИС</b><small class="s-addr">Как добраться</small></span></a>
+    </nav>
   </header>
 
   <nav class="tabs" role="tablist">
@@ -348,16 +366,6 @@ footer p{margin:0 0 8px;max-width:70ch;margin-inline:auto}
 
   <!-- ПОДБОР -->
   <section class="view" id="v-pick">
-    <div class="intro">
-      <h1 class="lead">Поможем выбрать табак и собрать вкусный микс</h1>
-      <p class="sub">Это бесплатный помощник магазина shpods hookah team. Здесь можно подобрать вкус под настроение, почитать про любой табак и разобраться в кальянах.</p>
-      <div class="how3">
-        <button class="howc" data-go="ai"><b>1</b><strong>Спроси Дымыча</strong><span>Напиши, чего хочется. Он соберёт микс или ответит на вопрос про кальян.</span></button>
-        <button class="howc" data-go="cat"><b>2</b><strong>Посмотри вкусы</strong><span>Все вкусы с описанием, крепостью и с чем их смешать.</span></button>
-        <div class="howc"><b>3</b><strong>Покажи экран продавцу</strong><span>Он найдёт эти вкусы на полке и подскажет, что взять.</span></div>
-      </div>
-      <div class="wrow"><a class="wa " href="https://wa.me/77476660077?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D0%B8%D1%88%D1%83%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%20shpods." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.5c.1.2 1.6 2.5 3.9 3.5 1.5.6 2 .7 2.7.6.4-.1 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1-.1-.2-.2-.2-.4-.3z"/></svg><span>Написать в WhatsApp</span></a><span class="wtxt">Есть вопрос? Пиши нам: <span class="wanum">+7 747 666 00 77</span></span></div>
-    </div>
     <div class="hero" id="hero">
       <canvas id="smoke" aria-hidden="true"></canvas>
       <div class="hero-in">
@@ -526,9 +534,19 @@ footer p{margin:0 0 8px;max-width:70ch;margin-inline:auto}
         </div>
       </div>
     </div>
-    <button class="rentban rise" data-go="rent"><div class="rprice">5 000 ₸</div><div><div class="ptag">Аренда кальяна</div><h3>Привезём кальян на твоё мероприятие</h3><p>Дни рождения, вечеринки, отдых с друзьями. Можно с мастером. Подробнее →</p></div></button>
     <div class="ai-out" id="ai-out" aria-live="polite"></div>
+    <button class="rentban rise" data-go="rent"><div class="rprice">5 000 ₸</div><div><div class="ptag">Аренда кальяна</div><h3>Привезём кальян на твоё мероприятие</h3><p>Дни рождения, вечеринки, отдых с друзьями. Можно с мастером. Подробнее →</p></div></button>
 
+    <div class="intro">
+      <h1 class="lead">Поможем выбрать табак и собрать вкусный микс</h1>
+      <p class="sub">Это бесплатный помощник магазина shpods hookah team. Здесь можно подобрать вкус под настроение, почитать про любой табак и разобраться в кальянах.</p>
+      <div class="how3">
+        <button class="howc" data-go="ai"><b>1</b><strong>Спроси Дымыча</strong><span>Напиши, чего хочется. Он соберёт микс или ответит на вопрос про кальян.</span></button>
+        <button class="howc" data-go="cat"><b>2</b><strong>Посмотри вкусы</strong><span>Все вкусы с описанием, крепостью и с чем их смешать.</span></button>
+        <div class="howc"><b>3</b><strong>Покажи экран продавцу</strong><span>Он найдёт эти вкусы на полке и подскажет, что взять.</span></div>
+      </div>
+      <div class="wrow"><a class="wa " href="https://wa.me/77476660077?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D0%B8%D1%88%D1%83%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%20shpods." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.5c.1.2 1.6 2.5 3.9 3.5 1.5.6 2 .7 2.7.6.4-.1 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1-.1-.2-.2-.2-.4-.3z"/></svg><span>Написать в WhatsApp</span></a><span class="wtxt">Есть вопрос? Пиши нам: <span class="wanum">+7 747 666 00 77</span></span></div>
+    </div>
     <div class="divider"><h2>Или просто выбери настроение</h2></div>
     <div class="step"><h3>Какое настроение?</h3><div class="chips" id="q-mood"></div>
       <h3>Крепость</h3><div class="chips" id="q-str"></div></div>
@@ -643,7 +661,11 @@ footer p{margin:0 0 8px;max-width:70ch;margin-inline:auto}
     </div>
   </section>
 
-  <footer><div class="fcity" id="fcity"></div><div class="wrow wcenter"><a class="wa sm" href="https://wa.me/77476660077?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D0%B8%D1%88%D1%83%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%20shpods." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.5c.1.2 1.6 2.5 3.9 3.5 1.5.6 2 .7 2.7.6.4-.1 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1-.1-.2-.2-.2-.4-.3z"/></svg><span>Написать в WhatsApp</span></a><span class="wanum">+7 747 666 00 77</span></div><p><b>Курение вредит вашему здоровью.</b></p><p>Сайт носит справочный характер, предназначен только для лиц старше 21 года и не является рекламой. Мы не продаём табачные изделия дистанционно: через сайт, мессенджеры или с доставкой. Продажа табака только в магазине, лично, лицам старше 21 года при предъявлении удостоверения личности.</p><p>Описания вкусов собраны из открытых источников: отзывов курильщиков и сайтов производителей. Наличие и цены уточняйте у продавца.</p></footer>
+  <footer><div class="fcity" id="fcity"></div><nav class="social bottom" aria-label="Связаться">
+      <a class="sb sb-wa" href="https://wa.me/77476660077?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!" target="_blank" rel="noopener"><span class="si"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.5 21.5l4.8-1.3A9.5 9.5 0 1 0 12 2.5zm0 2a7.5 7.5 0 1 1-3.8 14l-.4-.2-2.3.6.6-2.2-.2-.4A7.5 7.5 0 0 1 12 4.5z"/><path fill="currentColor" d="M9.3 7.6c.3 0 .5 0 .6.4l.8 1.8c.1.2 0 .4-.1.6l-.6.7c-.1.2-.1.3 0 .5.7 1.2 1.6 2.1 2.9 2.7.2.1.3 0 .5-.1l.8-.9c.2-.2.4-.2.6-.1l1.7.8c.3.1.3.3.3.5 0 .9-.7 1.9-1.6 2-1.1.2-2.8-.3-4.6-1.9-2-1.7-2.8-3.6-2.7-4.8.1-1.2 1-2.2 1.4-2.2z"/></svg></span><span class="sl"><b>WhatsApp</b><small class="s-phone">+7 747 666 00 77</small></span></a>
+      <a class="sb sb-ig lnk-ig" href="https://instagram.com/shpods.astana.k3" target="_blank" rel="noopener"><span class="si"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.3" cy="6.7" r="1.3" fill="currentColor"/></svg></span><span class="sl"><b>Instagram</b><small class="s-ig">@shpods</small></span></a>
+      <a class="sb sb-gis lnk-gis" href="https://2gis.kz/astana/geo/70000001084433607" target="_blank" rel="noopener"><span class="si"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a7.5 7.5 0 0 0-7.5 7.5c0 5.4 6.6 11.9 6.9 12.2a.9.9 0 0 0 1.2 0c.3-.3 6.9-6.8 6.9-12.2A7.5 7.5 0 0 0 12 2zm0 10.3a2.8 2.8 0 1 1 0-5.6 2.8 2.8 0 0 1 0 5.6z"/></svg></span><span class="sl"><b>2ГИС</b><small class="s-addr">Как добраться</small></span></a>
+    </nav><p><b>Курение вредит вашему здоровью.</b></p><p>Сайт носит справочный характер, предназначен только для лиц старше 21 года и не является рекламой. Мы не продаём табачные изделия дистанционно: через сайт, мессенджеры или с доставкой. Продажа табака только в магазине, лично, лицам старше 21 года при предъявлении удостоверения личности.</p><p>Описания вкусов собраны из открытых источников: отзывов курильщиков и сайтов производителей. Наличие и цены уточняйте у продавца.</p></footer>
 </div>
 
 <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-h">
@@ -656,7 +678,7 @@ footer p{margin:0 0 8px;max-width:70ch;margin-inline:auto}
     <p class="gno" id="gate-msg" hidden>Извини, бро, сайт только для тех, кому есть 21. Приходи позже!</p>
   </div>
 </div>
-<a class="wa-fab" href="https://wa.me/77476660077?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D0%B8%D1%88%D1%83%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%20shpods." target="_blank" rel="noopener" aria-label="Написать в WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.5c.1.2 1.6 2.5 3.9 3.5 1.5.6 2 .7 2.7.6.4-.1 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1-.1-.2-.2-.2-.4-.3z"/></svg><span>WhatsApp</span></a>
+<a class="wa-fab" href="https://wa.me/77476660077?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D0%B8%D1%88%D1%83%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%20shpods." target="_blank" rel="noopener" aria-label="Написать в WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.5 21.5l4.8-1.3A9.5 9.5 0 1 0 12 2.5zm0 2a7.5 7.5 0 1 1-3.8 14l-.4-.2-2.3.6.6-2.2-.2-.4A7.5 7.5 0 0 1 12 4.5z"/><path fill="currentColor" d="M9.3 7.6c.3 0 .5 0 .6.4l.8 1.8c.1.2 0 .4-.1.6l-.6.7c-.1.2-.1.3 0 .5.7 1.2 1.6 2.1 2.9 2.7.2.1.3 0 .5-.1l.8-.9c.2-.2.4-.2.6-.1l1.7.8c.3.1.3.3.3.5 0 .9-.7 1.9-1.6 2-1.1.2-2.8-.3-4.6-1.9-2-1.7-2.8-3.6-2.7-4.8.1-1.2 1-2.2 1.4-2.2z"/></svg><span>WhatsApp</span></a>
 <div class="dym-float off" id="dymf" role="button" tabindex="0" aria-label="Вернуться к Дымычу"><div class="say" id="say2" hidden></div></div>
 <div class="gate" id="citygate" hidden role="dialog" aria-modal="true" aria-labelledby="cg-h">
   <div class="gbox"><h2 id="cg-h">Ваш город?</h2><p>Покажем адрес и WhatsApp вашего магазина shpods.</p>
@@ -1352,8 +1374,18 @@ $("#ai-quick").onclick=e=>{const b=e.target.closest("[data-q]");if(!b)return;con
 $("#ai-go").onclick=()=>askAI($("#ai-q").value);
 $("#ai-q").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();askAI($("#ai-q").value)}});
 const TRY=["хочу освежиться, что-то с арбузом, без мяты","сладкое и ягодное, полегче","кислое и крепкое","как лимонад для компании"];
-$("#ai-out").innerHTML=`<div class="bubble"><div class="ava"><svg viewBox="62 40 110 98" aria-hidden="true"><defs><linearGradient id="dy-skin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3c6a0"/><stop offset="1" stop-color="#dc9f78"/></linearGradient><linearGradient id="dy-beard" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2820"/><stop offset="1" stop-color="#1f1511"/></linearGradient><linearGradient id="dy-cap" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2f2a2a"/><stop offset="1" stop-color="#0f0d0d"/></linearGradient><linearGradient id="dy-metal" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6d6664"/><stop offset=".35" stop-color="#ece6e4"/><stop offset=".6" stop-color="#8d8583"/><stop offset="1" stop-color="#c7c0bd"/></linearGradient></defs><g>       <ellipse cx="72.5" cy="91" rx="6.5" ry="8.5" fill="#e3ab84"/><ellipse cx="73.5" cy="91" rx="3.2" ry="5" fill="#c98563"/>       <ellipse cx="137.5" cy="91" rx="6.5" ry="8.5" fill="#dc9f78"/><ellipse cx="136.5" cy="91" rx="3.2" ry="5" fill="#c08060"/>       <path d="M74 84 Q74 54 105 54 Q136 54 136 84 L136 98 Q136 118 105 120 Q74 118 74 98Z" fill="url(#dy-skin)"/>       <path d="M127 64 Q136 72 136 86 L136 98 Q136 112 122 118 Q131 96 127 64Z" fill="#000" opacity=".07"/>       <!-- бакенбарды и борода -->       <path d="M74 80 L74 98 Q74 120 105 132 Q136 120 136 98 L136 80 L131 80 L131 96 Q129 104 120 104 Q113 99 105 100 Q97 99 90 104 Q81 104 79 96 L79 80Z" fill="url(#dy-beard)"/>       <path d="M82 110 q4 8 10 12 M95 118 q3 6 6 9 M115 118 q-3 6 -6 9 M128 110 q-4 8 -10 12 M105 122 v8" stroke="#4a3328" stroke-width="1.3" fill="none" stroke-linecap="round" opacity=".8"/>       <!-- усы -->       <path d="M90 104 Q97 98 105 101 Q113 98 120 104 Q114 107 105 104 Q96 107 90 104Z" fill="#2b1d18"/>       <!-- рот -->       <path d="M97 109 Q105 116 113 109 Q105 112 97 109Z" fill="#fff"/>       <path d="M97 109 Q105 116 113 109" stroke="#1a0f0c" stroke-width="1.4" fill="none" stroke-linecap="round"/>       <!-- нос и щёки -->       <path d="M103 86 Q101 95 99 97 Q103 100 108 98 Q111 96 108 94" fill="#d08a64"/>       <path d="M104 88 q-1 4 -2 6" stroke="rgba(255,255,255,.4)" stroke-width="1.2" fill="none" stroke-linecap="round"/>       <ellipse cx="85" cy="95" rx="5" ry="2.6" fill="#e6826a" opacity=".45"/><ellipse cx="125" cy="95" rx="5" ry="2.6" fill="#e6826a" opacity=".45"/>       <!-- глаза -->       <g class="d-eyes">         <ellipse cx="93" cy="83" rx="5.6" ry="6.2" fill="#fff"/><ellipse cx="117" cy="83" rx="5.6" ry="6.2" fill="#fff"/>         <circle cx="94.2" cy="84" r="3.6" fill="#4a2a1c"/><circle cx="118.2" cy="84" r="3.6" fill="#4a2a1c"/>         <circle cx="94.4" cy="84.2" r="1.9" fill="#120a08"/><circle cx="118.4" cy="84.2" r="1.9" fill="#120a08"/>         <circle cx="95.6" cy="82.6" r="1.1" fill="#fff"/><circle cx="119.6" cy="82.6" r="1.1" fill="#fff"/>         <path d="M87.5 80 Q93 76.5 98.5 80" stroke="#8a5a44" stroke-width="1" fill="none" opacity=".6"/>         <path d="M111.5 80 Q117 76.5 122.5 80" stroke="#8a5a44" stroke-width="1" fill="none" opacity=".6"/>       </g>       <!-- брови -->       <path d="M86 74.5 Q92 70 100 73.5 L99.5 76 Q92 73.5 86.5 77Z" fill="#2b1d18"/>       <path d="M110 73 Q118 69 125 73 L124.5 75.5 Q118 72.5 110.5 75.5Z" fill="#2b1d18"/>       <!-- кепка -->       <path d="M72 79 Q70 46 105 45 Q140 46 139 77 Q105 67 72 79Z" fill="url(#dy-cap)"/>       <path d="M105 45 Q101 60 100 70 M105 45 Q118 56 124 70 M105 45 Q88 56 83 72" stroke="#3d3737" stroke-width="1" fill="none"/>       <circle cx="105" cy="45.5" r="2.4" fill="#3d3737"/>       <path d="M71 79 Q105 64 139 76 L165 80 Q169 84 163 87 Q140 83 128 81 Q100 76 72 85Z" fill="#141111"/>       <path d="M139 76 L165 80 Q169 84 163 87 Q147 84 136 82Z" fill="#000" opacity=".35"/>       <path d="M74 81 Q105 70 136 79" stroke="#e63a33" stroke-width="1.6" fill="none"/>       <circle cx="104" cy="58" r="6.5" fill="#e63a33"/>       <path d="M100.5 60 q-1.5 -3.5 1.5 -4.5 q1 -3 4 -1.5 q3 -.5 3 2.5 q2 1 0 3.5z" fill="#fff"/>       <path d="M114 110 L141 106" stroke="url(#dy-metal)" stroke-width="4.2" stroke-linecap="round"/>       <path d="M113 110.2 L117 109.6" stroke="#e8c47a" stroke-width="4.6" stroke-linecap="round"/></g></svg></div><div class="btext"><p>Здорово, бро! Я Дымыч, супер-кальянщик этого магазина. Забил столько чаш, что знаю все ${FL.length} вкусов на полке по запаху. Пиши, какое настроение, что любишь и чего терпеть не можешь, а я соберу тебе три микса. Или спрашивай что угодно про кальяны: чаши, угли, забивку, почему горчит.</p><div class="tryq">${TRY.map(t=>`<button class="chip sm" data-try="${t}">«${t}»</button>`).join("")}</div></div></div>`;
-$("#ai-out").addEventListener("click",e=>{const b=e.target.closest("[data-try]");if(b){$("#ai-q").value=b.dataset.try;askAI(b.dataset.try)}});
+const GREETS=["Здорово, бро! Это shpods {CITY}. Чего хочется сегодня?","Салам, бро! На связи Дымыч из shpods {CITY}. Что будем курить?","О, привет! Дымыч на месте, shpods {CITY}. Давай подберём тебе вкус?"];
+const GO_CHIPS=[["try","Подбери микс по настроению","замути что-нибудь вкусное"],["try","Хочу свежее","хочу что-то свежее с холодком"],["try","Хочу сладкое","сладкое и ягодное"],["try","Какую чашу выбрать?","Какую чашу выбрать?"],["go","Кальяны в наличии","hook"],["go","Аренда кальяна","rent"]];
+let greeted=false;
+async function greet(){if(greeted)return;greeted=true;
+  const msg=GREETS[Math.floor(Math.random()*GREETS.length)].replace("{CITY}",CITY.name);
+  $("#ai-out").innerHTML=`<div class="bubble rise"><div class="ava">${AVA}</div><div class="btext"><p id="greet-t"></p><p class="gsub" id="greet-s" hidden>Напиши, что любишь, или жми кнопку:</p><div class="tryq" id="greet-c"></div></div></div>`;
+  setDym("happy","Здорово, бро!");
+  await typeInto($("#greet-t"),msg);
+  $("#greet-s").hidden=false;
+  const c=$("#greet-c");GO_CHIPS.forEach(([k,l,v],i)=>{const b=document.createElement("button");b.className="chip sm rise";b.style.setProperty("--i",i);b.textContent=l;if(k==="go")b.dataset.go2=v;else b.dataset.try=v;c.appendChild(b)});
+  setTimeout(()=>setDym("idle",null),2500)}
+$("#ai-out").addEventListener("click",e=>{const g=e.target.closest("[data-go2]");if(g){show(g.dataset.go2);return}const b=e.target.closest("[data-try]");if(b){$("#ai-q").value=b.dataset.try;askAI(b.dataset.try)}});
 
 // Дым на фоне
 (function(){const cv=$("#smoke"),cx=cv.getContext("2d");let W,H,P=[],dpr=Math.min(2,window.devicePixelRatio||1);
@@ -1416,23 +1448,28 @@ function fixContacts(root){if(!root||!root.querySelectorAll)return;
 function setCity(k){if(!CITIES[k])return;CITYKEY=k;CITY=CITIES[k];try{localStorage.setItem("city",k)}catch(e){}renderCity()}
 function renderCity(){$("#city-name").textContent=CITY.name;const a=$("#city-addr");a.textContent=CITY.addr;a.href=CITY.gis;
   $("#fcity").innerHTML=`<b>shpods ${esc(CITY.name)}</b> · <a href="${CITY.gis}" target="_blank" rel="noopener">${esc(CITY.addr)}</a> · WhatsApp <span class="wanum">${esc(CITY.phone)}</span> · <a href="https://instagram.com/${CITY.ig}" target="_blank" rel="noopener">@${esc(CITY.ig)}</a>`;
+  document.querySelectorAll(".lnk-ig").forEach(a=>a.href="https://instagram.com/"+CITY.ig);
+  document.querySelectorAll(".lnk-gis").forEach(a=>a.href=CITY.gis);
+  document.querySelectorAll(".s-ig").forEach(s=>s.textContent="@"+CITY.ig);
+  document.querySelectorAll(".s-addr").forEach(s=>s.textContent=CITY.addr);
+  document.querySelectorAll(".s-phone").forEach(s=>s.textContent=CITY.phone);
   fixContacts(document.body)}
 new MutationObserver(ms=>{for(const m of ms)m.addedNodes.forEach(nd=>{if(nd.nodeType===1)fixContacts(nd)})}).observe(document.body,{childList:true,subtree:true});
 function askCity(){const g=$("#citygate");g.hidden=false;document.documentElement.style.overflow="hidden"}
-document.querySelectorAll("[data-city]").forEach(b=>b.onclick=()=>{setCity(b.dataset.city);$("#citygate").hidden=true;document.documentElement.style.overflow=""});
+document.querySelectorAll("[data-city]").forEach(b=>b.onclick=()=>{setCity(b.dataset.city);$("#citygate").hidden=true;document.documentElement.style.overflow="";greeted=false;greet()});
 $("#city-sw").onclick=askCity;
 renderCity();
 // Возрастное окно
 (function(){let ok=false;try{ok=localStorage.getItem("age21")==="1"}catch(e){}
-  const g=$("#gate");if(ok){g.hidden=true;if(!CITYKEY)askCity();return}document.documentElement.style.overflow="hidden";
+  const g=$("#gate");if(ok){g.hidden=true;if(!CITYKEY)askCity();else setTimeout(greet,500);return}document.documentElement.style.overflow="hidden";
   // город не известен — спрашиваем возраст и город одним окном
   if(!CITYKEY){$("#gate-yes").hidden=true;$("#gate-h").textContent="Вам есть 21 год? Из какого вы города?"}else $("#gate-cities").hidden=true;
   const pass=()=>{try{localStorage.setItem("age21","1")}catch(e){}g.hidden=true;document.documentElement.style.overflow="";floatVis()};
-  document.querySelectorAll("[data-gcity]").forEach(b=>b.onclick=()=>{setCity(b.dataset.gcity);pass()});
-  $("#gate-yes").onclick=()=>{pass();if(!CITYKEY)askCity()};
+  document.querySelectorAll("[data-gcity]").forEach(b=>b.onclick=()=>{setCity(b.dataset.gcity);pass();setTimeout(greet,350)});
+  $("#gate-yes").onclick=()=>{pass();if(!CITYKEY)askCity();else setTimeout(greet,350)};
   $("#gate-no").onclick=()=>{$("#gate-msg").hidden=false;g.querySelectorAll(".gbtns").forEach(x=>x.hidden=true)}})();
 // Кальяны в наличии: файл hookahs.txt (Название | Цена | фото | Описание), фото в папке foto/
-const WAICON=`<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.5c.1.2 1.6 2.5 3.9 3.5 1.5.6 2 .7 2.7.6.4-.1 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1-.1-.2-.2-.2-.4-.3z"/></svg>`;
+const WAICON=`<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.5 21.5l4.8-1.3A9.5 9.5 0 1 0 12 2.5zm0 2a7.5 7.5 0 1 1-3.8 14l-.4-.2-2.3.6.6-2.2-.2-.4A7.5 7.5 0 0 1 12 4.5z"/><path fill="currentColor" d="M9.3 7.6c.3 0 .5 0 .6.4l.8 1.8c.1.2 0 .4-.1.6l-.6.7c-.1.2-.1.3 0 .5.7 1.2 1.6 2.1 2.9 2.7.2.1.3 0 .5-.1l.8-.9c.2-.2.4-.2.6-.1l1.7.8c.3.1.3.3.3.5 0 .9-.7 1.9-1.6 2-1.1.2-2.8-.3-4.6-1.9-2-1.7-2.8-3.6-2.7-4.8.1-1.2 1-2.2 1.4-2.2z"/></svg>`;
 const waLink=txt=>"https://wa.me/"+CITY.wa+"?text="+encodeURIComponent(txt);
 const HPH='<svg viewBox="0 0 60 100" aria-hidden="true"><path fill="currentColor" d="M22 6h16l-3 10H25zM18 18h24v4H18zM28 22h4v42h-4zM24 40h12v3H24zM16 64h28l-3 8c8 4 13 10 13 17 0 7-9 10-24 10S6 96 6 89c0-7 5-13 13-17z"/></svg>';
 function priceFmt(p){const n=String(p).replace(/[^\d]/g,"");return n?Number(n).toLocaleString("ru-RU").replace(/,/g," ")+" ₸":esc(p)}
