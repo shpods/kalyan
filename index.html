@@ -179,6 +179,16 @@ footer p{margin:0 0 8px;max-width:70ch;margin-inline:auto}
 }
 #ai-out,#hero,#res{scroll-margin-top:70px}
 @media(max-width:640px){body{padding-bottom:110px}}
+/* Аренда */
+.rentban{display:flex;gap:18px;align-items:center;text-align:left;width:100%;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px 20px;color:var(--fg);font:inherit;cursor:pointer}
+.rentban:hover{border-color:var(--muted)}
+.rentban h3{font-size:16px}.rentban p{margin:2px 0 0;font-size:14px;color:var(--muted)}
+.rprice{font-family:var(--display);font-weight:900;font-size:clamp(26px,6vw,36px);line-height:1;color:var(--fg);flex:0 0 auto;white-space:nowrap}
+.rentgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.rcard{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:8px}
+.rcard.hot{border-color:var(--red)}
+.rcard .big{font-family:var(--display);font-weight:900;font-size:clamp(28px,6vw,40px);line-height:1.05}
+.rcard h3{font-size:17px}.rcard p{margin:0;color:var(--muted)}
 /* WhatsApp */
 .wa-fab{position:fixed;left:max(12px,env(safe-area-inset-left,0px));bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:16;display:inline-flex;align-items:center;gap:8px;background:#1f8f4e;color:#fff;text-decoration:none;font-weight:800;font-size:14px;border-radius:999px;padding:12px 16px 12px 13px;box-shadow:0 8px 24px rgba(0,0,0,.5)}
 .wa-fab:hover{background:#25a85c}.wa-fab svg{width:24px;height:24px}
@@ -301,6 +311,7 @@ footer p{margin:0 0 8px;max-width:70ch;margin-inline:auto}
   <nav class="tabs" role="tablist">
     <button role="tab" id="t-pick" aria-selected="true" data-v="pick">Подбор микса</button>
     <button role="tab" id="t-cat" aria-selected="false" data-v="cat">Все вкусы</button>
+    <button role="tab" id="t-rent" aria-selected="false" data-v="rent">Аренда</button>
     <button role="tab" id="t-like" aria-selected="false" data-v="like">Найти похожее</button>
     <button role="tab" id="t-bowl" aria-selected="false" data-v="bowl">Чаши</button>
     <button role="tab" id="t-coal" aria-selected="false" data-v="coal">Угли</button>
@@ -487,6 +498,7 @@ footer p{margin:0 0 8px;max-width:70ch;margin-inline:auto}
         </div>
       </div>
     </div>
+    <button class="rentban rise" data-go="rent"><div class="rprice">5 000 ₸</div><div><div class="ptag">Аренда кальяна</div><h3>Привезём кальян на твоё мероприятие</h3><p>Дни рождения, вечеринки, отдых с друзьями. Можно с мастером. Подробнее →</p></div></button>
     <div class="promos" aria-label="Акции">
       <article class="promo rise" style="--i:0"><div class="pct">−10<span>%</span></div><div><div class="ptag">Акция</div><h3>Скидка на табак</h3><p>При покупке табака скидка 10%.</p></div></article>
       <article class="promo rise" style="--i:1"><div class="pct">−10<span>%</span></div><div><div class="ptag">Акция</div><h3>Купи кальян — скидка на всё</h3><p>При покупке кальяна скидка 10% на весь ассортимент.</p></div></article>
@@ -522,6 +534,22 @@ footer p{margin:0 0 8px;max-width:70ch;margin-inline:auto}
     <div class="search"><input id="like-q" type="search" placeholder="Например: дыня с холодком" aria-label="Что курил раньше"><button class="cta" id="like-go">Найти</button></div>
     <div class="chips" id="like-ex"></div>
     <div class="results" id="like-res"></div>
+  </section>
+
+  <!-- АРЕНДА -->
+  <section class="view" id="v-rent" hidden>
+    <h1 class="lead">Аренда кальяна <em>и выезд на мероприятия</em></h1>
+    <p class="sub">День рождения, вечеринка или просто отдых с друзьями? Привезём кальян, а если нужно, приедет мастер и будет готовить чаши весь вечер.</p>
+    <div class="rentgrid">
+      <article class="rcard"><div class="ptag">Аренда</div><div class="big">5 000 ₸</div><h3>Кальян в аренду</h3><p>Берёшь кальян и куришь сам. Что входит в комплект и на какой срок, уточни у нас в WhatsApp.</p></article>
+      <article class="rcard hot"><div class="ptag">С мастером</div><div class="big">по договорённости</div><h3>Кальянный мастер на выезд</h3><p>Мастер приезжает, забивает и меняет чаши, следит за углями. Цена зависит от количества гостей, кальянов и времени, обсудим отдельно.</p></article>
+    </div>
+    <div class="guide">
+      <article><h3>Куда выезжаем</h3><ul><li>Дни рождения и праздники</li><li>Вечеринки и встречи с друзьями</li><li>Отдых на даче или за городом</li></ul></article>
+      <article><h3>Как заказать</h3><ul><li>Напиши нам в WhatsApp.</li><li>Укажи дату, адрес и сколько нужно кальянов.</li><li>Скажи, нужен ли мастер. Цену обсудим сразу.</li></ul></article>
+      <article><h3>Важно</h3><p>Обслуживаем только гостей старше 21 года. Курить кальян можно только там, где это разрешено законом: дома, на частной территории.</p></article>
+    </div>
+    <div class="seller"><div><strong>Хочешь кальян на праздник?</strong><p>Напиши дату, адрес и количество кальянов, ответим с ценой.</p></div><a class="wa sm" href="https://wa.me/77476660077?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B0%D1%80%D0%B5%D0%BD%D0%B4%D0%BE%D0%B2%D0%B0%D1%82%D1%8C%20%D0%BA%D0%B0%D0%BB%D1%8C%D1%8F%D0%BD.%20%D0%94%D0%B0%D1%82%D0%B0%3A%20%2C%20%D1%81%D0%BA%D0%BE%D0%BB%D1%8C%D0%BA%D0%BE%20%D0%BA%D0%B0%D0%BB%D1%8C%D1%8F%D0%BD%D0%BE%D0%B2%3A%20%2C%20%D0%BD%D1%83%D0%B6%D0%B5%D0%BD%20%D0%BB%D0%B8%20%D0%BC%D0%B0%D1%81%D1%82%D0%B5%D1%80%3A%20" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.5c.1.2 1.6 2.5 3.9 3.5 1.5.6 2 .7 2.7.6.4-.1 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1-.1-.2-.2-.2-.4-.3z"/></svg><span>Заказать аренду</span></a></div>
   </section>
 
   <!-- ЧАШИ -->
@@ -1034,7 +1062,7 @@ document.addEventListener("click",e=>{const sw=e.target.closest("[data-swap]");i
 document.addEventListener("keydown",e=>{if(e.key==="Escape")$("#sheet").hidden=true});
 
 // Вкладки
-const VIEWS=["pick","cat","like","bowl","coal","new"];
+const VIEWS=["pick","cat","rent","like","bowl","coal","new"];
 function show(v){VIEWS.forEach(x=>{$("#v-"+x).hidden=x!==v;$("#t-"+x).setAttribute("aria-selected",x===v)});window.scrollTo({top:0});if(typeof floatVis==="function")floatVis()}
 document.querySelectorAll("nav.tabs button").forEach(b=>b.onclick=()=>show(b.dataset.v));
 if(VIEWS.includes(location.hash.slice(1)))show(location.hash.slice(1));
@@ -1091,6 +1119,7 @@ run();
 
 // База знаний Дымыча: k — ключевые слова (корни), g — тема, q — вопрос, a — ответ (абзацы через \n)
 const KB=[
+{g:"rent",k:["аренд","арендов","напрокат","прокат","выезд","выезж","мероприят","праздник","день рожден","др ","свадьб","вечеринк","мастер","кальянщик на","на дом","привез"],q:"Аренда кальяна и выезд",a:"Да, бро, сдаём кальяны в аренду и выезжаем на мероприятия.\nАренда кальяна стоит 5 000 ₸. Что входит в комплект и на какой срок, уточни в WhatsApp.\nЕсли нужен мастер, он приедет, будет забивать и менять чаши весь вечер. Цена обговаривается отдельно: зависит от гостей, количества кальянов и времени.\nПиши в WhatsApp дату, адрес и сколько кальянов нужно. Обслуживаем только тех, кому есть 21."},
 {g:"bowl",k:["фанел или турк","турка или фанел","турк или фанел","лучше турк","лучше фанел","фанел и турк","турк и фанел","фанел от турк","турк от фанел"],q:"Фанел или турка: что лучше?",a:"Зависит от табака, бро.\nФанел: сироп не стекает в шахту, вкус ровнее, меньше горчит, сессия дольше. Бери под сиропные табаки: Black Burn, Хулиган, Overdose, Hell.\nТурка: греется быстрее и даёт более яркий вкус с первых тяг, но легче перегреть. Бери под чайные смеси (Chabacco, Hook) и лёгкий Sebero.\nЕсли сомневаешься, начни с фанела с калаудом: так сложнее всё испортить."},
 {g:"bowl",k:["чаш","какую чаш","какая чаш"],q:"Какую чашу выбрать?",a:"Чаша решает половину вкуса, бро.\nДля сочных сиропных табаков (Black Burn, Хулиган, Overdose, Hell, NАШ) бери фанел: сироп не стекает в шахту, вкус ровный, почти не горчит.\nДля чайных смесей и лёгкого Sebero подойдёт турка: прогревается быстро и даёт яркий вкус.\nХочешь долгую крепкую сессию на фольге — бери убивашку.\nВсе чаши с картинками есть во вкладке «Чаши»."},
 {g:"bowl",k:["фанел","фанэл","phunnel","фанал"],q:"Что такое фанел?",a:"Фанел (phunnel) — чаша с одной дыркой в центре, которая поднята над дном, как маленькая труба.\nСироп стекает вниз по кругу и не попадает в шахту, поэтому чаша не «плачет» в колбу, вкус ровный и держится дольше.\nКак забивать: табак кладёшь кольцом вокруг трубки, рыхло, чуть ниже краёв. Сверху калауд или фольга.\nЛучше всего подходит для влажных сиропных табаков: Black Burn, Хулиган, Overdose, Hell."},
@@ -1138,7 +1167,7 @@ function bowlPick(){document.querySelectorAll(".bowl").forEach(b=>b.classList.re
 function kbMatch(text){const q=" "+norm(text)+" ";let best=null,bs=0;
   for(const e of KB){let s=0;for(const k of e.k){const kk=norm(k);if(new RegExp("[^а-яa-z]"+kk.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).test(q))s+=kk.includes(" ")?3:2}
     if(s>bs){bs=s;best=e}}return bs>=2?best:null}
-function kbHTML(e){if(e.g==="shop"&&/WhatsApp/.test(e.a))return kbHTML0(e)+`<div class="wrow" style="margin-top:10px"><a class=\"wa sm\" href=\"https://wa.me/77476660077?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D0%B8%D1%88%D1%83%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%20shpods.\" target=\"_blank\" rel=\"noopener\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.5c.1.2 1.6 2.5 3.9 3.5 1.5.6 2 .7 2.7.6.4-.1 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1-.1-.2-.2-.2-.4-.3z\"/></svg><span>Написать в WhatsApp</span></a></div>`;return kbHTML0(e)}
+function kbHTML(e){if(e.g==="rent")return kbHTML0(e)+`<div class="wrow" style="margin-top:10px"><a class="wa sm" href="https://wa.me/77476660077?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B0%D1%80%D0%B5%D0%BD%D0%B4%D0%BE%D0%B2%D0%B0%D1%82%D1%8C%20%D0%BA%D0%B0%D0%BB%D1%8C%D1%8F%D0%BD.%20%D0%94%D0%B0%D1%82%D0%B0%3A%20%2C%20%D1%81%D0%BA%D0%BE%D0%BB%D1%8C%D0%BA%D0%BE%20%D0%BA%D0%B0%D0%BB%D1%8C%D1%8F%D0%BD%D0%BE%D0%B2%3A%20%2C%20%D0%BD%D1%83%D0%B6%D0%B5%D0%BD%20%D0%BB%D0%B8%20%D0%BC%D0%B0%D1%81%D1%82%D0%B5%D1%80%3A%20" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.5c.1.2 1.6 2.5 3.9 3.5 1.5.6 2 .7 2.7.6.4-.1 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1-.1-.2-.2-.2-.4-.3z"/></svg><span>Заказать аренду</span></a></div>`;if(e.g==="shop"&&/WhatsApp/.test(e.a))return kbHTML0(e)+`<div class="wrow" style="margin-top:10px"><a class=\"wa sm\" href=\"https://wa.me/77476660077?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D0%B8%D1%88%D1%83%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%20shpods.\" target=\"_blank\" rel=\"noopener\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.5c.1.2 1.6 2.5 3.9 3.5 1.5.6 2 .7 2.7.6.4-.1 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1-.1-.2-.2-.2-.4-.3z\"/></svg><span>Написать в WhatsApp</span></a></div>`;return kbHTML0(e)}
 function kbHTML0(e){const rel=KB.filter(x=>x!==e&&x.g===e.g).concat(KB.filter(x=>x.g!==e.g&&x.g!=="me")).slice(0,3);
   return`<div class="kbans"><h3>${esc(e.q)}</h3>${e.a.split("\n").map(p=>`<p>${esc(p)}</p>`).join("")}</div><div class="tryq">${rel.map(x=>`<button class="chip sm" data-try="${esc(x.q)}">${esc(x.q)}</button>`).join("")}</div>`}
 
@@ -1333,7 +1362,7 @@ function findLike(){const q=$("#like-q").value.trim().toLowerCase();if(!q)return
 
 // Угли и шкала
 $("#coals").innerHTML=COALS.map(c=>`<article><div class="age">${esc(c.type)}</div><h3>${esc(c.name)}</h3><p>${esc(c.size)}</p><p>${esc(c.text)}</p><p><b style="color:var(--fg)">Как использовать.</b> ${esc(c.use)}</p></article>`).join("");
-document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>{if(b.dataset.go==="cat"){show("cat");return}
+document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>{if(VIEWS.includes(b.dataset.go)){show(b.dataset.go);return}
   $("#hero").scrollIntoView({behavior:RM?"auto":"smooth",block:"start"});setTimeout(()=>$("#ai-q").focus({preventScroll:true}),RM?0:450)});
 // Возрастное окно
 (function(){let ok=false;try{ok=localStorage.getItem("age21")==="1"}catch(e){}
