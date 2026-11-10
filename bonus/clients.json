@@ -1,6 +1,6 @@
 {
  "v": 3,
- "u": 1794299655127,
+ "u": 1794299672841,
  "rate": 3,
  "users": {
   "admin": {
@@ -10,15 +10,6 @@
    "w": {
     "i": "Lq7ekr3WXhzeRDjT",
     "c": "zECMTQvRfnkIL+YtXKGEXIdoXiURCAqAzz88f+GeTlXcREhhP6fz/k1i/9Uhm0pD1WLlXF+sJKTAW0Xz/Em/MFmUl6zv"
-   }
-  },
-  "shuva": {
-   "n": "Роман",
-   "role": "staff",
-   "s": "FljqbWUBFL8fvnsKEJiD0g==",
-   "w": {
-    "i": "vwKqkZ8bVt85tg+V",
-    "c": "0iJjilkROTnkTmNm26PDmp5rDm8wKn/DJZAqFT7BpbRAAKqUc+Q4Rx5sqaOekF5ZCYU3GfX7Mh2Ndgbxa6ST8sCzFVO0"
    }
   }
  },
