@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="referrer" content="no-referrer">
+<title>shpods · партнёрам</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+<header><a href="../"><img src="logo.png" alt="shpods"></a><span class="tag">Для партнёров</span></header>
+
+<h1>Оптовым клиентам</h1>
+<p class="muted">Прайс для магазинов, лаунжей и постоянных оптовых покупателей. Если у вас есть ключ, введите его, чтобы открыть цены.</p>
+
+<!-- ПРАЙС -->
+<section class="card" id="lock">
+ <h2>Оптовый прайс</h2>
+ <form id="f-key" class="row" autocomplete="off">
+  <input class="grow" id="key" type="password" placeholder="Ключ опта" autocomplete="current-password">
+  <button id="b-key">Открыть</button>
+ </form>
+ <label class="row small" style="gap:6px;color:var(--muted)"><input type="checkbox" id="remember" style="width:auto" checked> Запомнить на этом телефоне</label>
+ <div class="err" id="key-err" hidden></div>
+</section>
+
+<section id="price" hidden>
+ <div class="card">
+  <div class="row" style="justify-content:space-between"><h2 style="margin:0">Оптовый прайс</h2><button class="ghost small" id="b-lock">Закрыть</button></div>
+  <p class="small muted" id="p-upd" style="margin-top:6px"></p>
+  <p class="small" id="p-note"></p>
+  <input id="q" type="search" placeholder="Поиск: бренд, вес…">
+  <div id="list"></div>
+ </div>
+</section>
+
+<!-- БОНУСЫ -->
+<section class="card" id="bonus">
+ <h2>Мои бонусы</h2>
+ <p class="small muted">Код вам присылает менеджер после первой закупки.</p>
+ <form id="f-code" class="row" autocomplete="off">
+  <input class="grow" id="code" placeholder="SH-XXXX-XXXX" autocapitalize="characters" spellcheck="false">
+  <button>Проверить</button>
+ </form>
+ <div class="err" id="code-err" hidden></div>
+ <div id="bal" hidden>
+  <p class="muted small" style="margin:14px 0 2px">Баланс</p>
+  <div class="big" id="bal-n">0</div>
+  <p class="small muted">баллов · 1 балл = 1 ₸ скидки на угли, чаши и аксессуары</p>
+  <ul class="hist" id="hist"></ul>
+  <button class="ghost small" id="b-forget" style="margin-top:10px">Выйти</button>
+ </div>
+</section>
+
+<!-- КАК СТАТЬ -->
+<section class="card">
+ <h2>Как стать оптовым клиентом</h2>
+ <ol class="steps">
+  <li>Напишите нам в WhatsApp: кто вы и в каком городе.</li>
+  <li>Получите ключ к оптовому прайсу.</li>
+  <li>Соберите заявку прямо здесь и отправьте одной кнопкой.</li>
+  <li>С каждой закупки копятся бонусы, их можно потратить на расходники.</li>
+ </ol>
+ <div class="row" style="margin-top:12px">
+  <a class="btn wa" target="_blank" rel="noopener" data-wa="Здравствуйте! Хочу стать оптовым клиентом shpods.">WA Алматы</a>
+  <a class="btn wa" target="_blank" rel="noopener" data-wa="Здравствуйте! Хочу стать оптовым клиентом shpods." data-city="ast">WA Астана</a>
+ </div>
+</section>
+
+<footer>
+ Страница для партнёров. Цены указаны для юридических лиц и ИП, не являются публичной офертой.<br>
+ Продажа табачной продукции лицам младше 21 года запрещена. Курение вредит вашему здоровью.<br>
+ <a href="../">shpods hookah team</a>
+</footer>
+</div>
+
+<div class="bar" id="bar" hidden><div class="in">
+ <div class="sum"><b id="t-sum">0 ₸</b><div class="small muted" id="t-cnt"></div></div>
+ <button class="wa" id="b-order">Отправить заявку</button>
+</div></div>
+
+<div class="modal" id="m-order" hidden><div class="card">
+ <h2>Заявка</h2>
+ <div id="o-list" class="small"></div>
+ <p id="o-min" class="err" hidden></p>
+ <label>Город</label>
+ <select id="o-city"><option value="alm">Алматы</option><option value="ast">Астана</option></select>
+ <label>Магазин / имя</label>
+ <input id="o-name" placeholder="Например: Lounge «Облако», Айдар">
+ <label>Комментарий</label>
+ <input id="o-com" placeholder="Доставка, время, замены…">
+ <div class="row" style="margin-top:14px">
+  <button class="wa grow" id="o-send">Открыть WhatsApp</button>
+  <button class="ghost" id="o-close">Назад</button>
+ </div>
+</div></div>
+
+<script src="common.js"></script>
+<script>
+const WA = { alm: "77002802578", ast: "77476660077" };
+const WA_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.5c.1.2 1.6 2.5 3.9 3.5 1.5.6 2 .7 2.7.6.4-.1 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1-.1-.2-.2-.2-.4-.3z"/></svg>';
+const $ = id => document.getElementById(id);
+const city0 = SH.store.get("shpods-city") === "astana" ? "ast" : "alm";
+document.querySelectorAll("[data-wa]").forEach(a => {
+  const c = a.dataset.city || "alm";
+  a.href = `https://wa.me/${WA[c]}?text=${encodeURIComponent(a.dataset.wa)}`;
+  a.innerHTML = WA_ICON + "<span>" + a.textContent.replace("WA ", "") + "</span>";
+});
+$("o-city").value = city0;
+
+/* ---------- прайс ---------- */
+let PRICE = null, BOX = null;
+const cart = {};          // id -> qty
+const items = [];         // {id, g, n, s, p}
+
+async function loadBox() {
+  if (!BOX) BOX = await SH.readPublic("b2b/prices.enc.json");
+  return BOX;
+}
+async function unlock(pass, quiet) {
+  $("key-err").hidden = true;
+  $("b-key").disabled = true; $("b-key").textContent = "Открываю…";
+  try {
+    const box = await loadBox();
+    if (!box) throw new Error("net");
+    PRICE = await SH.decrypt(pass, box.box);
+    if ($("remember").checked) SH.store.set("shpods-opt", pass);
+    render();
+  } catch (e) {
+    if (!quiet) { $("key-err").textContent = e.message === "net" ? "Не удалось загрузить прайс, проверьте интернет." : "Ключ не подошёл. Уточните его у менеджера."; $("key-err").hidden = false; }
+    else SH.store.del("shpods-opt");
+  } finally { $("b-key").disabled = false; $("b-key").textContent = "Открыть"; }
+}
+function render() {
+  $("lock").hidden = true; $("price").hidden = false;
+  items.length = 0;
+  PRICE.groups.forEach((g, gi) => g.items.forEach((it, ii) => items.push({ id: gi + "-" + ii, g: g.name, n: it.n, s: it.s || "", p: +it.p || 0 })));
+  $("p-upd").textContent = PRICE.u ? "Обновлён " + new Date(PRICE.u).toLocaleDateString("ru-RU") : "";
+  const notes = [];
+  if (PRICE.min) notes.push("Минимальный заказ: " + SH.money(PRICE.min));
+  if (PRICE.note) notes.push(PRICE.note);
+  $("p-note").innerHTML = notes.map(SH.esc).join("<br>");
+  drawList();
+}
+function drawList() {
+  const q = $("q").value.trim().toLowerCase();
+  let html = "", last = null;
+  for (const it of items) {
+    if (q && !(it.n + " " + it.s + " " + it.g).toLowerCase().includes(q)) continue;
+    if (it.g !== last) { html += `<div class="grp">${SH.esc(it.g)}</div>`; last = it.g; }
+    const k = cart[it.id] || 0;
+    html += `<div class="item${k ? " sel" : ""}" data-id="${it.id}"><div class="nm"><b>${SH.esc(it.n)}</b><span>${SH.esc(it.s)}</span></div>
+      <div class="pr">${it.p ? SH.money(it.p) : "по запросу"}</div>
+      <div class="qty"><button data-d="-1" aria-label="меньше">−</button><input inputmode="numeric" value="${k || ""}" placeholder="0" aria-label="количество"><button data-d="1" aria-label="больше">+</button></div></div>`;
+  }
+  $("list").innerHTML = html || '<p class="muted" style="margin-top:12px">Ничего не нашлось</p>';
+  totals();
+}
+function setQty(id, v) {
+  v = Math.max(0, Math.min(9999, Math.floor(+v || 0)));
+  if (v) cart[id] = v; else delete cart[id];
+  const row = $("list").querySelector(`[data-id="${id}"]`);
+  if (row) { row.classList.toggle("sel", !!v); const inp = row.querySelector("input"); if (document.activeElement !== inp) inp.value = v || ""; }
+  totals();
+}
+function totals() {
+  let sum = 0, cnt = 0;
+  for (const it of items) if (cart[it.id]) { sum += cart[it.id] * it.p; cnt += cart[it.id]; }
+  $("bar").hidden = !cnt;
+  $("t-sum").textContent = SH.money(sum);
+  $("t-cnt").textContent = cnt + " шт.";
+  return sum;
+}
+$("list").addEventListener("click", e => {
+  const b = e.target.closest("button[data-d]"); if (!b) return;
+  const id = b.closest(".item").dataset.id;
+  setQty(id, (cart[id] || 0) + +b.dataset.d);
+});
+$("list").addEventListener("input", e => {
+  if (e.target.tagName !== "INPUT") return;
+  setQty(e.target.closest(".item").dataset.id, e.target.value);
+});
+$("q").addEventListener("input", drawList);
+$("f-key").addEventListener("submit", e => { e.preventDefault(); const v = $("key").value.trim(); if (v) unlock(v); });
+$("b-lock").onclick = () => { SH.store.del("shpods-opt"); PRICE = null; for (const k in cart) delete cart[k]; $("price").hidden = true; $("lock").hidden = false; $("bar").hidden = true; $("key").value = ""; };
+
+$("b-order").onclick = () => {
+  const sum = totals();
+  $("o-list").innerHTML = items.filter(it => cart[it.id]).map(it => `<div class="row" style="justify-content:space-between;border-top:1px solid var(--line);padding:6px 0"><span>${SH.esc(it.n)} ${SH.esc(it.s)} × ${cart[it.id]}</span><b>${SH.money(cart[it.id] * it.p)}</b></div>`).join("") + `<div class="row" style="justify-content:space-between;padding:8px 0;font-size:16px"><b>Итого</b><b>${SH.money(sum)}</b></div>`;
+  const low = PRICE.min && sum < PRICE.min;
+  $("o-min").hidden = !low;
+  if (low) $("o-min").textContent = "До минимального заказа не хватает " + SH.money(PRICE.min - sum) + ". Заявку всё равно можно отправить.";
+  $("o-name").value = SH.store.get("shpods-b2b-name") || "";
+  $("m-order").hidden = false;
+};
+$("o-close").onclick = () => $("m-order").hidden = true;
+$("m-order").addEventListener("click", e => { if (e.target.id === "m-order") $("m-order").hidden = true; });
+$("o-send").onclick = () => {
+  const name = $("o-name").value.trim(), com = $("o-com").value.trim();
+  SH.store.set("shpods-b2b-name", name);
+  const lines = ["Оптовая заявка shpods"];
+  if (name) lines.push("От: " + name);
+  lines.push("");
+  let sum = 0;
+  for (const it of items) if (cart[it.id]) { sum += cart[it.id] * it.p; lines.push(`• ${it.n} ${it.s} × ${cart[it.id]} = ${SH.money(cart[it.id] * it.p)}`); }
+  lines.push("", "Итого: " + SH.money(sum));
+  const code = SH.store.get("shpods-bonus");
+  if (code) lines.push("Бонусный код: " + code);
+  if (com) lines.push("Комментарий: " + com);
+  window.open(`https://wa.me/${WA[$("o-city").value]}?text=${encodeURIComponent(lines.join("\n"))}`, "_blank");
+};
+
+/* ---------- бонусы ---------- */
+async function checkCode(code, quiet) {
+  $("code-err").hidden = true;
+  const n = SH.normCode(code);
+  if (n.length !== 10 || !n.startsWith("SH")) { if (!quiet) { $("code-err").textContent = "Код выглядит так: SH-XXXX-XXXX"; $("code-err").hidden = false; } return; }
+  const data = await SH.readPublic("bonus/clients.json");
+  if (!data) { $("code-err").textContent = "Не удалось загрузить, проверьте интернет."; $("code-err").hidden = false; return; }
+  const c = data.clients && data.clients[await SH.hash(n)];
+  if (!c) { if (!quiet) { $("code-err").textContent = "Такой код не найден. Если код новый, данные появятся в течение 5 минут."; $("code-err").hidden = false; } return; }
+  const pretty = "SH-" + n.slice(2, 6) + "-" + n.slice(6);
+  SH.store.set("shpods-bonus", pretty);
+  $("code").value = pretty;
+  $("bal-n").textContent = (c.b || 0).toLocaleString("ru-RU");
+  $("hist").innerHTML = (c.h || []).slice().reverse().slice(0, 30).map(h =>
+    `<li><span>${new Date(h.d).toLocaleDateString("ru-RU")} · ${SH.esc(h.c || (h.a > 0 ? "Начисление" : "Списание"))}${h.s ? `<br><span class="muted small">закупка на ${SH.money(h.s)}</span>` : ""}</span><span class="${h.a >= 0 ? "plus" : "minus"}">${h.a >= 0 ? "+" : "−"}${Math.abs(h.a).toLocaleString("ru-RU")}</span></li>`).join("") || '<li class="muted">Пока операций нет</li>';
+  $("f-code").hidden = true; $("bal").hidden = false;
+}
+$("f-code").addEventListener("submit", e => { e.preventDefault(); checkCode($("code").value); });
+$("b-forget").onclick = () => { SH.store.del("shpods-bonus"); $("bal").hidden = true; $("f-code").hidden = false; $("code").value = ""; };
+
+/* ---------- старт ---------- */
+const hashCode = (location.hash.match(/code=([A-Za-z0-9-]+)/) || [])[1];
+if (hashCode) { history.replaceState(null, "", location.pathname); checkCode(hashCode); $("bonus").scrollIntoView(); }
+else if (SH.store.get("shpods-bonus")) checkCode(SH.store.get("shpods-bonus"), true);
+const savedKey = SH.store.get("shpods-opt");
+if (savedKey) unlock(savedKey, true);
+</script>
+</body>
+</html>

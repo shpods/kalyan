@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="referrer" content="no-referrer">
+<title>shpods · управление</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+<header><img src="logo.png" alt="shpods"><span class="tag">Управление</span></header>
+
+<!-- ВХОД -->
+<section class="card" id="s-login">
+ <h2>Вход</h2>
+ <form id="f-login" autocomplete="on">
+  <label>Ключ GitHub (токен)</label>
+  <input id="l-token" type="password" placeholder="github_pat_…" autocomplete="off" spellcheck="false">
+  <p class="small muted" id="l-token-saved" hidden style="margin-top:6px">Токен сохранён на этом телефоне. <a href="#" id="l-token-reset">Ввести другой</a></p>
+  <label>Пароль админки</label>
+  <input id="l-pass" type="password" autocomplete="current-password">
+  <div id="l-setup" hidden>
+   <p class="small okmsg">Первый вход: придумайте пароль. Им шифруются имена клиентов, без него их не прочитать.</p>
+   <label>Повторите пароль</label>
+   <input id="l-pass2" type="password" autocomplete="new-password">
+  </div>
+  <button style="margin-top:14px;width:100%" id="b-login">Войти</button>
+ </form>
+ <div class="err" id="l-err" hidden></div>
+</section>
+
+<!-- РАБОТА -->
+<section id="s-app" hidden>
+ <div class="tabs">
+  <button class="on" data-tab="t-clients">Клиенты</button>
+  <button data-tab="t-price">Прайс</button>
+  <button data-tab="t-set">Настройки</button>
+ </div>
+
+ <div id="t-clients">
+  <div class="row"><input class="grow" id="c-q" type="search" placeholder="Поиск клиента"><button id="b-new">+ Клиент</button></div>
+  <p class="small muted" id="c-total" style="margin-top:10px"></p>
+  <div id="c-list"></div>
+ </div>
+
+ <div id="t-price" hidden>
+  <div class="card">
+   <label style="margin-top:0">Ключ опта (его вы даёте оптовикам)</label>
+   <div class="row"><input class="grow" id="p-key" type="text" autocomplete="off" spellcheck="false"><button class="ghost" id="b-pload">Загрузить</button></div>
+   <p class="small muted" style="margin-top:6px">Сменить ключ: загрузите прайс, впишите новый ключ и сохраните. Старый ключ сразу перестанет работать.</p>
+   <label>Прайс</label>
+   <textarea id="p-text" spellcheck="false" placeholder="# Табак&#10;Black Burn | 200 г | 10000"></textarea>
+   <p class="small muted">Строка = товар: <b>Название | вес | цена</b>. Строка с # в начале = раздел.</p>
+   <div class="row">
+    <div class="grow"><label>Минимальный заказ, ₸</label><input id="p-min" inputmode="numeric" placeholder="0 = без минимума"></div>
+   </div>
+   <label>Условия (видят оптовики)</label>
+   <input id="p-note" placeholder="Доставка по городу бесплатно от 100 000 ₸">
+   <button style="margin-top:14px;width:100%" id="b-psave">Сохранить прайс</button>
+   <div id="p-msg"></div>
+  </div>
+ </div>
+
+ <div id="t-set" hidden>
+  <div class="card">
+   <h2>Бонусы</h2>
+   <label>Сколько процентов от закупки начислять</label>
+   <div class="row"><input class="grow" id="s-rate" inputmode="decimal"><button id="b-rate">Сохранить</button></div>
+   <div id="s-rate-msg"></div>
+  </div>
+  <div class="card">
+   <h2>Сменить пароль админки</h2>
+   <label>Новый пароль</label><input id="s-p1" type="password" autocomplete="new-password">
+   <label>Ещё раз</label><input id="s-p2" type="password" autocomplete="new-password">
+   <button style="margin-top:12px" id="b-pass">Сменить</button>
+   <div id="s-pass-msg"></div>
+  </div>
+  <div class="card">
+   <h2>Ссылки</h2>
+   <p class="small">Страница для оптовиков: <a href="./" target="_blank">shpods.github.io/kalyan/b2b/</a></p>
+   <button class="ghost" id="b-logout">Выйти и забыть токен на этом телефоне</button>
+  </div>
+ </div>
+</section>
+</div>
+
+<!-- новый клиент -->
+<div class="modal" id="m-new" hidden><div class="card">
+ <h2>Новый клиент</h2>
+ <label>Название / имя</label><input id="n-name" placeholder="Lounge «Облако», Айдар">
+ <label>Телефон WhatsApp (необязательно)</label><input id="n-phone" inputmode="tel" placeholder="+7 7__ ___ __ __">
+ <label>Город</label><select id="n-city"><option>Алматы</option><option>Астана</option></select>
+ <div class="row" style="margin-top:14px"><button class="grow" id="n-ok">Создать и выдать код</button><button class="ghost" data-close>Отмена</button></div>
+ <div class="err" id="n-err" hidden></div>
+</div></div>
+
+<!-- карточка клиента -->
+<div class="modal" id="m-cl" hidden><div class="card">
+ <div class="row" style="justify-content:space-between"><h2 style="margin:0" id="k-name"></h2><button class="ghost" data-close>✕</button></div>
+ <p class="small muted" id="k-meta" style="margin-top:4px"></p>
+ <div class="code" id="k-code"></div>
+ <div class="row" style="margin-top:8px"><a class="btn wa grow" id="k-wa" target="_blank" rel="noopener">Код в WhatsApp</a><button class="ghost" id="k-copy">Копировать</button></div>
+ <p class="muted small" style="margin:14px 0 2px">Баланс</p>
+ <div class="big" id="k-bal"></div>
+
+ <div class="tabs" id="k-ops" style="margin-top:14px">
+  <button class="on" data-op="buy">Закупка</button><button data-op="use">Списать</button><button data-op="add">Начислить</button>
+ </div>
+ <label id="k-lab">Сумма закупки, ₸</label>
+ <input id="k-sum" inputmode="numeric">
+ <p class="small okmsg" id="k-calc"></p>
+ <label>Комментарий (видит клиент)</label>
+ <input id="k-com" placeholder="Например: накладная 245">
+ <button style="margin-top:12px;width:100%" id="k-go">Провести</button>
+ <div id="k-msg"></div>
+ <ul class="hist" id="k-hist"></ul>
+ <button class="ghost small" id="k-del" style="margin-top:14px">Удалить клиента</button>
+</div></div>
+
+<script src="common.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const FILE = "bonus/clients.json", PFILE = "b2b/prices.enc.json";
+const PAGE = location.origin + location.pathname.replace(/admin\.html$/, "");
+let DATA = null, KEY = null, NAMES = {}, CUR = null, OP = "buy";
+const msg = (el, text, ok) => { $(el).innerHTML = text ? `<div class="${ok ? "okmsg" : "err"}">${SH.esc(text)}</div>` : ""; };
+const busy = (btn, on, text) => { btn.disabled = on; if (on) { btn.dataset.t = btn.textContent; btn.textContent = text || "Сохраняю…"; } else if (btn.dataset.t) btn.textContent = btn.dataset.t; };
+const errText = e => e.status === 401 ? "Токен GitHub не подошёл или истёк." : e.status === 403 || e.status === 404 ? "У токена нет доступа на запись в репозиторий shpods/kalyan." : (e.message || "Ошибка");
+
+/* ---------- вход ---------- */
+const savedToken = SH.store.get("shpods-gh");
+if (savedToken) { $("l-token").hidden = true; $("l-token-saved").hidden = false; }
+$("l-token-reset").onclick = e => { e.preventDefault(); SH.store.del("shpods-gh"); $("l-token").hidden = false; $("l-token-saved").hidden = true; };
+
+$("f-login").addEventListener("submit", async e => {
+  e.preventDefault();
+  $("l-err").hidden = true;
+  const token = ($("l-token").hidden ? savedToken : $("l-token").value).trim(), pass = $("l-pass").value;
+  if (!token || !pass) { $("l-err").textContent = "Введите токен и пароль."; $("l-err").hidden = false; return; }
+  SH.gh.token = token;
+  busy($("b-login"), true, "Проверяю…");
+  try {
+    let { data } = await SH.gh.read(FILE);
+    if (!data || !data.verifier) {
+      if ($("l-setup").hidden) { $("l-setup").hidden = false; $("l-pass2").focus(); return; }
+      if (pass !== $("l-pass2").value) throw new Error("Пароли не совпадают.");
+      if (pass.length < 6) throw new Error("Пароль минимум 6 символов.");
+      const salt = SH.b64(crypto.getRandomValues(new Uint8Array(16)));
+      const key = await SH.keyFor(pass, salt), ver = await SH.encWith(key, "shpods-ok");
+      data = await SH.gh.mutate(FILE, d => {
+        d = d || { v: 1, rate: 3, clients: {} };
+        if (d.verifier) throw new Error("Пароль уже задан с другого устройства. Обновите страницу.");
+        d.salt = salt; d.verifier = ver; d.clients = d.clients || {}; return d;
+      }, "Админка: задан пароль");
+    }
+    KEY = await SH.keyFor(pass, data.salt);
+    try { await SH.decWith(KEY, data.verifier); } catch (_) { throw new Error("Неверный пароль."); }
+    SH.store.set("shpods-gh", token);
+    await useData(data);
+    $("s-login").hidden = true; $("s-app").hidden = false;
+  } catch (er) { $("l-err").textContent = errText(er); $("l-err").hidden = false; }
+  finally { busy($("b-login"), false); }
+});
+
+async function useData(d) {
+  DATA = d;
+  for (const h in d.clients) if (!NAMES[h]) { try { NAMES[h] = await SH.decWith(KEY, d.clients[h].x); } catch (_) { NAMES[h] = { n: "(не расшифровано)", code: "?" }; } }
+  for (const h in NAMES) if (!d.clients[h]) delete NAMES[h];
+  $("s-rate").value = d.rate ?? 3;
+  drawClients();
+  if (CUR) { if (d.clients[CUR]) drawCard(); else $("m-cl").hidden = true; }
+}
+
+/* ---------- вкладки ---------- */
+document.querySelectorAll("[data-tab]").forEach(b => b.onclick = () => {
+  document.querySelectorAll("[data-tab]").forEach(x => { x.classList.toggle("on", x === b); $(x.dataset.tab).hidden = x !== b; });
+});
+document.querySelectorAll("[data-close]").forEach(b => b.onclick = () => b.closest(".modal").hidden = true);
+
+/* ---------- клиенты ---------- */
+function drawClients() {
+  const q = $("c-q").value.trim().toLowerCase();
+  const list = Object.keys(DATA.clients).map(h => ({ h, ...NAMES[h], b: DATA.clients[h].b || 0 }))
+    .sort((a, b) => (a.n || "").localeCompare(b.n || "", "ru"));
+  const total = list.reduce((s, c) => s + c.b, 0);
+  $("c-total").textContent = `Клиентов: ${list.length} · баллов на счетах: ${total.toLocaleString("ru-RU")} · начисление ${DATA.rate ?? 3}% от закупки`;
+  const shown = list.filter(c => !q || (c.n + " " + c.code + " " + (c.ph || "") + " " + (c.city || "")).toLowerCase().includes(q));
+  $("c-list").innerHTML = shown.map(c => `<div class="client" data-h="${c.h}"><span class="nm">${SH.esc(c.n)}<br><span class="small muted" style="font-weight:400">${SH.esc(c.city || "")} ${SH.esc(c.code)}</span></span><span class="pill">${c.b.toLocaleString("ru-RU")}</span></div>`).join("")
+    || `<p class="muted">${list.length ? "Никого не нашлось" : "Клиентов пока нет. Нажмите «+ Клиент»."}</p>`;
+}
+$("c-q").addEventListener("input", drawClients);
+$("c-list").addEventListener("click", e => { const c = e.target.closest(".client"); if (c) openCard(c.dataset.h); });
+
+$("b-new").onclick = () => { $("n-name").value = ""; $("n-phone").value = ""; $("n-err").hidden = true; $("m-new").hidden = false; $("n-name").focus(); };
+$("n-ok").onclick = async () => {
+  const n = $("n-name").value.trim();
+  if (!n) { $("n-err").textContent = "Введите название или имя."; $("n-err").hidden = false; return; }
+  const ph = $("n-phone").value.replace(/\D/g, "").replace(/^8(?=7\d{9}$)/, "7");
+  busy($("n-ok"), true);
+  try {
+    const code = SH.newCode(), h = await SH.hash(code);
+    const info = { n, code, ph, city: $("n-city").value, since: SH.today() };
+    const x = await SH.encWith(KEY, info);
+    const d = await SH.gh.mutate(FILE, d => { d.clients[h] = { b: 0, x, h: [] }; return d; }, "Бонусы: новый клиент");
+    NAMES[h] = info;
+    await useData(d);
+    $("m-new").hidden = true;
+    openCard(h);
+  } catch (er) { $("n-err").textContent = errText(er); $("n-err").hidden = false; }
+  finally { busy($("n-ok"), false); }
+};
+
+function openCard(h) { CUR = h; OP = "buy"; $("k-sum").value = ""; $("k-com").value = ""; msg("k-msg"); $("k-del").dataset.sure = ""; $("k-del").textContent = "Удалить клиента"; setOp("buy"); drawCard(); $("m-cl").hidden = false; }
+function drawCard() {
+  const c = DATA.clients[CUR], i = NAMES[CUR] || {};
+  $("k-name").textContent = i.n;
+  $("k-meta").textContent = [i.city, i.ph && "+" + i.ph, i.since && "с " + new Date(i.since).toLocaleDateString("ru-RU")].filter(Boolean).join(" · ");
+  $("k-code").textContent = i.code;
+  const text = `Здравствуйте! Ваш бонусный код shpods: ${i.code}\nБаланс и история: ${PAGE}#code=${i.code}\nНазывайте код при каждой закупке.`;
+  $("k-wa").href = `https://wa.me/${i.ph || ""}?text=${encodeURIComponent(text)}`;
+  $("k-bal").textContent = (c.b || 0).toLocaleString("ru-RU") + " б.";
+  $("k-hist").innerHTML = (c.h || []).slice().reverse().map(x => `<li><span>${new Date(x.d).toLocaleDateString("ru-RU")} · ${SH.esc(x.c || "")}${x.s ? `<br><span class="muted small">закупка ${SH.money(x.s)}</span>` : ""}</span><span class="${x.a >= 0 ? "plus" : "minus"}">${x.a >= 0 ? "+" : "−"}${Math.abs(x.a).toLocaleString("ru-RU")}</span></li>`).join("") || '<li class="muted">Операций пока нет</li>';
+  calc();
+}
+$("k-copy").onclick = async () => { try { await navigator.clipboard.writeText(NAMES[CUR].code); msg("k-msg", "Код скопирован", true); } catch (_) { msg("k-msg", "Выделите код и скопируйте вручную"); } };
+function setOp(op) {
+  OP = op;
+  document.querySelectorAll("[data-op]").forEach(b => b.classList.toggle("on", b.dataset.op === op));
+  $("k-lab").textContent = op === "buy" ? "Сумма закупки, ₸" : op === "use" ? "Сколько баллов списать" : "Сколько баллов начислить";
+  $("k-com").placeholder = op === "buy" ? "Например: накладная 245" : op === "use" ? "Например: угли Cocoloco 2 кг" : "Например: подарок на открытие";
+  calc();
+}
+document.querySelectorAll("[data-op]").forEach(b => b.onclick = () => setOp(b.dataset.op));
+function points() {
+  const v = Math.floor(+$("k-sum").value.replace(/\s/g, "") || 0);
+  return OP === "buy" ? Math.floor(v * (DATA.rate ?? 3) / 100) : v;
+}
+function calc() {
+  const p = points(), bal = DATA.clients[CUR]?.b || 0;
+  $("k-calc").className = "small okmsg";
+  if (OP === "buy") $("k-calc").textContent = p ? `Начислится ${p.toLocaleString("ru-RU")} баллов (${DATA.rate ?? 3}%)` : "";
+  else if (OP === "use") { $("k-calc").textContent = p > bal ? "Больше, чем на балансе" : p ? `Останется ${(bal - p).toLocaleString("ru-RU")}` : ""; if (p > bal) $("k-calc").className = "small err"; }
+  else $("k-calc").textContent = "";
+}
+$("k-sum").addEventListener("input", calc);
+$("k-go").onclick = async () => {
+  const raw = Math.floor(+$("k-sum").value.replace(/\s/g, "") || 0), p = points(), com = $("k-com").value.trim(), h = CUR, op = OP;
+  if (!raw) return msg("k-msg", "Введите число");
+  if (op === "buy" && !p) return msg("k-msg", "Сумма слишком маленькая для начисления");
+  busy($("k-go"), true);
+  try {
+    const d = await SH.gh.mutate(FILE, d => {
+      const c = d.clients[h]; if (!c) throw new Error("Клиента удалили с другого устройства");
+      const rate = d.rate ?? 3;
+      const a = op === "buy" ? Math.floor(raw * rate / 100) : op === "use" ? -raw : raw;
+      if (a < 0 && c.b + a < 0) throw new Error(`На балансе только ${c.b} баллов`);
+      c.b = (c.b || 0) + a;
+      const e = { d: SH.today(), a, c: com || (op === "buy" ? "Закупка" : op === "use" ? "Списание" : "Начисление") };
+      if (op === "buy") e.s = raw;
+      (c.h = c.h || []).push(e);
+      if (c.h.length > 150) c.h = c.h.slice(-150);
+      return d;
+    }, op === "buy" ? "Бонусы: закупка" : op === "use" ? "Бонусы: списание" : "Бонусы: начисление");
+    await useData(d);
+    $("k-sum").value = ""; $("k-com").value = "";
+    msg("k-msg", "Готово. Клиент увидит изменения в течение пары минут.", true);
+    calc();
+  } catch (er) { msg("k-msg", errText(er)); }
+  finally { busy($("k-go"), false); }
+};
+$("k-del").onclick = async () => {
+  const b = $("k-del");
+  if (!b.dataset.sure) { b.dataset.sure = "1"; b.textContent = "Точно удалить? Нажмите ещё раз"; return; }
+  busy(b, true, "Удаляю…");
+  try {
+    const h = CUR;
+    const d = await SH.gh.mutate(FILE, d => { delete d.clients[h]; return d; }, "Бонусы: клиент удалён");
+    CUR = null; $("m-cl").hidden = true; await useData(d);
+  } catch (er) { msg("k-msg", errText(er)); }
+  finally { busy(b, false); }
+};
+
+/* ---------- прайс ---------- */
+let LOADED_KEY = null;
+function toText(p) { return p.groups.map(g => "# " + g.name + "\n" + g.items.map(i => [i.n, i.s, i.p].filter(x => x !== "" && x != null).join(" | ")).join("\n")).join("\n\n"); }
+function parse(text) {
+  const groups = [], bad = [];
+  let g = null;
+  text.split("\n").forEach((line, k) => {
+    line = line.trim(); if (!line) return;
+    if (line.startsWith("#")) { g = { name: line.replace(/^#+\s*/, "") || "Товары", items: [] }; groups.push(g); return; }
+    const parts = line.split("|").map(s => s.trim());
+    const last = parts[parts.length - 1], pr = parts.length > 1 ? last.replace(/[\s₸тгTtg.,]/g, "") : "";
+    if (parts.length > 1 && pr && !/^\d+$/.test(pr)) { bad.push(k + 1); return; }
+    if (!g) { g = { name: "Товары", items: [] }; groups.push(g); }
+    const it = { n: parts[0] };
+    if (parts.length >= 3) { it.s = parts.slice(1, -1).join(" "); it.p = +pr || 0; }
+    else if (parts.length === 2) it.p = +pr || 0;
+    g.items.push(it);
+  });
+  return { groups: groups.filter(x => x.items.length), bad };
+}
+$("b-pload").onclick = async () => {
+  const k = $("p-key").value.trim(); if (!k) return msg("p-msg", "Введите текущий ключ опта");
+  busy($("b-pload"), true, "Загружаю…");
+  try {
+    const { data } = await SH.gh.read(PFILE);
+    if (!data) { msg("p-msg", "Прайса ещё нет: впишите товары и сохраните.", true); LOADED_KEY = k; return; }
+    let p; try { p = await SH.decrypt(k, data.box); } catch (_) { throw new Error("Ключ не подошёл к текущему прайсу."); }
+    $("p-text").value = toText(p); $("p-min").value = p.min || ""; $("p-note").value = p.note || "";
+    LOADED_KEY = k; msg("p-msg", "Загружено", true);
+  } catch (er) { msg("p-msg", errText(er)); }
+  finally { busy($("b-pload"), false); }
+};
+$("b-psave").onclick = async () => {
+  const k = $("p-key").value.trim();
+  if (k.length < 4) return msg("p-msg", "Ключ опта минимум 4 символа");
+  const { groups, bad } = parse($("p-text").value);
+  if (bad.length) return msg("p-msg", "Не понял цену в строках: " + bad.join(", ") + ". Формат: Название | вес | цена");
+  if (!groups.length) return msg("p-msg", "Прайс пустой");
+  if (LOADED_KEY === null) return msg("p-msg", "Сначала нажмите «Загрузить», чтобы не затереть текущий прайс.");
+  busy($("b-psave"), true);
+  try {
+    const u = Date.now();
+    const box = await SH.encrypt(k, { u, groups, min: Math.floor(+$("p-min").value.replace(/\D/g, "") || 0), note: $("p-note").value.trim() });
+    const { sha } = await SH.gh.read(PFILE);
+    await SH.gh.write(PFILE, { v: 1, u, box }, sha, "Оптовый прайс обновлён");
+    const n = groups.reduce((s, g) => s + g.items.length, 0);
+    msg("p-msg", `Сохранено: ${n} позиций.` + (k !== LOADED_KEY ? " Ключ изменён, сообщите новый оптовикам." : "") + " На сайте обновится через 1–2 минуты.", true);
+    LOADED_KEY = k;
+  } catch (er) { msg("p-msg", errText(er)); }
+  finally { busy($("b-psave"), false); }
+};
+
+/* ---------- настройки ---------- */
+$("b-rate").onclick = async () => {
+  const r = +$("s-rate").value.replace(",", ".");
+  if (!(r >= 0 && r <= 50)) return msg("s-rate-msg", "Введите число от 0 до 50");
+  busy($("b-rate"), true);
+  try { await useData(await SH.gh.mutate(FILE, d => { d.rate = Math.round(r * 10) / 10; return d; }, "Бонусы: процент " + r)); msg("s-rate-msg", "Сохранено: " + r + "% от закупки", true); }
+  catch (er) { msg("s-rate-msg", errText(er)); }
+  finally { busy($("b-rate"), false); }
+};
+$("b-pass").onclick = async () => {
+  const p1 = $("s-p1").value, p2 = $("s-p2").value;
+  if (p1.length < 6) return msg("s-pass-msg", "Минимум 6 символов");
+  if (p1 !== p2) return msg("s-pass-msg", "Пароли не совпадают");
+  busy($("b-pass"), true, "Перешифровываю…");
+  try {
+    const salt = SH.b64(crypto.getRandomValues(new Uint8Array(16))), nk = await SH.keyFor(p1, salt);
+    const d = await SH.gh.mutate(FILE, async d => {
+      for (const h in d.clients) d.clients[h].x = await SH.encWith(nk, await SH.decWith(KEY, d.clients[h].x));
+      d.salt = salt; d.verifier = await SH.encWith(nk, "shpods-ok"); return d;
+    }, "Админка: пароль изменён");
+    KEY = nk; await useData(d);
+    $("s-p1").value = $("s-p2").value = "";
+    msg("s-pass-msg", "Пароль изменён", true);
+  } catch (er) { msg("s-pass-msg", errText(er)); }
+  finally { busy($("b-pass"), false); }
+};
+$("b-logout").onclick = () => { SH.store.del("shpods-gh"); location.reload(); };
+</script>
+</body>
+</html>
