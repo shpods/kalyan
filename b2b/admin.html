@@ -18,6 +18,10 @@
  <form id="f-login" autocomplete="on">
   <label>Ключ GitHub (токен)</label>
   <input id="l-token" type="password" placeholder="github_pat_…" autocomplete="off" spellcheck="false">
+  <div id="l-token-help" class="small" style="margin-top:8px;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:10px 12px">
+   Нет ключа? <a class="btn ghost" style="padding:6px 10px;margin:6px 0" href="https://github.com/settings/tokens/new?scopes=repo&amp;description=shpods-admin" target="_blank" rel="noopener">Получить ключ GitHub</a><br>
+   Откроется GitHub, всё уже заполнено. В «Expiration» выберите <b>No expiration</b>, пролистайте вниз, нажмите зелёную <b>Generate token</b>, скопируйте ключ и вставьте сюда. Это делается один раз.
+  </div>
   <p class="small muted" id="l-token-saved" hidden style="margin-top:6px">Токен сохранён на этом телефоне. <a href="#" id="l-token-reset">Ввести другой</a></p>
   <label>Пароль админки</label>
   <input id="l-pass" type="password" autocomplete="current-password">
@@ -129,8 +133,8 @@ const errText = e => e.status === 401 ? "Токен GitHub не подошёл �
 
 /* ---------- вход ---------- */
 const savedToken = SH.store.get("shpods-gh");
-if (savedToken) { $("l-token").hidden = true; $("l-token-saved").hidden = false; }
-$("l-token-reset").onclick = e => { e.preventDefault(); SH.store.del("shpods-gh"); $("l-token").hidden = false; $("l-token-saved").hidden = true; };
+if (savedToken) { $("l-token").hidden = true; $("l-token-help").hidden = true; $("l-token-saved").hidden = false; }
+$("l-token-reset").onclick = e => { e.preventDefault(); SH.store.del("shpods-gh"); $("l-token").hidden = false; $("l-token-help").hidden = false; $("l-token-saved").hidden = true; };
 
 $("f-login").addEventListener("submit", async e => {
   e.preventDefault();

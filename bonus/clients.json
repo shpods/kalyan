@@ -1,1 +1,15 @@
-{"v":1,"u":0,"rate":3,"salt":null,"verifier":null,"clients":{}}
+{
+ "v": 2,
+ "u": 1794298660959,
+ "rate": 3,
+ "salt": "ESPQCJY7VwVQEvpBnwFn7bQU",
+ "verifier": {
+  "i": "25DxznZreHRKEo/B",
+  "c": "IIx3olKb8ZTxZPzAojx6ldrpib59Q2ON8Obj"
+ },
+ "clients": {},
+ "pk": {
+  "i": "1Xq0/vptPgB2cuUd",
+  "c": "ShprVFA1ZILkPIBYk54QR8KRzh98XbNhRDjcM3pGuS13e7pJsj+zthjd38nSiFigHsug5M7PrPy5AfDLICE="
+ }
+}
