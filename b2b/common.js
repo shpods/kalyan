@@ -36,10 +36,17 @@ const SH = {
     return JSON.parse(SH.dec.decode(pt));
   },
   today() { return new Date().toISOString().slice(0, 10); },
-  async hash(code) {
-    const d = await crypto.subtle.digest("SHA-256", SH.enc.encode("shpods-bonus:" + SH.normCode(code)));
-    return [...new Uint8Array(d)].map(b => b.toString(16).padStart(2, "0")).join("");
+  // из кода клиента получаем: id записи в файле и ключ, которым закрыт доступ к прайсу
+  async client(code) {
+    const base = await crypto.subtle.importKey("raw", SH.enc.encode(SH.normCode(code)), "PBKDF2", false, ["deriveBits"]);
+    const bits = new Uint8Array(await crypto.subtle.deriveBits({ name: "PBKDF2", salt: SH.enc.encode("shpods-client-v2"), iterations: SH.ITER, hash: "SHA-256" }, base, 512));
+    const id = [...bits.slice(0, 16)].map(b => b.toString(16).padStart(2, "0")).join("");
+    const wk = await crypto.subtle.importKey("raw", bits.slice(32), "AES-GCM", false, ["encrypt", "decrypt"]);
+    return { id, wk };
   },
+  async rawKey(b64) { return crypto.subtle.importKey("raw", SH.unb64(b64), "AES-GCM", false, ["encrypt", "decrypt"]); },
+  newRaw() { return SH.b64(crypto.getRandomValues(new Uint8Array(32))); },
+  prettyCode(c) { const n = SH.normCode(c); return n.length === 10 ? "SH-" + n.slice(2, 6) + "-" + n.slice(6) : c; },
   normCode(c) { return String(c || "").toUpperCase().replace(/[^A-Z0-9]/g, ""); },
   newCode() {
     const A = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789", r = crypto.getRandomValues(new Uint8Array(8));

@@ -47,10 +47,8 @@
 
  <div id="t-price" hidden>
   <div class="card">
-   <label style="margin-top:0">Ключ опта (его вы даёте оптовикам)</label>
-   <div class="row"><input class="grow" id="p-key" type="text" autocomplete="off" spellcheck="false"><button class="ghost" id="b-pload">Загрузить</button></div>
-   <p class="small muted" style="margin-top:6px">Сменить ключ: загрузите прайс, впишите новый ключ и сохраните. Старый ключ сразу перестанет работать.</p>
-   <label>Прайс</label>
+   <p class="small muted" style="margin-top:0">Этот прайс видят только оптовики, вошедшие по своему коду.</p>
+   <label style="margin-top:0">Прайс</label>
    <textarea id="p-text" spellcheck="false" placeholder="# Табак&#10;Black Burn | 200 г | 10000"></textarea>
    <p class="small muted">Строка = товар: <b>Название | вес | цена</b>. Строка с # в начале = раздел.</p>
    <div class="row">
@@ -124,7 +122,7 @@
 const $ = id => document.getElementById(id);
 const FILE = "bonus/clients.json", PFILE = "b2b/prices.enc.json";
 const PAGE = location.origin + location.pathname.replace(/admin\.html$/, "");
-let DATA = null, KEY = null, NAMES = {}, CUR = null, OP = "buy";
+let DATA = null, KEY = null, PK = null, NAMES = {}, CUR = null, OP = "buy";
 const msg = (el, text, ok) => { $(el).innerHTML = text ? `<div class="${ok ? "okmsg" : "err"}">${SH.esc(text)}</div>` : ""; };
 const busy = (btn, on, text) => { btn.disabled = on; if (on) { btn.dataset.t = btn.textContent; btn.textContent = text || "Сохраняю…"; } else if (btn.dataset.t) btn.textContent = btn.dataset.t; };
 const errText = e => e.status === 401 ? "Токен GitHub не подошёл или истёк." : e.status === 403 || e.status === 404 ? "У токена нет доступа на запись в репозиторий shpods/kalyan." : (e.message || "Ошибка");
@@ -148,15 +146,17 @@ $("f-login").addEventListener("submit", async e => {
       if (pass !== $("l-pass2").value) throw new Error("Пароли не совпадают.");
       if (pass.length < 6) throw new Error("Пароль минимум 6 символов.");
       const salt = SH.b64(crypto.getRandomValues(new Uint8Array(16)));
-      const key = await SH.keyFor(pass, salt), ver = await SH.encWith(key, "shpods-ok");
+      const key = await SH.keyFor(pass, salt), ver = await SH.encWith(key, "shpods-ok"), pk = await SH.encWith(key, SH.newRaw());
       data = await SH.gh.mutate(FILE, d => {
         d = d || { v: 1, rate: 3, clients: {} };
         if (d.verifier) throw new Error("Пароль уже задан с другого устройства. Обновите страницу.");
-        d.salt = salt; d.verifier = ver; d.clients = d.clients || {}; return d;
+        d.v = 2; d.salt = salt; d.verifier = ver; d.pk = pk; d.clients = d.clients || {}; return d;
       }, "Админка: задан пароль");
     }
     KEY = await SH.keyFor(pass, data.salt);
     try { await SH.decWith(KEY, data.verifier); } catch (_) { throw new Error("Неверный пароль."); }
+    if (!data.pk) { const pk = await SH.encWith(KEY, SH.newRaw()); data = await SH.gh.mutate(FILE, d => { d.pk = d.pk || pk; d.v = 2; return d; }, "Админка: ключ прайса"); }
+    PK = await SH.decWith(KEY, data.pk);
     SH.store.set("shpods-gh", token);
     await useData(data);
     $("s-login").hidden = true; $("s-app").hidden = false;
@@ -200,10 +200,10 @@ $("n-ok").onclick = async () => {
   const ph = $("n-phone").value.replace(/\D/g, "").replace(/^8(?=7\d{9}$)/, "7");
   busy($("n-ok"), true);
   try {
-    const code = SH.newCode(), h = await SH.hash(code);
+    const code = SH.newCode(), { id: h, wk } = await SH.client(code);
     const info = { n, code, ph, city: $("n-city").value, since: SH.today() };
-    const x = await SH.encWith(KEY, info);
-    const d = await SH.gh.mutate(FILE, d => { d.clients[h] = { b: 0, x, h: [] }; return d; }, "Бонусы: новый клиент");
+    const x = await SH.encWith(KEY, info), w = await SH.encWith(wk, { k: PK, n, city: info.city });
+    const d = await SH.gh.mutate(FILE, d => { d.clients[h] = { b: 0, x, w, h: [] }; return d; }, "Опт: новый клиент");
     NAMES[h] = info;
     await useData(d);
     $("m-new").hidden = true;
@@ -218,7 +218,7 @@ function drawCard() {
   $("k-name").textContent = i.n;
   $("k-meta").textContent = [i.city, i.ph && "+" + i.ph, i.since && "с " + new Date(i.since).toLocaleDateString("ru-RU")].filter(Boolean).join(" · ");
   $("k-code").textContent = i.code;
-  const text = `Здравствуйте! Ваш бонусный код shpods: ${i.code}\nБаланс и история: ${PAGE}#code=${i.code}\nНазывайте код при каждой закупке.`;
+  const text = `Здравствуйте! Ваш личный код оптового клиента shpods: ${i.code}\nОптовый прайс, заявки и бонусы: ${PAGE}#code=${i.code}\nКод никому не передавайте.`;
   $("k-wa").href = `https://wa.me/${i.ph || ""}?text=${encodeURIComponent(text)}`;
   $("k-bal").textContent = (c.b || 0).toLocaleString("ru-RU") + " б.";
   $("k-hist").innerHTML = (c.h || []).slice().reverse().map(x => `<li><span>${new Date(x.d).toLocaleDateString("ru-RU")} · ${SH.esc(x.c || "")}${x.s ? `<br><span class="muted small">закупка ${SH.money(x.s)}</span>` : ""}</span><span class="${x.a >= 0 ? "plus" : "minus"}">${x.a >= 0 ? "+" : "−"}${Math.abs(x.a).toLocaleString("ru-RU")}</span></li>`).join("") || '<li class="muted">Операций пока нет</li>';
@@ -283,7 +283,7 @@ $("k-del").onclick = async () => {
 };
 
 /* ---------- прайс ---------- */
-let LOADED_KEY = null;
+let PLOADED = false;
 function toText(p) { return p.groups.map(g => "# " + g.name + "\n" + g.items.map(i => [i.n, i.s, i.p].filter(x => x !== "" && x != null).join(" | ")).join("\n")).join("\n\n"); }
 function parse(text) {
   const groups = [], bad = [];
@@ -302,34 +302,36 @@ function parse(text) {
   });
   return { groups: groups.filter(x => x.items.length), bad };
 }
-$("b-pload").onclick = async () => {
-  const k = $("p-key").value.trim(); if (!k) return msg("p-msg", "Введите текущий ключ опта");
-  busy($("b-pload"), true, "Загружаю…");
+async function loadPrice() {
+  if (PLOADED) return;
+  msg("p-msg", "Загружаю прайс…", true);
   try {
     const { data } = await SH.gh.read(PFILE);
-    if (!data) { msg("p-msg", "Прайса ещё нет: впишите товары и сохраните.", true); LOADED_KEY = k; return; }
-    let p; try { p = await SH.decrypt(k, data.box); } catch (_) { throw new Error("Ключ не подошёл к текущему прайсу."); }
-    $("p-text").value = toText(p); $("p-min").value = p.min || ""; $("p-note").value = p.note || "";
-    LOADED_KEY = k; msg("p-msg", "Загружено", true);
+    if (data && data.v === 2) {
+      const p = await SH.decWith(await SH.rawKey(PK), data.box);
+      $("p-text").value = toText(p); $("p-min").value = p.min || ""; $("p-note").value = p.note || "";
+      PLOADED = true; msg("p-msg");
+    } else {
+      // первый запуск: берём стартовый прайс, оптовики увидят его после сохранения
+      try { const p = await SH.decrypt("shpods2026", data.box); $("p-text").value = toText(p); } catch (_) {}
+      PLOADED = true; msg("p-msg", "Проверьте прайс и нажмите «Сохранить», чтобы его увидели оптовики.", true);
+    }
   } catch (er) { msg("p-msg", errText(er)); }
-  finally { busy($("b-pload"), false); }
-};
+}
+document.querySelector('[data-tab="t-price"]').addEventListener("click", loadPrice);
 $("b-psave").onclick = async () => {
-  const k = $("p-key").value.trim();
-  if (k.length < 4) return msg("p-msg", "Ключ опта минимум 4 символа");
+  if (!PLOADED) return msg("p-msg", "Подождите, прайс ещё загружается.");
   const { groups, bad } = parse($("p-text").value);
   if (bad.length) return msg("p-msg", "Не понял цену в строках: " + bad.join(", ") + ". Формат: Название | вес | цена");
   if (!groups.length) return msg("p-msg", "Прайс пустой");
-  if (LOADED_KEY === null) return msg("p-msg", "Сначала нажмите «Загрузить», чтобы не затереть текущий прайс.");
   busy($("b-psave"), true);
   try {
     const u = Date.now();
-    const box = await SH.encrypt(k, { u, groups, min: Math.floor(+$("p-min").value.replace(/\D/g, "") || 0), note: $("p-note").value.trim() });
+    const box = await SH.encWith(await SH.rawKey(PK), { u, groups, min: Math.floor(+$("p-min").value.replace(/\D/g, "") || 0), note: $("p-note").value.trim() });
     const { sha } = await SH.gh.read(PFILE);
-    await SH.gh.write(PFILE, { v: 1, u, box }, sha, "Оптовый прайс обновлён");
+    await SH.gh.write(PFILE, { v: 2, u, box }, sha, "Оптовый прайс обновлён");
     const n = groups.reduce((s, g) => s + g.items.length, 0);
-    msg("p-msg", `Сохранено: ${n} позиций.` + (k !== LOADED_KEY ? " Ключ изменён, сообщите новый оптовикам." : "") + " На сайте обновится через 1–2 минуты.", true);
-    LOADED_KEY = k;
+    msg("p-msg", `Сохранено: ${n} позиций. У оптовиков обновится через 1–2 минуты.`, true);
   } catch (er) { msg("p-msg", errText(er)); }
   finally { busy($("b-psave"), false); }
 };
@@ -352,6 +354,7 @@ $("b-pass").onclick = async () => {
     const salt = SH.b64(crypto.getRandomValues(new Uint8Array(16))), nk = await SH.keyFor(p1, salt);
     const d = await SH.gh.mutate(FILE, async d => {
       for (const h in d.clients) d.clients[h].x = await SH.encWith(nk, await SH.decWith(KEY, d.clients[h].x));
+      d.pk = await SH.encWith(nk, await SH.decWith(KEY, d.pk));
       d.salt = salt; d.verifier = await SH.encWith(nk, "shpods-ok"); return d;
     }, "Админка: пароль изменён");
     KEY = nk; await useData(d);

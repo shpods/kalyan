@@ -12,60 +12,58 @@
 <div class="wrap">
 <header><a href="../"><img src="logo.png" alt="shpods"></a><span class="tag">Для партнёров</span></header>
 
-<h1>Оптовым клиентам</h1>
-<p class="muted">Прайс для магазинов, лаунжей и постоянных оптовых покупателей. Если у вас есть ключ, введите его, чтобы открыть цены.</p>
-
-<!-- ПРАЙС -->
-<section class="card" id="lock">
- <h2>Оптовый прайс</h2>
- <form id="f-key" class="row" autocomplete="off">
-  <input class="grow" id="key" type="password" placeholder="Ключ опта" autocomplete="current-password">
-  <button id="b-key">Открыть</button>
- </form>
- <label class="row small" style="gap:6px;color:var(--muted)"><input type="checkbox" id="remember" style="width:auto" checked> Запомнить на этом телефоне</label>
- <div class="err" id="key-err" hidden></div>
+<!-- ВХОД -->
+<section id="s-in">
+ <h1>Кабинет оптового клиента</h1>
+ <p class="muted">Для магазинов, лаунжей и постоянных оптовых покупателей. Введите личный код, который вам выдал менеджер.</p>
+ <div class="card">
+  <form id="f-code" autocomplete="off">
+   <label style="margin-top:0">Ваш код</label>
+   <input id="code" placeholder="SH-XXXX-XXXX" autocapitalize="characters" spellcheck="false" style="font:700 20px/1.2 ui-monospace,Menlo,monospace;letter-spacing:.06em;text-align:center">
+   <button id="b-in" style="width:100%;margin-top:12px">Войти</button>
+  </form>
+  <div class="err" id="code-err" hidden></div>
+  <p class="small muted" style="margin:10px 0 0">Код запомнится на этом телефоне, вводить его каждый раз не нужно.</p>
+ </div>
+ <div class="card">
+  <h2>Как стать оптовым клиентом</h2>
+  <ol class="steps">
+   <li>Напишите нам в WhatsApp: кто вы и в каком городе.</li>
+   <li>Получите личный код.</li>
+   <li>Смотрите оптовые цены и собирайте заявку прямо здесь.</li>
+   <li>С каждой закупки копятся бонусы, их можно потратить на расходники.</li>
+  </ol>
+  <div class="row" style="margin-top:12px">
+   <a class="btn wa" target="_blank" rel="noopener" data-wa="Здравствуйте! Хочу стать оптовым клиентом shpods.">WA Алматы</a>
+   <a class="btn wa" target="_blank" rel="noopener" data-wa="Здравствуйте! Хочу стать оптовым клиентом shpods." data-city="ast">WA Астана</a>
+  </div>
+ </div>
 </section>
 
-<section id="price" hidden>
- <div class="card">
-  <div class="row" style="justify-content:space-between"><h2 style="margin:0">Оптовый прайс</h2><button class="ghost small" id="b-lock">Закрыть</button></div>
-  <p class="small muted" id="p-upd" style="margin-top:6px"></p>
+<!-- КАБИНЕТ -->
+<section id="s-cab" hidden>
+ <div class="row" style="justify-content:space-between;margin-top:14px">
+  <div style="min-width:0"><p class="small muted" style="margin:0">Здравствуйте,</p><h1 style="margin:0" id="who"></h1></div>
+  <button class="ghost small" id="b-out">Выйти</button>
+ </div>
+ <div class="tabs">
+  <button class="on" data-tab="t-price">Прайс</button>
+  <button data-tab="t-bonus">Бонусы <span class="pill" id="pill" style="margin-left:4px"></span></button>
+ </div>
+
+ <div id="t-price" class="card">
+  <p class="small muted" id="p-upd" style="margin:0 0 4px"></p>
   <p class="small" id="p-note"></p>
   <input id="q" type="search" placeholder="Поиск: бренд, вес…">
   <div id="list"></div>
  </div>
-</section>
 
-<!-- БОНУСЫ -->
-<section class="card" id="bonus">
- <h2>Мои бонусы</h2>
- <p class="small muted">Код вам присылает менеджер после первой закупки.</p>
- <form id="f-code" class="row" autocomplete="off">
-  <input class="grow" id="code" placeholder="SH-XXXX-XXXX" autocapitalize="characters" spellcheck="false">
-  <button>Проверить</button>
- </form>
- <div class="err" id="code-err" hidden></div>
- <div id="bal" hidden>
-  <p class="muted small" style="margin:14px 0 2px">Баланс</p>
+ <div id="t-bonus" class="card" hidden>
+  <p class="muted small" style="margin:0 0 2px">Баланс</p>
   <div class="big" id="bal-n">0</div>
-  <p class="small muted">баллов · 1 балл = 1 ₸ скидки на угли, чаши и аксессуары</p>
+  <p class="small muted">баллов · 1 балл = 1 ₸ скидки на угли, чаши и аксессуары. Назовите код менеджеру при закупке.</p>
+  <div class="code" id="my-code" style="font-size:18px"></div>
   <ul class="hist" id="hist"></ul>
-  <button class="ghost small" id="b-forget" style="margin-top:10px">Выйти</button>
- </div>
-</section>
-
-<!-- КАК СТАТЬ -->
-<section class="card">
- <h2>Как стать оптовым клиентом</h2>
- <ol class="steps">
-  <li>Напишите нам в WhatsApp: кто вы и в каком городе.</li>
-  <li>Получите ключ к оптовому прайсу.</li>
-  <li>Соберите заявку прямо здесь и отправьте одной кнопкой.</li>
-  <li>С каждой закупки копятся бонусы, их можно потратить на расходники.</li>
- </ol>
- <div class="row" style="margin-top:12px">
-  <a class="btn wa" target="_blank" rel="noopener" data-wa="Здравствуйте! Хочу стать оптовым клиентом shpods.">WA Алматы</a>
-  <a class="btn wa" target="_blank" rel="noopener" data-wa="Здравствуйте! Хочу стать оптовым клиентом shpods." data-city="ast">WA Астана</a>
  </div>
 </section>
 
@@ -87,8 +85,6 @@
  <p id="o-min" class="err" hidden></p>
  <label>Город</label>
  <select id="o-city"><option value="alm">Алматы</option><option value="ast">Астана</option></select>
- <label>Магазин / имя</label>
- <input id="o-name" placeholder="Например: Lounge «Облако», Айдар">
  <label>Комментарий</label>
  <input id="o-com" placeholder="Доставка, время, замены…">
  <div class="row" style="margin-top:14px">
@@ -102,48 +98,63 @@
 const WA = { alm: "77002802578", ast: "77056232568" };
 const WA_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.5c.1.2 1.6 2.5 3.9 3.5 1.5.6 2 .7 2.7.6.4-.1 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1-.1-.2-.2-.2-.4-.3z"/></svg>';
 const $ = id => document.getElementById(id);
-const city0 = SH.store.get("shpods-city") === "astana" ? "ast" : "alm";
 document.querySelectorAll("[data-wa]").forEach(a => {
   const c = a.dataset.city || "alm";
   a.href = `https://wa.me/${WA[c]}?text=${encodeURIComponent(a.dataset.wa)}`;
   a.innerHTML = WA_ICON + "<span>" + a.textContent.replace("WA ", "") + "</span>";
 });
-$("o-city").value = city0;
+document.querySelectorAll("[data-tab]").forEach(b => b.onclick = () => {
+  document.querySelectorAll("[data-tab]").forEach(x => { x.classList.toggle("on", x === b); $(x.dataset.tab).hidden = x !== b; });
+});
 
-/* ---------- прайс ---------- */
-let PRICE = null, BOX = null;
-const cart = {};          // id -> qty
-const items = [];         // {id, g, n, s, p}
+let ME = null, PRICE = null, CODE = null;
+const cart = {}, items = [];
 
-async function loadBox() {
-  if (!BOX) BOX = await SH.readPublic("b2b/prices.enc.json");
-  return BOX;
-}
-async function unlock(pass, quiet) {
-  $("key-err").hidden = true;
-  $("b-key").disabled = true; $("b-key").textContent = "Открываю…";
+/* ---------- вход ---------- */
+async function login(code, quiet) {
+  $("code-err").hidden = true;
+  const n = SH.normCode(code);
+  const fail = t => { if (!quiet) { $("code-err").textContent = t; $("code-err").hidden = false; } else SH.store.del("shpods-code"); };
+  if (n.length !== 10 || !n.startsWith("SH")) return fail("Код выглядит так: SH-XXXX-XXXX");
+  $("b-in").disabled = true; $("b-in").textContent = "Вхожу…";
   try {
-    const box = await loadBox();
-    if (!box) throw new Error("net");
-    PRICE = await SH.decrypt(pass, box.box);
-    if ($("remember").checked) SH.store.set("shpods-opt", pass);
-    render();
-  } catch (e) {
-    if (!quiet) { $("key-err").textContent = e.message === "net" ? "Не удалось загрузить прайс, проверьте интернет." : "Ключ не подошёл. Уточните его у менеджера."; $("key-err").hidden = false; }
-    else SH.store.del("shpods-opt");
-  } finally { $("b-key").disabled = false; $("b-key").textContent = "Открыть"; }
+    const [{ id, wk }, data] = await Promise.all([SH.client(n), SH.readPublic("bonus/clients.json")]);
+    if (!data) return fail("Не удалось загрузить, проверьте интернет.");
+    const c = data.clients && data.clients[id];
+    if (!c || !c.w) return fail("Код не найден. Если менеджер выдал его только что, подождите пару минут.");
+    const acc = await SH.decWith(wk, c.w);
+    const box = await SH.readPublic("b2b/prices.enc.json");
+    PRICE = box ? await SH.decWith(await SH.rawKey(acc.k), box.box).catch(() => null) : null;
+    ME = { ...acc, b: c.b || 0, h: c.h || [] };
+    CODE = SH.prettyCode(n);
+    SH.store.set("shpods-code", CODE);
+    showCab();
+  } catch (e) { fail("Не получилось войти. Проверьте код."); }
+  finally { $("b-in").disabled = false; $("b-in").textContent = "Войти"; }
 }
-function render() {
-  $("lock").hidden = true; $("price").hidden = false;
+function showCab() {
+  $("s-in").hidden = true; $("s-cab").hidden = false;
+  $("who").textContent = ME.n;
+  $("o-city").value = ME.city === "Астана" ? "ast" : "alm";
+  $("bal-n").textContent = ME.b.toLocaleString("ru-RU");
+  $("pill").textContent = ME.b.toLocaleString("ru-RU");
+  $("my-code").textContent = CODE;
+  $("hist").innerHTML = ME.h.slice().reverse().slice(0, 40).map(h =>
+    `<li><span>${new Date(h.d).toLocaleDateString("ru-RU")} · ${SH.esc(h.c || (h.a > 0 ? "Начисление" : "Списание"))}${h.s ? `<br><span class="muted small">закупка на ${SH.money(h.s)}</span>` : ""}</span><span class="${h.a >= 0 ? "plus" : "minus"}">${h.a >= 0 ? "+" : "−"}${Math.abs(h.a).toLocaleString("ru-RU")}</span></li>`).join("") || '<li class="muted">Пока операций нет</li>';
   items.length = 0;
+  if (!PRICE) { $("list").innerHTML = '<p class="muted">Прайс обновляется, загляните чуть позже.</p>'; return; }
   PRICE.groups.forEach((g, gi) => g.items.forEach((it, ii) => items.push({ id: gi + "-" + ii, g: g.name, n: it.n, s: it.s || "", p: +it.p || 0 })));
-  $("p-upd").textContent = PRICE.u ? "Обновлён " + new Date(PRICE.u).toLocaleDateString("ru-RU") : "";
+  $("p-upd").textContent = PRICE.u ? "Прайс от " + new Date(PRICE.u).toLocaleDateString("ru-RU") : "";
   const notes = [];
   if (PRICE.min) notes.push("Минимальный заказ: " + SH.money(PRICE.min));
   if (PRICE.note) notes.push(PRICE.note);
   $("p-note").innerHTML = notes.map(SH.esc).join("<br>");
   drawList();
 }
+$("f-code").addEventListener("submit", e => { e.preventDefault(); login($("code").value); });
+$("b-out").onclick = () => { SH.store.del("shpods-code"); location.replace(location.pathname); };
+
+/* ---------- прайс и заявка ---------- */
 function drawList() {
   const q = $("q").value.trim().toLowerCase();
   let html = "", last = null;
@@ -178,13 +189,8 @@ $("list").addEventListener("click", e => {
   const id = b.closest(".item").dataset.id;
   setQty(id, (cart[id] || 0) + +b.dataset.d);
 });
-$("list").addEventListener("input", e => {
-  if (e.target.tagName !== "INPUT") return;
-  setQty(e.target.closest(".item").dataset.id, e.target.value);
-});
+$("list").addEventListener("input", e => { if (e.target.tagName === "INPUT") setQty(e.target.closest(".item").dataset.id, e.target.value); });
 $("q").addEventListener("input", drawList);
-$("f-key").addEventListener("submit", e => { e.preventDefault(); const v = $("key").value.trim(); if (v) unlock(v); });
-$("b-lock").onclick = () => { SH.store.del("shpods-opt"); PRICE = null; for (const k in cart) delete cart[k]; $("price").hidden = true; $("lock").hidden = false; $("bar").hidden = true; $("key").value = ""; };
 
 $("b-order").onclick = () => {
   const sum = totals();
@@ -192,52 +198,25 @@ $("b-order").onclick = () => {
   const low = PRICE.min && sum < PRICE.min;
   $("o-min").hidden = !low;
   if (low) $("o-min").textContent = "До минимального заказа не хватает " + SH.money(PRICE.min - sum) + ". Заявку всё равно можно отправить.";
-  $("o-name").value = SH.store.get("shpods-b2b-name") || "";
   $("m-order").hidden = false;
 };
 $("o-close").onclick = () => $("m-order").hidden = true;
 $("m-order").addEventListener("click", e => { if (e.target.id === "m-order") $("m-order").hidden = true; });
 $("o-send").onclick = () => {
-  const name = $("o-name").value.trim(), com = $("o-com").value.trim();
-  SH.store.set("shpods-b2b-name", name);
-  const lines = ["Оптовая заявка shpods"];
-  if (name) lines.push("От: " + name);
-  lines.push("");
+  const com = $("o-com").value.trim();
+  const lines = ["Оптовая заявка shpods", "От: " + ME.n + " (" + CODE + ")", ""];
   let sum = 0;
   for (const it of items) if (cart[it.id]) { sum += cart[it.id] * it.p; lines.push(`• ${it.n} ${it.s} × ${cart[it.id]} = ${SH.money(cart[it.id] * it.p)}`); }
   lines.push("", "Итого: " + SH.money(sum));
-  const code = SH.store.get("shpods-bonus");
-  if (code) lines.push("Бонусный код: " + code);
   if (com) lines.push("Комментарий: " + com);
   window.open(`https://wa.me/${WA[$("o-city").value]}?text=${encodeURIComponent(lines.join("\n"))}`, "_blank");
+  $("m-order").hidden = true;
 };
-
-/* ---------- бонусы ---------- */
-async function checkCode(code, quiet) {
-  $("code-err").hidden = true;
-  const n = SH.normCode(code);
-  if (n.length !== 10 || !n.startsWith("SH")) { if (!quiet) { $("code-err").textContent = "Код выглядит так: SH-XXXX-XXXX"; $("code-err").hidden = false; } return; }
-  const data = await SH.readPublic("bonus/clients.json");
-  if (!data) { $("code-err").textContent = "Не удалось загрузить, проверьте интернет."; $("code-err").hidden = false; return; }
-  const c = data.clients && data.clients[await SH.hash(n)];
-  if (!c) { if (!quiet) { $("code-err").textContent = "Такой код не найден. Если код новый, данные появятся в течение 5 минут."; $("code-err").hidden = false; } return; }
-  const pretty = "SH-" + n.slice(2, 6) + "-" + n.slice(6);
-  SH.store.set("shpods-bonus", pretty);
-  $("code").value = pretty;
-  $("bal-n").textContent = (c.b || 0).toLocaleString("ru-RU");
-  $("hist").innerHTML = (c.h || []).slice().reverse().slice(0, 30).map(h =>
-    `<li><span>${new Date(h.d).toLocaleDateString("ru-RU")} · ${SH.esc(h.c || (h.a > 0 ? "Начисление" : "Списание"))}${h.s ? `<br><span class="muted small">закупка на ${SH.money(h.s)}</span>` : ""}</span><span class="${h.a >= 0 ? "plus" : "minus"}">${h.a >= 0 ? "+" : "−"}${Math.abs(h.a).toLocaleString("ru-RU")}</span></li>`).join("") || '<li class="muted">Пока операций нет</li>';
-  $("f-code").hidden = true; $("bal").hidden = false;
-}
-$("f-code").addEventListener("submit", e => { e.preventDefault(); checkCode($("code").value); });
-$("b-forget").onclick = () => { SH.store.del("shpods-bonus"); $("bal").hidden = true; $("f-code").hidden = false; $("code").value = ""; };
 
 /* ---------- старт ---------- */
 const hashCode = (location.hash.match(/code=([A-Za-z0-9-]+)/) || [])[1];
-if (hashCode) { history.replaceState(null, "", location.pathname); checkCode(hashCode); $("bonus").scrollIntoView(); }
-else if (SH.store.get("shpods-bonus")) checkCode(SH.store.get("shpods-bonus"), true);
-const savedKey = SH.store.get("shpods-opt");
-if (savedKey) unlock(savedKey, true);
+if (hashCode) { history.replaceState(null, "", location.pathname); $("code").value = SH.prettyCode(hashCode); login(hashCode); }
+else if (SH.store.get("shpods-code")) { $("code").value = SH.store.get("shpods-code"); login(SH.store.get("shpods-code"), true); }
 </script>
 </body>
 </html>
