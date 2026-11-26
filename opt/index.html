@@ -3,9 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Каталог вкусов табака</title>
+<title>shpods · каталог вкусов</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23170606'/%3E%3Ccircle cx='16' cy='16' r='10' fill='%23e5463a'/%3E%3Ccircle cx='11' cy='21' r='4.5' fill='%23170606'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@800&family=Unbounded:wght@600;800&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 /* VOICE everyday trade: a friendly wholesale menu a lounge owner flips through on the phone
    IDEA a tobacco tin shelf: each brand is a tin label, each flavor a line on it with a colour seal
@@ -13,8 +14,35 @@
    COLOUR white / aubergine #2b1638 band / coral #ff5a3c accent; 8 flavor seal colours
    TYPE Unbounded 800 for brand names and title + Manrope for text
    LAYOUT band with title, search and flavour chips; brand rail; brand sections with row grid; sticky order bar. Phone: one column rows */
-:root{color-scheme:light dark;--bg:light-dark(#ffffff,#130a19);--ink:light-dark(#22142b,#f3ecf6);--mute:light-dark(#6f6278,#ab9cb5);--band:light-dark(#2b1638,#21102c);--bandink:#fff;--line:light-dark(#ece6ef,#2c2036);--card:light-dark(#faf7fb,#1b1023);--acc:#ff5a3c;--acc2:light-dark(#e8452a,#ff7a5f)}
-:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+/* Brand world: shpods — deep maroon night, white wordmark, red smoke circle, falling snow. One palette in every theme. */
+:root,:root[data-theme=light],:root[data-theme=dark]{color-scheme:dark;--bg:#170606;--ink:#f7eded;--mute:#c9a9a6;--band:#2a0808;--bandink:#fff;--line:#3a1513;--card:#220a09;--acc:#e5463a;--acc2:#ff6a5c}
+.logo{display:block;height:clamp(44px,7vw,64px);width:auto;filter:drop-shadow(0 0 22px rgba(229,70,58,.45))}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:clamp(18px,3vw,30px)}
+.tag{border:1.5px solid rgba(255,255,255,.3);border-radius:999px;padding:6px 14px;font-weight:700;font-size:14px;white-space:nowrap}
+header{position:relative;overflow:hidden;background:radial-gradient(120% 90% at 85% 0%,#5e1210 0%,#2a0808 55%,#170606 100%)!important}
+header .wrap{position:relative;z-index:1}
+.snow{position:absolute;inset:0;pointer-events:none}
+.snow i{position:absolute;top:-10px;width:var(--s);height:var(--s);border-radius:50%;background:#fff;opacity:.55;animation:fall var(--d) linear var(--w) infinite}
+@keyframes fall{to{transform:translate3d(var(--x),110vh,0)}}
+.promo{background:linear-gradient(180deg,#170606,#2b0907 60%,#170606);border-bottom:1px solid var(--line)}
+.promo .wrap{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(18px,4vw,48px);align-items:center;padding-block:clamp(26px,4vw,48px)}
+.promo h2{font:800 clamp(26px,4vw,44px)/1.05 Unbounded,system-ui,sans-serif;letter-spacing:-.02em;margin:10px 0 14px;text-wrap:balance}
+.promo h2 em{font-style:normal;color:var(--acc2)}
+.pill{display:inline-block;background:var(--acc);color:#fff;font-weight:800;font-size:14px;border-radius:999px;padding:6px 14px}
+.rules{list-style:none;margin:0 0 20px;padding:0;display:grid;gap:10px}
+.rules li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:start;font-size:16px}
+.rules b.n{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--acc);color:var(--acc2);font-size:14px}
+.cd{display:flex;flex-wrap:wrap;gap:10px;align-items:stretch}
+.cd div{background:#0e0303;border:1px solid var(--line);border-radius:14px;padding:10px 14px;min-width:84px;text-align:center}
+.cd strong{display:block;font:800 clamp(24px,3.4vw,34px)/1 Unbounded,system-ui,sans-serif;font-variant-numeric:tabular-nums}
+.cd span{font-size:13px;color:var(--mute)}
+.cd .fin{background:#000;border-color:#000;display:flex;align-items:center;font-weight:800;font-size:16px;padding:0 18px}
+.poster{justify-self:center;width:min(100%,290px);aspect-ratio:9/16;border-radius:22px;overflow:hidden;box-shadow:0 30px 60px -20px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.08);transform:rotate(2deg)}
+.poster img{display:block;width:100%;height:100%;object-fit:cover}
+.tick{margin:14px 0 0;padding:12px 14px;border-radius:12px;background:#2b0907;border:1px solid var(--line);font-size:14px}
+.tick b{color:var(--acc2)}
+@media(max-width:720px){.promo .wrap{grid-template-columns:minmax(0,1fr)}.poster{width:min(62%,220px);transform:rotate(2deg)}}
+@media(prefers-reduced-motion:reduce){.snow{display:none}}
 *{box-sizing:border-box;min-width:0}
 html,body{margin:0}
 body{background:var(--bg);color:var(--ink);font:16px/1.5 Manrope,system-ui,sans-serif;overflow-x:clip;padding-bottom:96px}
@@ -22,7 +50,7 @@ button,input,textarea{font:inherit;color:inherit}
 .wrap{max-width:1240px;margin:0 auto;padding:0 max(4vw,16px)}
 header{background:var(--band);color:var(--bandink);padding:clamp(24px,4vw,44px) 0 18px}
 h1{font:800 clamp(28px,4.4vw,46px)/1.05 Unbounded,system-ui,sans-serif;letter-spacing:-.02em;margin:0 0 8px;text-wrap:balance}
-.sub{color:#d9c9e3;margin:0 0 20px;font-size:16px}
+.sub{color:#e8cfcc;margin:0 0 20px;font-size:16px}
 .sub b{color:#fff}
 .search{position:relative;max-width:640px}
 .search input{width:100%;height:52px;border-radius:14px;border:0;padding:0 48px 0 18px;font-size:17px;background:#fff;color:#22142b;outline:none}
@@ -62,7 +90,7 @@ section.brand{padding-top:22px;scroll-margin-top:64px}
 .bar.show{transform:none}
 .bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:12px}
 .bar p{margin:0;font-weight:600}
-.bar p span{color:#d9c9e3;font-weight:400}
+.bar p span{color:#e8cfcc;font-weight:400}
 .btn{min-height:48px;padding:0 20px;border-radius:12px;border:0;background:var(--acc);color:#fff;font-weight:700;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
 .btn.ghost{background:transparent;border:1.5px solid var(--line);color:var(--ink)}
 .sheet{position:fixed;inset:0;z-index:30;display:none;background:rgba(10,4,14,.55);align-items:flex-end;justify-content:center}
@@ -84,13 +112,38 @@ label{display:block;font-weight:600;margin:16px 0 6px;font-size:15px}
 </head>
 <body>
 <header>
+  <div class="snow" id="snow" aria-hidden="true"></div>
   <div class="wrap">
+    <div class="top">
+      <svg class="logo" viewBox="0 0 520 150" role="img" aria-label="shpods hookah team">
+        <defs><mask id="bite"><rect width="520" height="150" fill="#fff"/><circle cx="436" cy="104" r="24" fill="#000"/></mask></defs>
+        <circle cx="468" cy="58" r="52" fill="#e5463a" mask="url(#bite)"/>
+        <text x="0" y="118" fill="#fff" font-family="Figtree,Manrope,system-ui,sans-serif" font-weight="800" font-size="118" letter-spacing="-3">shpods</text>
+        <text x="300" y="146" fill="#fff" font-family="Manrope,system-ui,sans-serif" font-weight="700" font-size="20" letter-spacing="1">hookah team</text>
+      </svg>
+      <span class="tag">HoReCa · опт</span>
+    </div>
     <h1>Табак для кальяна: выберите вкусы</h1>
     <p class="sub" id="sub">Отметьте нужные вкусы и количество, затем отправьте список менеджеру. Цены уточняйте при заказе.</p>
     <div class="search" id="sbox"><input id="q" type="search" placeholder="Найти вкус: малина, холодок, Pinkman…" autocomplete="off" aria-label="Поиск по вкусам"><button id="qx" aria-label="Очистить поиск">×</button></div>
     <div class="chips" id="cats"></div>
   </div>
 </header>
+<section class="promo" aria-labelledby="pt">
+  <div class="wrap">
+    <div>
+      <span class="pill">Розыгрыш для партнёров</span>
+      <h2 id="pt">Разыграем <em>iPhone 18 Pro</em> среди наших партнёров</h2>
+      <ul class="rules">
+        <li><b class="n">1</b><span>Закуп от <b>100 000 ₸</b> — один билет</span></li>
+        <li><b class="n">2</b><span>Билетов можно собрать сколько угодно: больше закупов — больше шансов</span></li>
+        <li><b class="n">3</b><span>Итоги подведём <b>31 декабря</b></span></li>
+      </ul>
+      <div class="cd" id="cd"><div><strong id="cdd">–</strong><span>дней</span></div><div><strong id="cdh">–</strong><span>часов</span></div><div><strong id="cdm">–</strong><span>минут</span></div><div class="fin">Итоги 31 декабря</div></div>
+    </div>
+    <div class="poster"><img src="iphone.jpg" alt="Постер розыгрыша iPhone 18 Pro от shpods" loading="lazy" width="720" height="1280"></div>
+  </div>
+</section>
 <nav class="rail" aria-label="Бренды"><div class="wrap" id="brands"></div></nav>
 <main class="wrap">
   <p class="status" id="status"></p>
@@ -111,6 +164,7 @@ label{display:block;font-weight:600;margin:16px 0 6px;font-size:15px}
       <a class="btn" id="tg" href="#" target="_blank" rel="noopener">Telegram</a>
       <button class="btn ghost" id="clear">Очистить</button>
     </div>
+    <p class="tick">Участвуете в розыгрыше iPhone 18 Pro: каждый закуп от <b>100 000 ₸</b> — это билет. Итоги 31 декабря.</p>
     <p class="note" id="cnote">Скопируйте список или откройте мессенджер и отправьте его менеджеру.</p>
   </div>
 </div>
@@ -186,6 +240,11 @@ $("who").addEventListener("input",()=>{save();renderSheet()});
 $("copy").onclick=async()=>{try{await navigator.clipboard.writeText(orderText());$("copy").textContent="Скопировано"}catch(err){$("txt").select();$("copy").textContent="Выделено — нажмите Ctrl+C"}setTimeout(()=>$("copy").textContent="Копировать",2000)};
 let armed=false;$("clear").onclick=()=>{if(!armed){armed=true;$("clear").textContent="Точно очистить?";setTimeout(()=>{armed=false;$("clear").textContent="Очистить"},2500);return}cart={};save();close();render();updateBar();armed=false;$("clear").textContent="Очистить"};
 render();updateBar();
+const end=new Date("2026-12-31T23:59:59+05:00").getTime();
+const tickCd=()=>{let s=Math.max(0,Math.floor((end-Date.now())/1000));$("cdd").textContent=Math.floor(s/86400);$("cdh").textContent=Math.floor(s%86400/3600);$("cdm").textContent=Math.floor(s%3600/60)};
+tickCd();setInterval(tickCd,30000);
+let sd=7;const rnd=()=>(sd=sd*16807%2147483647)/2147483647;
+$("snow").innerHTML=Array.from({length:36},()=>`<i style="left:${(rnd()*100).toFixed(1)}%;--s:${(2+rnd()*4).toFixed(1)}px;--d:${(9+rnd()*10).toFixed(1)}s;--w:-${(rnd()*18).toFixed(1)}s;--x:${(rnd()*60-30).toFixed(0)}px"></i>`).join("");
 }
 </script>
 </body>
