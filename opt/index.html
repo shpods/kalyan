@@ -219,7 +219,7 @@ function renderSheet(){
   $("otn").textContent=ids.length?`${ids.length} ${plural(ids.length,"вкус","вкуса","вкусов")}, ${ids.reduce((a,i)=>a+cart[i],0)} шт`:"Пока ничего не выбрано";
   $("olist").innerHTML=brands.map(b=>{const l=ids.filter(i=>items[i].b===b);return l.length?`<div class="ob">${esc(b)}</div>`+l.map(i=>`<div class="ol" data-id="${i}"><div><div class="nm">${esc(items[i].n)}</div>${items[i].d?`<div class="ds">${esc(items[i].d)}</div>`:""}</div><div class="step"><button data-a="-1" aria-label="Убрать один">−</button><b>${cart[i]}</b><button data-a="1" aria-label="Добавить один">+</button></div></div>`).join(""):""}).join("");
   const t=orderText();$("txt").value=t;
-  $("wa").href="https://wa.me/77056232568?text="+encodeURIComponent(t);
+  $("wa").href="https://wa.me/77089804933?text="+encodeURIComponent(t);
   $("tg").href="https://t.me/share/url?url=%20&text="+encodeURIComponent(t);
 }
 function bump(id,a){cart[id]=Math.max(0,(cart[id]||0)+a);if(!cart[id])delete cart[id];save();
